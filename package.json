@@ -1,0 +1,22 @@
+{
+  "name": "co-list-view-table",
+  "version": "0.0.1",
+  "description": "Simple table to use in list views",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "build": "npm run typescript",
+    "prepublish": "npm run build",
+    "typescript": "tsc -p src",
+    "watch": "tsc -p src -w",
+    "sass": "gulp sass"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run build"
+    }
+  },
+  "keywords": [],
+  "author": "Carl-Ola Boketoft",
+  "license": "ISC"
+}
