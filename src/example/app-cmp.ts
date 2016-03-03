@@ -1,15 +1,15 @@
 import {Component} from 'angular2/core'
-import {ListViewTableCmp} from '../co-list-view-table/co-list-view-table'
+import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
 
 @Component({
   selector: 'app',
-  directives: [ListViewTableCmp],
+  directives: [CoListViewTableCmp],
   template: `
-    <list-view-table-cmp
+    <co-list-view-table-cmp
       [tableData]='myData'
       [tableConfig]='myConfig'
       (selected)='selectedItem($event)'>
-    </list-view-table-cmp>
+    </co-list-view-table-cmp>
   `
 })
 export class AppCmp {

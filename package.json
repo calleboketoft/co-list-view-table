@@ -7,8 +7,8 @@
     "start": "node server",
     "build": "npm run typescript",
     "prepublish": "npm run build",
-    "typescript": "tsc -p src",
-    "watch": "tsc -p src -w",
+    "typescript": "tsc -p .",
+    "watch": "tsc -p . -w",
     "sass": "gulp sass"
   },
   "config": {

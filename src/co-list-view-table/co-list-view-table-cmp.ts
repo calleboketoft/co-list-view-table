@@ -5,7 +5,7 @@ export interface ITableConfig {
 }
 
 @Component({
-  selector: 'list-view-table-cmp',
+  selector: 'co-list-view-table-cmp',
   template: `
     <table class='table'>
       <thead>
@@ -25,7 +25,7 @@ export interface ITableConfig {
     </table>
   `
 })
-export class ListViewTableCmp {
+export class CoListViewTableCmp {
   @Input() tableData: ITableConfig;
   @Input() tableConfig;
   @Output() selected = new EventEmitter();

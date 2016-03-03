@@ -1,0 +1,3 @@
+var browser_1 = require('angular2/platform/browser');
+exports.bootstrap = browser_1.bootstrap;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY28tbGlzdC12aWV3LXRhYmxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHdCQUEwQiwyQkFBMkIsQ0FBQztBQUE3Qyx3Q0FBNkMifQ==
