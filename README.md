@@ -10,18 +10,23 @@ Simple table for list views
 
 
 ## How to use
+```javascript
+npm install --save co-list-view-table
+```
 
 HTML Template:
 ```html
-<list-view-table-cmp
+<co-list-view-table-cmp
   [tableData]='myData'
   [tableConfig]='myConfig'
   (selected)='selectedItem($event)'>
-</list-view-table-cmp>
+</co-list-view-table-cmp>
 ```
 
 JavaScript:
 ```javascript
+import {CoListViewTableCmp} from 'co-list-view-table/co-list-view-table'
+
 myData = [
   {userId: '1', userName: 'Calle'},
   {userId: '2', userName: 'Nisse'}
