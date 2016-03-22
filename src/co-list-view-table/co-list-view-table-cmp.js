@@ -28,6 +28,7 @@ var CoListViewTableCmp = (function () {
     CoListViewTableCmp = __decorate([
         core_1.Component({
             selector: 'co-list-view-table-cmp',
+            styles: ["\n    tr:hover {\n      cursor: pointer;\n    }\n  "],
             template: "\n    <table class='table'>\n      <thead>\n        <tr>\n          <th *ngFor='#col of tableConfig.columnDefs'>\n            {{col.displayName}}\n          </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor='#dataRow of tableData' (click)='selected.emit(dataRow)'>\n          <td *ngFor='#col of tableConfig.columnDefs'>\n            {{dataRow[col.field]}}\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  "
         }), 
         __metadata('design:paramtypes', [])
@@ -35,4 +36,4 @@ var CoListViewTableCmp = (function () {
     return CoListViewTableCmp;
 }());
 exports.CoListViewTableCmp = CoListViewTableCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImNvLWxpc3Qtdmlldy10YWJsZS1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFxRCxlQUVyRCxDQUFDLENBRm1FO0FBMkJwRTtJQUFBO1FBR1ksYUFBUSxHQUFHLElBQUksbUJBQVksRUFBRSxDQUFDO0lBQzFDLENBQUM7SUFIQztRQUFDLFlBQUssRUFBRTs7eURBQUE7SUFDUjtRQUFDLFlBQUssRUFBRTs7MkRBQUE7SUFDUjtRQUFDLGFBQU0sRUFBRTs7d0RBQUE7SUF4Qlg7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLHdCQUF3QjtZQUNsQyxRQUFRLEVBQUUsOGJBaUJUO1NBQ0YsQ0FBQzs7MEJBQUE7SUFLRix5QkFBQztBQUFELENBQUMsQUFKRCxJQUlDO0FBSlksMEJBQWtCLHFCQUk5QixDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImNvLWxpc3Qtdmlldy10YWJsZS1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFxRCxlQUVyRCxDQUFDLENBRm1FO0FBZ0NwRTtJQUFBO1FBR1ksYUFBUSxHQUFHLElBQUksbUJBQVksRUFBRSxDQUFDO0lBQzFDLENBQUM7SUFIQztRQUFDLFlBQUssRUFBRTs7eURBQUE7SUFDUjtRQUFDLFlBQUssRUFBRTs7MkRBQUE7SUFDUjtRQUFDLGFBQU0sRUFBRTs7d0RBQUE7SUE3Qlg7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLHdCQUF3QjtZQUNsQyxNQUFNLEVBQUUsQ0FBQyxxREFJUixDQUFDO1lBQ0YsUUFBUSxFQUFFLDhiQWlCVDtTQUNGLENBQUM7OzBCQUFBO0lBS0YseUJBQUM7QUFBRCxDQUFDLEFBSkQsSUFJQztBQUpZLDBCQUFrQixxQkFJOUIsQ0FBQSJ9

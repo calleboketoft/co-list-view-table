@@ -6,6 +6,11 @@ export interface ITableConfig {
 
 @Component({
   selector: 'co-list-view-table-cmp',
+  styles: [`
+    tr:hover {
+      cursor: pointer;
+    }
+  `],
   template: `
     <table class='table'>
       <thead>
