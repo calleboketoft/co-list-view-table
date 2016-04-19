@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core'
+import {Sorter} from './sorter'
 
 export interface ITableConfig {
   columnDefs: any
@@ -12,7 +13,7 @@ export interface ITableConfig {
     }
   `],
   template: `
-    <table class='table'>
+    <table class='table table-striped'>
       <thead>
         <tr>
           <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
@@ -25,7 +26,7 @@ export interface ITableConfig {
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor='#dataRow of displayTableData' (click)='selected.emit(dataRow)'>
+        <tr *ngFor='#dataRow of tableData' (click)='selected.emit(dataRow)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
           </td>
@@ -39,18 +40,9 @@ export class CoListViewTableCmp {
   @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();
 
-  public displayTableData // sorted and filtered etc.
-
-  ngOnInit () {
-    this.displayTableData = [...this.tableData]
-  }
+  sorter = new Sorter()
 
   sortCol (col, index) {
-    console.log('filtering: ' + col.filtering)
-    console.log('field: ' + col.field)
-    console.log('tableData: ')
-    console.log(this.tableData)
-    this.displayTableData = [...this.tableData]
-    // Sort the tableData here
+    this.sorter.sort(col.field, this.tableData)
   }
 }
