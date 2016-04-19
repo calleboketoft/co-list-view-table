@@ -8,7 +8,7 @@ export interface ITableConfig {
 }
 
 @Component({
-  selector: 'co-list-view-table-cmp',
+  selector: 'co-list-view-table',
   pipes: [SearchPipe],
   directives: [SearchInput],
   styles: [`

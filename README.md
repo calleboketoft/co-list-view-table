@@ -34,7 +34,7 @@ myData = [
 myConfig = {
   columnDefs: [
     {field: 'userId', displayName: 'ID'},
-    {field: 'userName', displayName: 'Name'}
+    {field: 'userName', displayName: 'Name', search: true}
   ]
 }
 function selectedItem (item) {

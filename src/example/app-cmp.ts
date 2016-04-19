@@ -5,19 +5,19 @@ import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
   selector: 'app',
   directives: [CoListViewTableCmp],
   template: `
-    <co-list-view-table-cmp
+    <co-list-view-table
       [tableData]='myData'
       [tableConfig]='myConfig'
       (selected)='selectedItem($event)'>
-    </co-list-view-table-cmp>
+    </co-list-view-table>
 
     <br><br>
 
-    <co-list-view-table-cmp
+    <co-list-view-table
       [tableData]='myData'
       [tableConfig]='minimalConfig'
       (selected)='selectedItem($event)'>
-    </co-list-view-table-cmp>
+    </co-list-view-table>
   `
 })
 export class AppCmp {
