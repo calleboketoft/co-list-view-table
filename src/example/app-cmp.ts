@@ -14,13 +14,26 @@ import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
 })
 export class AppCmp {
   public myData = [
-    {userId: '1', userName: 'Calle'},
-    {userId: '2', userName: 'Nisse'}
+    {
+      userId: '1',
+      userName: 'Calle'
+    },
+    {
+      userId: '2',
+      userName: 'Boke'
+    }
   ];
   private myConfig = {
     columnDefs: [
-      {field: 'userId', displayName: 'ID'},
-      {field: 'userName', displayName: 'Name'}
+      {
+        field: 'userId',
+        displayName: 'ID'
+      },
+      {
+        field: 'userName',
+        displayName: 'Name',
+        filtering: true
+      }
     ]
   };
   private selectedItem (item) {

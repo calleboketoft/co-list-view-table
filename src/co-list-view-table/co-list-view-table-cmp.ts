@@ -15,13 +15,17 @@ export interface ITableConfig {
     <table class='table'>
       <thead>
         <tr>
-          <th *ngFor='#col of tableConfig.columnDefs'>
-            {{col.displayName}}
+          <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
+            <input type='text' [hidden]='!col.filtering'>
+            <br>
+            <span (click)='sortCol(col, i)'>
+              {{col.displayName}}
+            </span>
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor='#dataRow of tableData' (click)='selected.emit(dataRow)'>
+        <tr *ngFor='#dataRow of displayTableData' (click)='selected.emit(dataRow)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
           </td>
@@ -31,7 +35,22 @@ export interface ITableConfig {
   `
 })
 export class CoListViewTableCmp {
-  @Input() tableData: ITableConfig;
-  @Input() tableConfig;
+  @Input() tableData: Array<any>;
+  @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();
+
+  public displayTableData // sorted and filtered etc.
+
+  ngOnInit () {
+    this.displayTableData = [...this.tableData]
+  }
+
+  sortCol (col, index) {
+    console.log('filtering: ' + col.filtering)
+    console.log('field: ' + col.field)
+    console.log('tableData: ')
+    console.log(this.tableData)
+    this.displayTableData = [...this.tableData]
+    // Sort the tableData here
+  }
 }
