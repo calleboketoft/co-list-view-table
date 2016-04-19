@@ -26,9 +26,9 @@ export interface ITableConfig {
               [field]='col.field'
               (search)='searchUpdate($event)'>
             </search-input-cmp>
-            <br>
+            <br *ngIf='col.search'>
             <span (click)='sortCol(col, i)'>
-              {{col.displayName}}
+              {{col.displayName || col.field}}
             </span>
           </th>
         </tr>

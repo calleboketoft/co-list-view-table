@@ -10,6 +10,14 @@ import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
       [tableConfig]='myConfig'
       (selected)='selectedItem($event)'>
     </co-list-view-table-cmp>
+
+    <br><br>
+
+    <co-list-view-table-cmp
+      [tableData]='myData'
+      [tableConfig]='minimalConfig'
+      (selected)='selectedItem($event)'>
+    </co-list-view-table-cmp>
   `
 })
 export class AppCmp {
@@ -48,6 +56,13 @@ export class AppCmp {
       }
     ]
   };
+
+  private minimalConfig = {
+    columnDefs: [
+      {field: 'userId'},
+      {field: 'userName'}
+    ]
+  }
   private selectedItem (item) {
     console.log('clicked item:', item)
   }

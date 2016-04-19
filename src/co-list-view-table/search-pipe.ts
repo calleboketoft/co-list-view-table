@@ -8,10 +8,10 @@ export class SearchPipe {
     return value.filter((item) => {
       // each row
       let resultArr = [] // filter results per column
-      Object.keys(item).forEach(fieldKey => {
+      searchParams.columnDefs.forEach(columnDef => {
         // each column
         let field = searchParams.columnDefs.find(colDef => {
-          return colDef.field === fieldKey
+          return colDef.field === columnDef.field
         })
         if (!field.search) {
           // the field doesn't support search, always include
@@ -21,7 +21,7 @@ export class SearchPipe {
           if (!field.searchTerm) {
             return true
           }
-          resultArr.push(item[fieldKey].toLowerCase().includes(field.searchTerm.toLowerCase()))
+          resultArr.push(item[columnDef.field].toLowerCase().includes(field.searchTerm.toLowerCase()))
         }
       })
       return resultArr.every(i => i)
