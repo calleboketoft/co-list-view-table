@@ -16,11 +16,18 @@ export class AppCmp {
   public myData = [
     {
       userId: '1',
-      userName: 'Calle'
+      userName: 'Carl',
+      nickName: 'Calle'
     },
     {
       userId: '2',
-      userName: 'Boke'
+      userName: 'Boke',
+      nickName: 'G'
+    },
+    {
+      userId: '3',
+      userName: 'Bubba',
+      nickName: 'Bullen'
     }
   ];
   private myConfig = {
@@ -32,6 +39,11 @@ export class AppCmp {
       {
         field: 'userName',
         displayName: 'Name',
+        search: true
+      },
+      {
+        field: 'nickName',
+        displayName: 'Nickname',
         search: true
       }
     ]
