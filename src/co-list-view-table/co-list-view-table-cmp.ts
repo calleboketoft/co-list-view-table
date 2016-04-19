@@ -35,7 +35,7 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          *ngFor='#dataRow of tableData | search: tableConfigCopy'
+          *ngFor='#dataRow of tableDataCopy | search: tableConfigCopy'
           (click)='selected.emit(dataRow)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
@@ -51,12 +51,14 @@ export class CoListViewTableCmp {
   @Output() selected = new EventEmitter();
 
   public tableConfigCopy;
+  public tableDataCopy;
 
   sorter = new Sorter();
 
   ngOnInit () {
     // add search terms etc to this one
     this.tableConfigCopy = Object['assign']({}, this.tableConfig)
+    this.tableDataCopy = this.tableData.map(i => Object['assign']({}, i))
   }
 
   searchUpdate ($event) {
@@ -68,6 +70,6 @@ export class CoListViewTableCmp {
   }
 
   sortCol (col, index) {
-    this.sorter.sort(col.field, this.tableData)
+    this.tableDataCopy = this.sorter.sort(col.field, this.tableDataCopy)
   }
 }
