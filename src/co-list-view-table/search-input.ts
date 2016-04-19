@@ -6,10 +6,10 @@ import {Component, Input, Output, EventEmitter} from 'angular2/core'
 })
 export class SearchInput {
   @Input() field;
-  @Output() term = new EventEmitter();
+  @Output() search = new EventEmitter();
 
   public valueChange ($event) {
-    this.term.emit({
+    this.search.emit({
       field: this.field,
       value: $event.target.value
     })

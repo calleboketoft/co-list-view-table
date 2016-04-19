@@ -32,7 +32,7 @@ export class AppCmp {
       {
         field: 'userName',
         displayName: 'Name',
-        filtering: true
+        search: true
       }
     ]
   };

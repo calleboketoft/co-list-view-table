@@ -17,8 +17,16 @@ var CoListViewTableCmp = (function () {
         this.selected = new core_1.EventEmitter();
         this.sorter = new sorter_1.Sorter();
     }
+    CoListViewTableCmp.prototype.ngOnInit = function () {
+        // add search terms etc to this one
+        this.tableConfigCopy = Object['assign']({}, this.tableConfig);
+    };
     CoListViewTableCmp.prototype.searchUpdate = function ($event) {
-        console.log($event);
+        var foundColDef = this.tableConfigCopy.columnDefs.find(function (colDef) {
+            return colDef.field === $event.field;
+        });
+        foundColDef.searchTerm = $event.value;
+        this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy);
     };
     CoListViewTableCmp.prototype.sortCol = function (col, index) {
         this.sorter.sort(col.field, this.tableData);
@@ -41,11 +49,11 @@ var CoListViewTableCmp = (function () {
             pipes: [search_pipe_1.SearchPipe],
             directives: [search_input_1.SearchInput],
             styles: ["\n    tr:hover {\n      cursor: pointer;\n    }\n  "],
-            template: "\n    <table class='table table-striped'>\n      <thead>\n        <tr>\n          <th *ngFor='#col of tableConfig.columnDefs; #i = index'>\n            <search-input-cmp\n              *ngIf='col.filtering'\n              [field]='col.field'\n              (term)='searchUpdate($event)'>\n            </search-input-cmp>\n            <br>\n            <span (click)='sortCol(col, i)'>\n              {{col.displayName}}\n            </span>\n          </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr\n          *ngFor='#dataRow of tableData'\n          (click)='selected.emit(dataRow)'>\n          <td *ngFor='#col of tableConfig.columnDefs'>\n            {{dataRow[col.field]}}\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  "
+            template: "\n    <table class='table table-striped'>\n      <thead>\n        <tr>\n          <th *ngFor='#col of tableConfig.columnDefs; #i = index'>\n            <search-input-cmp\n              *ngIf='col.search'\n              [field]='col.field'\n              (search)='searchUpdate($event)'>\n            </search-input-cmp>\n            <br>\n            <span (click)='sortCol(col, i)'>\n              {{col.displayName}}\n            </span>\n          </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr\n          *ngFor='#dataRow of tableData | search: tableConfigCopy'\n          (click)='selected.emit(dataRow)'>\n          <td *ngFor='#col of tableConfig.columnDefs'>\n            {{dataRow[col.field]}}\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], CoListViewTableCmp);
     return CoListViewTableCmp;
 }());
 exports.CoListViewTableCmp = CoListViewTableCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImNvLWxpc3Qtdmlldy10YWJsZS1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFxRCxlQUNyRCxDQUFDLENBRG1FO0FBQ3BFLHVCQUFxQixVQUNyQixDQUFDLENBRDhCO0FBQy9CLDRCQUF5QixlQUN6QixDQUFDLENBRHVDO0FBQ3hDLDZCQUEwQixnQkFFMUIsQ0FBQyxDQUZ5QztBQTRDMUM7SUFBQTtRQUdZLGFBQVEsR0FBRyxJQUFJLG1CQUFZLEVBQUUsQ0FBQztRQUV4QyxXQUFNLEdBQUcsSUFBSSxlQUFNLEVBQUUsQ0FBQTtJQVN2QixDQUFDO0lBUEMseUNBQVksR0FBWixVQUFjLE1BQU07UUFDbEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxNQUFNLENBQUMsQ0FBQTtJQUNyQixDQUFDO0lBRUQsb0NBQU8sR0FBUCxVQUFTLEdBQUcsRUFBRSxLQUFLO1FBQ2pCLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxLQUFLLEVBQUUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFBO0lBQzdDLENBQUM7SUFaRDtRQUFDLFlBQUssRUFBRTs7eURBQUE7SUFDUjtRQUFDLFlBQUssRUFBRTs7MkRBQUE7SUFDUjtRQUFDLGFBQU0sRUFBRTs7d0RBQUE7SUF6Q1g7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLHdCQUF3QjtZQUNsQyxLQUFLLEVBQUUsQ0FBQyx3QkFBVSxDQUFDO1lBQ25CLFVBQVUsRUFBRSxDQUFDLDBCQUFXLENBQUM7WUFDekIsTUFBTSxFQUFFLENBQUMscURBSVIsQ0FBQztZQUNGLFFBQVEsRUFBRSwydkJBMkJUO1NBQ0YsQ0FBQzs7MEJBQUE7SUFlRix5QkFBQztBQUFELENBQUMsQUFkRCxJQWNDO0FBZFksMEJBQWtCLHFCQWM5QixDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImNvLWxpc3Qtdmlldy10YWJsZS1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFxRCxlQUNyRCxDQUFDLENBRG1FO0FBQ3BFLHVCQUFxQixVQUNyQixDQUFDLENBRDhCO0FBQy9CLDRCQUF5QixlQUN6QixDQUFDLENBRHVDO0FBQ3hDLDZCQUEwQixnQkFFMUIsQ0FBQyxDQUZ5QztBQTRDMUM7SUFBQTtRQUdZLGFBQVEsR0FBRyxJQUFJLG1CQUFZLEVBQUUsQ0FBQztRQUl4QyxXQUFNLEdBQUcsSUFBSSxlQUFNLEVBQUUsQ0FBQztJQWtCeEIsQ0FBQztJQWhCQyxxQ0FBUSxHQUFSO1FBQ0UsbUNBQW1DO1FBQ25DLElBQUksQ0FBQyxlQUFlLEdBQUcsTUFBTSxDQUFDLFFBQVEsQ0FBQyxDQUFDLEVBQUUsRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUE7SUFDL0QsQ0FBQztJQUVELHlDQUFZLEdBQVosVUFBYyxNQUFNO1FBQ2xCLElBQUksV0FBVyxHQUFHLElBQUksQ0FBQyxlQUFlLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxVQUFBLE1BQU07WUFDM0QsTUFBTSxDQUFDLE1BQU0sQ0FBQyxLQUFLLEtBQUssTUFBTSxDQUFDLEtBQUssQ0FBQTtRQUN0QyxDQUFDLENBQUMsQ0FBQTtRQUNGLFdBQVcsQ0FBQyxVQUFVLEdBQUcsTUFBTSxDQUFDLEtBQUssQ0FBQTtRQUNyQyxJQUFJLENBQUMsZUFBZSxHQUFHLE1BQU0sQ0FBQyxRQUFRLENBQUMsQ0FBQyxFQUFFLEVBQUUsSUFBSSxDQUFDLGVBQWUsQ0FBQyxDQUFBO0lBQ25FLENBQUM7SUFFRCxvQ0FBTyxHQUFQLFVBQVMsR0FBRyxFQUFFLEtBQUs7UUFDakIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLEtBQUssRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUE7SUFDN0MsQ0FBQztJQXZCRDtRQUFDLFlBQUssRUFBRTs7eURBQUE7SUFDUjtRQUFDLFlBQUssRUFBRTs7MkRBQUE7SUFDUjtRQUFDLGFBQU0sRUFBRTs7d0RBQUE7SUF6Q1g7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLHdCQUF3QjtZQUNsQyxLQUFLLEVBQUUsQ0FBQyx3QkFBVSxDQUFDO1lBQ25CLFVBQVUsRUFBRSxDQUFDLDBCQUFXLENBQUM7WUFDekIsTUFBTSxFQUFFLENBQUMscURBSVIsQ0FBQztZQUNGLFFBQVEsRUFBRSxveEJBMkJUO1NBQ0YsQ0FBQzs7MEJBQUE7SUEwQkYseUJBQUM7QUFBRCxDQUFDLEFBekJELElBeUJDO0FBekJZLDBCQUFrQixxQkF5QjlCLENBQUEifQ==

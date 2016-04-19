@@ -22,9 +22,9 @@ export interface ITableConfig {
         <tr>
           <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
             <search-input-cmp
-              *ngIf='col.filtering'
+              *ngIf='col.search'
               [field]='col.field'
-              (term)='searchUpdate($event)'>
+              (search)='searchUpdate($event)'>
             </search-input-cmp>
             <br>
             <span (click)='sortCol(col, i)'>
@@ -35,7 +35,7 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          *ngFor='#dataRow of tableData'
+          *ngFor='#dataRow of tableData | search: tableConfigCopy'
           (click)='selected.emit(dataRow)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
@@ -50,10 +50,21 @@ export class CoListViewTableCmp {
   @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();
 
-  sorter = new Sorter()
+  public tableConfigCopy;
+
+  sorter = new Sorter();
+
+  ngOnInit () {
+    // add search terms etc to this one
+    this.tableConfigCopy = Object['assign']({}, this.tableConfig)
+  }
 
   searchUpdate ($event) {
-    console.log($event)
+    let foundColDef = this.tableConfigCopy.columnDefs.find(colDef => {
+      return colDef.field === $event.field
+    })
+    foundColDef.searchTerm = $event.value
+    this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy)
   }
 
   sortCol (col, index) {
