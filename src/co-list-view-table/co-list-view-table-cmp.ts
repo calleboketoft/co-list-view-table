@@ -12,7 +12,10 @@ export interface ITableConfig {
   pipes: [SearchPipe],
   directives: [SearchInput],
   styles: [`
-    tr:hover {
+    tbody tr:hover {
+      cursor: pointer;
+    }
+    th span:hover {
       cursor: pointer;
     }
   `],
@@ -35,7 +38,7 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          *ngFor='#dataRow of tableDataCopy | search: tableConfigCopy'
+          *ngFor='#dataRow of tableData | search: tableConfigCopy'
           (click)='selected.emit(dataRow)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
@@ -51,14 +54,14 @@ export class CoListViewTableCmp {
   @Output() selected = new EventEmitter();
 
   public tableConfigCopy;
-  public tableDataCopy;
 
   sorter = new Sorter();
 
   ngOnInit () {
     // add search terms etc to this one
+    // the only problem would be if we want to send in a new tableConfig
+    // via the @Input() since we're now working with a copy
     this.tableConfigCopy = Object['assign']({}, this.tableConfig)
-    this.tableDataCopy = this.tableData.map(i => Object['assign']({}, i))
   }
 
   searchUpdate ($event) {
@@ -70,6 +73,6 @@ export class CoListViewTableCmp {
   }
 
   sortCol (col, index) {
-    this.tableDataCopy = this.sorter.sort(col.field, this.tableDataCopy)
+    this.tableData = this.sorter.sort(col.field, this.tableData)
   }
 }
