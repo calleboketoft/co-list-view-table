@@ -18,21 +18,28 @@ export interface ITableConfig {
     th span:hover {
       cursor: pointer;
     }
+    .table thead th {
+      vertical-align: top;
+    }
+    .search-wrap {
+      margin-top: 8px;
+    }
   `],
   template: `
     <table class='table table-striped'>
       <thead>
         <tr>
           <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
-            <search-input-cmp
-              *ngIf='col.search'
-              [field]='col.field'
-              (search)='searchUpdate($event)'>
-            </search-input-cmp>
-            <br *ngIf='col.search'>
             <span (click)='sortCol(col, i)'>
               {{col.displayName || col.field}}
             </span>
+            <div *ngIf='anySearch' class='search-wrap'>
+              <search-input-cmp
+                *ngIf='col.search'
+                [field]='col.field'
+                (search)='searchUpdate($event)'>
+              </search-input-cmp>
+            </div>
           </th>
         </tr>
       </thead>
@@ -54,6 +61,7 @@ export class CoListViewTableCmp {
   @Output() selected = new EventEmitter();
 
   public tableConfigCopy;
+  public anySearch;
 
   sorter = new Sorter();
 
@@ -62,6 +70,10 @@ export class CoListViewTableCmp {
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
     this.tableConfigCopy = Object['assign']({}, this.tableConfig)
+
+    this.anySearch = this.tableConfigCopy.columnDefs.some(col => {
+      return !!col.search
+    })
   }
 
   searchUpdate ($event) {
