@@ -4,7 +4,7 @@ import {Pipe} from 'angular2/core'
   name: 'search'
 })
 export class SearchPipe {
-  transform (value, [searchParams]) {
+  transform (value, searchParams) {
     return value.filter((item) => {
       // each row
       let resultArr = [] // filter results per column

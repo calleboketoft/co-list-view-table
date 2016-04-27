@@ -38,7 +38,7 @@ export class AppCmp {
       nickName: 'Bullen'
     }
   ];
-  private myConfig = {
+  public myConfig = {
     columnDefs: [
       {
         field: 'userId',
@@ -57,10 +57,14 @@ export class AppCmp {
     ]
   };
 
-  private minimalConfig = {
+  public minimalConfig = {
     columnDefs: [
-      {field: 'userId'},
-      {field: 'userName'}
+      {
+        field: 'userId'
+      },
+      {
+        field: 'userName'
+      }
     ]
   }
   private selectedItem (item) {
