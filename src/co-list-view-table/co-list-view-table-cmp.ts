@@ -29,8 +29,8 @@ export interface ITableConfig {
     <table class='table table-striped table-hover'>
       <thead>
         <tr>
-          <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
-            <span (click)='sortCol(col, i)'>
+          <th *ngFor='#col of tableConfig.columnDefs; #colIndex = index'>
+            <span (click)='sortCol(col, colIndex)'>
               {{col.displayName || col.field}}
             </span>
             <div *ngIf='isAnyFieldSearchable' class='search-wrap'>
@@ -45,8 +45,9 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          *ngFor='#dataRow of tableData | search: tableConfigCopy'
-          (click)='selected.emit(dataRow)'>
+          [class.table-info]='rowIndex === activeRow'
+          *ngFor='#dataRow of tableData | search: tableConfigCopy; #rowIndex = index'
+          (click)='selectRow(dataRow, rowIndex)'>
           <td *ngFor='#col of tableConfig.columnDefs'>
             {{dataRow[col.field]}}
           </td>
@@ -62,6 +63,7 @@ export class CoListViewTableCmp {
 
   public tableConfigCopy;
   public isAnyFieldSearchable;
+  public activeRow;
 
   sorter = new Sorter();
 
@@ -74,6 +76,11 @@ export class CoListViewTableCmp {
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
     })
+  }
+
+  selectRow (dataRow, rowIndex) {
+    this.activeRow = rowIndex
+    this.selected.emit(dataRow)
   }
 
   searchUpdate ($event) {
