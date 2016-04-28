@@ -1,6 +1,6 @@
 {
   "name": "co-list-view-table",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Simple table to use in list views",
   "main": "server.js",
   "scripts": {
