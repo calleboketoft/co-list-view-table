@@ -26,14 +26,14 @@ export interface ITableConfig {
     }
   `],
   template: `
-    <table class='table table-striped'>
+    <table class='table table-striped table-hover'>
       <thead>
         <tr>
           <th *ngFor='#col of tableConfig.columnDefs; #i = index'>
             <span (click)='sortCol(col, i)'>
               {{col.displayName || col.field}}
             </span>
-            <div *ngIf='anySearch' class='search-wrap'>
+            <div *ngIf='isAnyFieldSearchable' class='search-wrap'>
               <search-input-cmp
                 *ngIf='col.search'
                 [field]='col.field'
@@ -61,7 +61,7 @@ export class CoListViewTableCmp {
   @Output() selected = new EventEmitter();
 
   public tableConfigCopy;
-  public anySearch;
+  public isAnyFieldSearchable;
 
   sorter = new Sorter();
 
@@ -71,7 +71,7 @@ export class CoListViewTableCmp {
     // via the @Input() since we're now working with a copy
     this.tableConfigCopy = Object['assign']({}, this.tableConfig)
 
-    this.anySearch = this.tableConfigCopy.columnDefs.some(col => {
+    this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
     })
   }
