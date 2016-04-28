@@ -1,15 +1,18 @@
 import {Component} from 'angular2/core'
 import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
+import {exampleData} from './example-data'
 
 @Component({
   selector: 'app',
   directives: [CoListViewTableCmp],
   template: `
-    <co-list-view-table-cmp
-      [tableData]='myData'
-      [tableConfig]='myConfig'
-      (selected)='selectedItem($event)'>
-    </co-list-view-table-cmp>
+    <div style='height: 250px;'>
+      <co-list-view-table-cmp
+        [tableData]='myData'
+        [tableConfig]='myConfig'
+        (selected)='selectedItem($event)'>
+      </co-list-view-table-cmp>
+    </div>
 
     <br><br>
 
@@ -21,23 +24,7 @@ import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
   `
 })
 export class AppCmp {
-  public myData = [
-    {
-      userId: '1',
-      userName: 'Carl',
-      nickName: 'Calle'
-    },
-    {
-      userId: '2',
-      userName: 'Boke',
-      nickName: 'G'
-    },
-    {
-      userId: '3',
-      userName: 'Bubba',
-      nickName: 'Bullen'
-    }
-  ];
+  public myData = exampleData;
   public myConfig = {
     columnDefs: [
       {

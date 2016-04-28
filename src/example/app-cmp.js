@@ -10,25 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var co_list_view_table_cmp_1 = require('../co-list-view-table/co-list-view-table-cmp');
+var example_data_1 = require('./example-data');
 var AppCmp = (function () {
     function AppCmp() {
-        this.myData = [
-            {
-                userId: '1',
-                userName: 'Carl',
-                nickName: 'Calle'
-            },
-            {
-                userId: '2',
-                userName: 'Boke',
-                nickName: 'G'
-            },
-            {
-                userId: '3',
-                userName: 'Bubba',
-                nickName: 'Bullen'
-            }
-        ];
+        this.myData = example_data_1.exampleData;
         this.myConfig = {
             columnDefs: [
                 {
@@ -65,11 +50,11 @@ var AppCmp = (function () {
         core_1.Component({
             selector: 'app',
             directives: [co_list_view_table_cmp_1.CoListViewTableCmp],
-            template: "\n    <co-list-view-table-cmp\n      [tableData]='myData'\n      [tableConfig]='myConfig'\n      (selected)='selectedItem($event)'>\n    </co-list-view-table-cmp>\n\n    <br><br>\n\n    <co-list-view-table-cmp\n      [tableData]='myData'\n      [tableConfig]='minimalConfig'\n      (selected)='selectedItem($event)'>\n    </co-list-view-table-cmp>\n  "
+            template: "\n    <div style='height: 250px;'>\n      <co-list-view-table-cmp\n        [tableData]='myData'\n        [tableConfig]='myConfig'\n        (selected)='selectedItem($event)'>\n      </co-list-view-table-cmp>\n    </div>\n\n    <br><br>\n\n    <co-list-view-table-cmp\n      [tableData]='myData'\n      [tableConfig]='minimalConfig'\n      (selected)='selectedItem($event)'>\n    </co-list-view-table-cmp>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppCmp);
     return AppCmp;
 }());
 exports.AppCmp = AppCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLHVDQUFpQyw4Q0FFakMsQ0FBQyxDQUY4RTtBQXFCL0U7SUFBQTtRQUNTLFdBQU0sR0FBRztZQUNkO2dCQUNFLE1BQU0sRUFBRSxHQUFHO2dCQUNYLFFBQVEsRUFBRSxNQUFNO2dCQUNoQixRQUFRLEVBQUUsT0FBTzthQUNsQjtZQUNEO2dCQUNFLE1BQU0sRUFBRSxHQUFHO2dCQUNYLFFBQVEsRUFBRSxNQUFNO2dCQUNoQixRQUFRLEVBQUUsR0FBRzthQUNkO1lBQ0Q7Z0JBQ0UsTUFBTSxFQUFFLEdBQUc7Z0JBQ1gsUUFBUSxFQUFFLE9BQU87Z0JBQ2pCLFFBQVEsRUFBRSxRQUFRO2FBQ25CO1NBQ0YsQ0FBQztRQUNLLGFBQVEsR0FBRztZQUNoQixVQUFVLEVBQUU7Z0JBQ1Y7b0JBQ0UsS0FBSyxFQUFFLFFBQVE7b0JBQ2YsV0FBVyxFQUFFLElBQUk7aUJBQ2xCO2dCQUNEO29CQUNFLEtBQUssRUFBRSxVQUFVO29CQUNqQixXQUFXLEVBQUUsTUFBTTtvQkFDbkIsTUFBTSxFQUFFLElBQUk7aUJBQ2I7Z0JBQ0Q7b0JBQ0UsS0FBSyxFQUFFLFVBQVU7b0JBQ2pCLFdBQVcsRUFBRSxVQUFVO29CQUN2QixNQUFNLEVBQUUsSUFBSTtpQkFDYjthQUNGO1NBQ0YsQ0FBQztRQUVLLGtCQUFhLEdBQUc7WUFDckIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO2lCQUNoQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtpQkFDbEI7YUFDRjtTQUNGLENBQUE7SUFJSCxDQUFDO0lBSFMsNkJBQVksR0FBcEIsVUFBc0IsSUFBSTtRQUN4QixPQUFPLENBQUMsR0FBRyxDQUFDLGVBQWUsRUFBRSxJQUFJLENBQUMsQ0FBQTtJQUNwQyxDQUFDO0lBcEVIO1FBQUMsZ0JBQVMsQ0FBQztZQUNULFFBQVEsRUFBRSxLQUFLO1lBQ2YsVUFBVSxFQUFFLENBQUMsMkNBQWtCLENBQUM7WUFDaEMsUUFBUSxFQUFFLGlXQWNUO1NBQ0YsQ0FBQzs7Y0FBQTtJQW1ERixhQUFDO0FBQUQsQ0FBQyxBQWxERCxJQWtEQztBQWxEWSxjQUFNLFNBa0RsQixDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLWNtcC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC1jbXAudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLHVDQUFpQyw4Q0FDakMsQ0FBQyxDQUQ4RTtBQUMvRSw2QkFBMEIsZ0JBRTFCLENBQUMsQ0FGeUM7QUF1QjFDO0lBQUE7UUFDUyxXQUFNLEdBQUcsMEJBQVcsQ0FBQztRQUNyQixhQUFRLEdBQUc7WUFDaEIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO29CQUNmLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLE1BQU07b0JBQ25CLE1BQU0sRUFBRSxJQUFJO2lCQUNiO2dCQUNEO29CQUNFLEtBQUssRUFBRSxVQUFVO29CQUNqQixXQUFXLEVBQUUsVUFBVTtvQkFDdkIsTUFBTSxFQUFFLElBQUk7aUJBQ2I7YUFDRjtTQUNGLENBQUM7UUFFSyxrQkFBYSxHQUFHO1lBQ3JCLFVBQVUsRUFBRTtnQkFDVjtvQkFDRSxLQUFLLEVBQUUsUUFBUTtpQkFDaEI7Z0JBQ0Q7b0JBQ0UsS0FBSyxFQUFFLFVBQVU7aUJBQ2xCO2FBQ0Y7U0FDRixDQUFBO0lBSUgsQ0FBQztJQUhTLDZCQUFZLEdBQXBCLFVBQXNCLElBQUk7UUFDeEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxlQUFlLEVBQUUsSUFBSSxDQUFDLENBQUE7SUFDcEMsQ0FBQztJQXRESDtRQUFDLGdCQUFTLENBQUM7WUFDVCxRQUFRLEVBQUUsS0FBSztZQUNmLFVBQVUsRUFBRSxDQUFDLDJDQUFrQixDQUFDO1lBQ2hDLFFBQVEsRUFBRSx5WkFnQlQ7U0FDRixDQUFDOztjQUFBO0lBbUNGLGFBQUM7QUFBRCxDQUFDLEFBbENELElBa0NDO0FBbENZLGNBQU0sU0FrQ2xCLENBQUEifQ==

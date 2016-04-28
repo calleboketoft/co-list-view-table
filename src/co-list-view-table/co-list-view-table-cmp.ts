@@ -12,14 +12,49 @@ export interface ITableConfig {
   pipes: [SearchPipe],
   directives: [SearchInput],
   styles: [`
-    tbody tr:hover {
-      cursor: pointer;
+    /**
+     * Scrollable tbody
+     * https://jsfiddle.net/tsayen/xuvsncr2/28/
+     * http://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody
+     */
+
+    table {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+      width: 100%;
     }
+    table thead {
+      /* head takes the height it requires,
+      and it's not scaled when table is resized */
+      flex: 0 0 auto;
+      width: calc(100% - 0.9em);
+    }
+    table tbody {
+      /* body takes all the remaining available space */
+      flex: 1 1 auto;
+      display: block;
+      overflow-y: scroll;
+    }
+    table tbody tr {
+      width: 100%;
+    }
+    table thead, table tbody tr {
+      display: table;
+      table-layout: fixed;
+    }
+
+    /**
+     * Appearance
+     */
+
+    tbody tr:hover,
     th span:hover {
       cursor: pointer;
     }
     .table thead th {
       vertical-align: top;
+      border-bottom: 1px solid #eceeef;
     }
     .search-wrap {
       margin-top: 8px;
