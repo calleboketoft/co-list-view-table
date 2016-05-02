@@ -7,9 +7,9 @@ export class Sorter {
     this.direction = 1
   }
 
-  sort(key: string, data: any[]) {
+  sort(key: string, data: any[], dontToggle) {
     let dataCopy = data.map(i => Object['assign']({}, i))
-    if (this.key === key) {
+    if (this.key === key && !dontToggle) {
       this.direction = -this.direction
     }
     else {

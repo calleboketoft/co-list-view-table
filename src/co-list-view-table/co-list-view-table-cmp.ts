@@ -64,8 +64,8 @@ export interface ITableConfig {
     <table class='table table-striped table-hover'>
       <thead>
         <tr>
-          <th *ngFor='let col of tableConfig.columnDefs; let colIndex = index'>
-            <span (click)='sortCol(col, colIndex)'>
+          <th *ngFor='let col of tableConfig.columnDefs'>
+            <span (click)='sortCol(col)'>
               {{col.displayName || col.field}}
             </span>
             <div *ngIf='isAnyFieldSearchable' class='search-wrap'>
@@ -102,7 +102,6 @@ export class CoListViewTableCmp {
 
   sorter = new Sorter();
 
-  private _tableInitialized = false;
   ngOnChanges (changes) {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
@@ -112,13 +111,15 @@ export class CoListViewTableCmp {
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
     })
-    if (!this._tableInitialized && changes.tableData.currentValue.length > 0) {
-      this._tableInitialized = true
+
+    // TODO when updating content, remember which column was clicked for sorting
+    // atm, we reset the sorting when updating the content
+    if (changes.tableData.currentValue.length > 0) {
       let sortDefaultCol = this.tableConfigCopy.columnDefs.find(col => {
         return col.sortDefault
       })
       if (sortDefaultCol) {
-        this.sortCol(sortDefaultCol)
+        this.sortCol(sortDefaultCol, true)
       }
     }
   }
@@ -136,7 +137,7 @@ export class CoListViewTableCmp {
     this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy)
   }
 
-  sortCol (col) {
-    this.tableData = this.sorter.sort(col.field, this.tableData)
+  sortCol (col, dontToggle) {
+    this.tableData = this.sorter.sort(col.field, this.tableData, dontToggle)
   }
 }
