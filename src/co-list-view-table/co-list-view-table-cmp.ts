@@ -102,20 +102,24 @@ export class CoListViewTableCmp {
 
   sorter = new Sorter();
 
-  ngOnInit () {
+  private _tableInitialized = false;
+  ngOnChanges (changes) {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
-    this.tableConfigCopy = Object['assign']({}, this.tableConfig)
+    this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig)
 
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
     })
-    let sortDefaultCol = this.tableConfigCopy.columnDefs.find(col => {
-      return col.sortDefault
-    })
-    if (sortDefaultCol) {
-      this.sortCol(sortDefaultCol)
+    if (!this._tableInitialized && changes.tableData.currentValue.length > 0) {
+      this._tableInitialized = true
+      let sortDefaultCol = this.tableConfigCopy.columnDefs.find(col => {
+        return col.sortDefault
+      })
+      if (sortDefaultCol) {
+        this.sortCol(sortDefaultCol)
+      }
     }
   }
 
