@@ -34,7 +34,8 @@ export class AppCmp {
       {
         field: 'userName',
         displayName: 'Name',
-        search: true
+        search: true,
+        sortDefault: true
       },
       {
         field: 'nickName',

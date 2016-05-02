@@ -111,6 +111,12 @@ export class CoListViewTableCmp {
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
     })
+    let sortDefaultCol = this.tableConfigCopy.columnDefs.find(col => {
+      return col.sortDefault
+    })
+    if (sortDefaultCol) {
+      this.sortCol(sortDefaultCol)
+    }
   }
 
   selectRow (dataRow, rowIndex) {
@@ -126,7 +132,7 @@ export class CoListViewTableCmp {
     this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy)
   }
 
-  sortCol (col, index) {
+  sortCol (col) {
     this.tableData = this.sorter.sort(col.field, this.tableData)
   }
 }
