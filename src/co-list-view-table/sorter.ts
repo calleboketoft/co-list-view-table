@@ -19,10 +19,12 @@ export class Sorter {
     this.key = key
 
     dataCopy.sort((a, b) => {
-      if (a[key] === b[key]) {
+      let aTmp = (a[key] + '').toLowerCase()
+      let bTmp = (b[key] + '').toLowerCase()
+      if (aTmp === bTmp) {
         return 0
       }
-      else if (a[key] > b[key]) {
+      else if (aTmp > bTmp) {
         return this.direction
       }
       else {
