@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core'
+import {Component} from '@angular/core'
 import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
 import {exampleData} from './example-data'
 

@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('angular2/core');
+var core_1 = require('@angular/core');
 var co_list_view_table_cmp_1 = require('../co-list-view-table/co-list-view-table-cmp');
 var example_data_1 = require('./example-data');
 var AppCmp = (function () {
