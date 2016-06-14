@@ -9,12 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var SearchInput = (function () {
-    function SearchInput() {
+var SearchInputComponent = (function () {
+    function SearchInputComponent() {
         this.placeholder = 'Search';
         this.search = new core_1.EventEmitter();
     }
-    SearchInput.prototype.valueChange = function ($event) {
+    SearchInputComponent.prototype.valueChange = function ($event) {
         this.search.emit({
             field: this.field,
             value: $event.target.value
@@ -23,24 +23,24 @@ var SearchInput = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], SearchInput.prototype, "field", void 0);
+    ], SearchInputComponent.prototype, "field", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
-    ], SearchInput.prototype, "placeholder", void 0);
+    ], SearchInputComponent.prototype, "placeholder", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], SearchInput.prototype, "search", void 0);
-    SearchInput = __decorate([
+    ], SearchInputComponent.prototype, "search", void 0);
+    SearchInputComponent = __decorate([
         core_1.Component({
             selector: 'search-input-cmp',
             styles: ["\n    .form-control {\n      max-width: 200px;\n      font-weight: 400;\n    }\n  "],
             template: "\n    <input type='text'\n      class='form-control'\n      (keyup)='valueChange($event)'\n      placeholder='{{placeholder}}'>\n  "
         }), 
         __metadata('design:paramtypes', [])
-    ], SearchInput);
-    return SearchInput;
+    ], SearchInputComponent);
+    return SearchInputComponent;
 }());
-exports.SearchInput = SearchInput;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VhcmNoLWlucHV0LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsic2VhcmNoLWlucHV0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBQSxxQkFBcUQsZUFFckQsQ0FBQyxDQUZtRTtBQWlCcEU7SUFBQTtRQUVXLGdCQUFXLEdBQUcsUUFBUSxDQUFDO1FBQ3RCLFdBQU0sR0FBRyxJQUFJLG1CQUFZLEVBQUUsQ0FBQztJQVF4QyxDQUFDO0lBTlEsaUNBQVcsR0FBbEIsVUFBb0IsTUFBTTtRQUN4QixJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQztZQUNmLEtBQUssRUFBRSxJQUFJLENBQUMsS0FBSztZQUNqQixLQUFLLEVBQUUsTUFBTSxDQUFDLE1BQU0sQ0FBQyxLQUFLO1NBQzNCLENBQUMsQ0FBQTtJQUNKLENBQUM7SUFURDtRQUFDLFlBQUssRUFBRTs7OENBQUE7SUFDUjtRQUFDLFlBQUssRUFBRTs7b0RBQUE7SUFDUjtRQUFDLGFBQU0sRUFBRTs7K0NBQUE7SUFsQlg7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLGtCQUFrQjtZQUM1QixNQUFNLEVBQUUsQ0FBQyxvRkFLUixDQUFDO1lBQ0YsUUFBUSxFQUFFLHFJQUtUO1NBQ0YsQ0FBQzs7bUJBQUE7SUFZRixrQkFBQztBQUFELENBQUMsQUFYRCxJQVdDO0FBWFksbUJBQVcsY0FXdkIsQ0FBQSJ9
+exports.SearchInputComponent = SearchInputComponent;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VhcmNoLWlucHV0LmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbInNlYXJjaC1pbnB1dC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUFxRCxlQUVyRCxDQUFDLENBRm1FO0FBaUJwRTtJQUFBO1FBRVcsZ0JBQVcsR0FBRyxRQUFRLENBQUM7UUFDdEIsV0FBTSxHQUFHLElBQUksbUJBQVksRUFBRSxDQUFDO0lBUXhDLENBQUM7SUFOUSwwQ0FBVyxHQUFsQixVQUFvQixNQUFNO1FBQ3hCLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDO1lBQ2YsS0FBSyxFQUFFLElBQUksQ0FBQyxLQUFLO1lBQ2pCLEtBQUssRUFBRSxNQUFNLENBQUMsTUFBTSxDQUFDLEtBQUs7U0FDM0IsQ0FBQyxDQUFBO0lBQ0osQ0FBQztJQVREO1FBQUMsWUFBSyxFQUFFOzt1REFBQTtJQUNSO1FBQUMsWUFBSyxFQUFFOzs2REFBQTtJQUNSO1FBQUMsYUFBTSxFQUFFOzt3REFBQTtJQWxCWDtRQUFDLGdCQUFTLENBQUM7WUFDVCxRQUFRLEVBQUUsa0JBQWtCO1lBQzVCLE1BQU0sRUFBRSxDQUFDLG9GQUtSLENBQUM7WUFDRixRQUFRLEVBQUUscUlBS1Q7U0FDRixDQUFDOzs0QkFBQTtJQVlGLDJCQUFDO0FBQUQsQ0FBQyxBQVhELElBV0M7QUFYWSw0QkFBb0IsdUJBV2hDLENBQUEifQ==

@@ -1,4 +1,4 @@
 "use strict";
-var co_list_view_table_cmp_1 = require('./src/co-list-view-table/co-list-view-table-cmp');
-exports.CoListViewTableCmp = co_list_view_table_cmp_1.CoListViewTableCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY28tbGlzdC12aWV3LXRhYmxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSx1Q0FBaUMsaURBQWlELENBQUM7QUFBM0UseUVBQTBFIn0=
+var co_list_view_table_component_1 = require('./src/co-list-view-table/co-list-view-table.component');
+exports.CoListViewTableComponent = co_list_view_table_component_1.CoListViewTableComponent;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY28tbGlzdC12aWV3LXRhYmxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY28tbGlzdC12aWV3LXRhYmxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSw2Q0FBdUMsdURBQXVELENBQUM7QUFBdkYsMkZBQXNGIn0=

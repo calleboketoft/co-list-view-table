@@ -1,0 +1,5 @@
+"use strict";
+var platform_browser_dynamic_1 = require('@angular/platform-browser-dynamic');
+var app_component_1 = require('./app.component');
+platform_browser_dynamic_1.bootstrap(app_component_1.AppCmp);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWFpbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIm1haW4udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLHlDQUF3QixtQ0FDeEIsQ0FBQyxDQUQwRDtBQUMzRCw4QkFBcUIsaUJBQ3JCLENBQUMsQ0FEcUM7QUFDdEMsb0NBQVMsQ0FBQyxzQkFBTSxDQUFDLENBQUEifQ==

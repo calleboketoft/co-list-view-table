@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core'
-import {Sorter} from './sorter'
-import {SearchPipe} from './search-pipe'
-import {SearchInput} from './search-input'
+import {Sorter} from './sorter.service'
+import {SearchPipe} from './search.pipe'
+import {SearchInputComponent} from './search-input.component'
 
 export interface ITableConfig {
   columnDefs: any
@@ -10,7 +10,7 @@ export interface ITableConfig {
 @Component({
   selector: 'co-list-view-table-cmp',
   pipes: [SearchPipe],
-  directives: [SearchInput],
+  directives: [SearchInputComponent],
   styles: [`
     /**
      * Scrollable tbody
@@ -91,7 +91,7 @@ export interface ITableConfig {
     </table>
   `
 })
-export class CoListViewTableCmp {
+export class CoListViewTableComponent {
   @Input() tableData: Array<any>;
   @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();

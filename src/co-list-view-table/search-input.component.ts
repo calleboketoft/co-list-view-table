@@ -15,7 +15,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core'
       placeholder='{{placeholder}}'>
   `
 })
-export class SearchInput {
+export class SearchInputComponent {
   @Input() field;
   @Input() placeholder = 'Search';
   @Output() search = new EventEmitter();

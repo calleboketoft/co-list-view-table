@@ -1,10 +1,10 @@
 import {Component} from '@angular/core'
-import {CoListViewTableCmp} from '../co-list-view-table/co-list-view-table-cmp'
-import {exampleData} from './example-data'
+import {CoListViewTableComponent} from '../co-list-view-table/co-list-view-table.component'
+import {exampleData} from './example.data'
 
 @Component({
   selector: 'app',
-  directives: [CoListViewTableCmp],
+  directives: [CoListViewTableComponent],
   template: `
     <div style='height: 250px;'>
       <co-list-view-table-cmp
