@@ -6,20 +6,21 @@ import {exampleData} from './example.data'
   selector: 'app',
   directives: [CoListViewTableComponent],
   template: `
-    <div style='height: 300px;'>
+    <div style="height: 300px;">
       <co-list-view-table-cmp
-        [tableData]='myData'
-        [tableConfig]='myConfig'
-        (selected)='selectedItem($event)'>
+        [tableData]="myData"
+        [tableConfig]="myConfig"
+        (selected)="selectedItem($event)"
+        (buttonClicked)="buttonClicked($event)">
       </co-list-view-table-cmp>
     </div>
 
     <br ><br >
 
     <co-list-view-table-cmp
-      [tableData]='myData'
-      [tableConfig]='minimalConfig'
-      (selected)='selectedItem($event)'>
+      [tableData]="myData"
+      [tableConfig]="minimalConfig"
+      (selected)="selectedItem($event)">
     </co-list-view-table-cmp>
   `
 })
@@ -63,7 +64,10 @@ export class AppCmp {
       }
     ]
   }
-  private selectedItem (item) {
+  public selectedItem (item) {
     console.log('clicked item:', item)
+  }
+  public buttonClicked (options) {
+    console.log(options)
   }
 }
