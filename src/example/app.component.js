@@ -30,6 +30,14 @@ var AppCmp = (function () {
                     field: 'nickName',
                     displayName: 'Nickname',
                     search: true
+                },
+                {
+                    displayName: 'Delete',
+                    type: 'button',
+                    config: {
+                        buttonName: 'X',
+                        buttonClass: 'btn btn-sm btn-danger'
+                    }
                 }
             ]
         };
@@ -51,11 +59,11 @@ var AppCmp = (function () {
         core_1.Component({
             selector: 'app',
             directives: [co_list_view_table_component_1.CoListViewTableComponent],
-            template: "\n    <div style='height: 250px;'>\n      <co-list-view-table-cmp\n        [tableData]='myData'\n        [tableConfig]='myConfig'\n        (selected)='selectedItem($event)'>\n      </co-list-view-table-cmp>\n    </div>\n\n    <br><br>\n\n    <co-list-view-table-cmp\n      [tableData]='myData'\n      [tableConfig]='minimalConfig'\n      (selected)='selectedItem($event)'>\n    </co-list-view-table-cmp>\n  "
+            template: "\n    <div style='height: 300px;'>\n      <co-list-view-table-cmp\n        [tableData]='myData'\n        [tableConfig]='myConfig'\n        (selected)='selectedItem($event)'>\n      </co-list-view-table-cmp>\n    </div>\n\n    <br ><br >\n\n    <co-list-view-table-cmp\n      [tableData]='myData'\n      [tableConfig]='minimalConfig'\n      (selected)='selectedItem($event)'>\n    </co-list-view-table-cmp>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppCmp);
     return AppCmp;
 }());
 exports.AppCmp = AppCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLDZDQUF1QyxvREFDdkMsQ0FBQyxDQUQwRjtBQUMzRiw2QkFBMEIsZ0JBRTFCLENBQUMsQ0FGeUM7QUF1QjFDO0lBQUE7UUFDUyxXQUFNLEdBQUcsMEJBQVcsQ0FBQztRQUNyQixhQUFRLEdBQUc7WUFDaEIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO29CQUNmLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLE1BQU07b0JBQ25CLE1BQU0sRUFBRSxJQUFJO29CQUNaLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLFVBQVU7b0JBQ3ZCLE1BQU0sRUFBRSxJQUFJO2lCQUNiO2FBQ0Y7U0FDRixDQUFDO1FBRUssa0JBQWEsR0FBRztZQUNyQixVQUFVLEVBQUU7Z0JBQ1Y7b0JBQ0UsS0FBSyxFQUFFLFFBQVE7aUJBQ2hCO2dCQUNEO29CQUNFLEtBQUssRUFBRSxVQUFVO2lCQUNsQjthQUNGO1NBQ0YsQ0FBQTtJQUlILENBQUM7SUFIUyw2QkFBWSxHQUFwQixVQUFzQixJQUFJO1FBQ3hCLE9BQU8sQ0FBQyxHQUFHLENBQUMsZUFBZSxFQUFFLElBQUksQ0FBQyxDQUFBO0lBQ3BDLENBQUM7SUF2REg7UUFBQyxnQkFBUyxDQUFDO1lBQ1QsUUFBUSxFQUFFLEtBQUs7WUFDZixVQUFVLEVBQUUsQ0FBQyx1REFBd0IsQ0FBQztZQUN0QyxRQUFRLEVBQUUseVpBZ0JUO1NBQ0YsQ0FBQzs7Y0FBQTtJQW9DRixhQUFDO0FBQUQsQ0FBQyxBQW5DRCxJQW1DQztBQW5DWSxjQUFNLFNBbUNsQixDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLDZDQUF1QyxvREFDdkMsQ0FBQyxDQUQwRjtBQUMzRiw2QkFBMEIsZ0JBRTFCLENBQUMsQ0FGeUM7QUF1QjFDO0lBQUE7UUFDUyxXQUFNLEdBQUcsMEJBQVcsQ0FBQztRQUNyQixhQUFRLEdBQUc7WUFDaEIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO29CQUNmLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLE1BQU07b0JBQ25CLE1BQU0sRUFBRSxJQUFJO29CQUNaLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLFVBQVU7b0JBQ3ZCLE1BQU0sRUFBRSxJQUFJO2lCQUNiO2dCQUNEO29CQUNFLFdBQVcsRUFBRSxRQUFRO29CQUNyQixJQUFJLEVBQUUsUUFBUTtvQkFDZCxNQUFNLEVBQUU7d0JBQ04sVUFBVSxFQUFFLEdBQUc7d0JBQ2YsV0FBVyxFQUFFLHVCQUF1QjtxQkFDckM7aUJBQ0Y7YUFDRjtTQUNGLENBQUM7UUFFSyxrQkFBYSxHQUFHO1lBQ3JCLFVBQVUsRUFBRTtnQkFDVjtvQkFDRSxLQUFLLEVBQUUsUUFBUTtpQkFDaEI7Z0JBQ0Q7b0JBQ0UsS0FBSyxFQUFFLFVBQVU7aUJBQ2xCO2FBQ0Y7U0FDRixDQUFBO0lBSUgsQ0FBQztJQUhTLDZCQUFZLEdBQXBCLFVBQXNCLElBQUk7UUFDeEIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxlQUFlLEVBQUUsSUFBSSxDQUFDLENBQUE7SUFDcEMsQ0FBQztJQS9ESDtRQUFDLGdCQUFTLENBQUM7WUFDVCxRQUFRLEVBQUUsS0FBSztZQUNmLFVBQVUsRUFBRSxDQUFDLHVEQUF3QixDQUFDO1lBQ3RDLFFBQVEsRUFBRSwyWkFnQlQ7U0FDRixDQUFDOztjQUFBO0lBNENGLGFBQUM7QUFBRCxDQUFDLEFBM0NELElBMkNDO0FBM0NZLGNBQU0sU0EyQ2xCLENBQUEifQ==

@@ -6,7 +6,7 @@ import {exampleData} from './example.data'
   selector: 'app',
   directives: [CoListViewTableComponent],
   template: `
-    <div style='height: 250px;'>
+    <div style='height: 300px;'>
       <co-list-view-table-cmp
         [tableData]='myData'
         [tableConfig]='myConfig'
@@ -14,7 +14,7 @@ import {exampleData} from './example.data'
       </co-list-view-table-cmp>
     </div>
 
-    <br><br>
+    <br ><br >
 
     <co-list-view-table-cmp
       [tableData]='myData'
@@ -41,6 +41,14 @@ export class AppCmp {
         field: 'nickName',
         displayName: 'Nickname',
         search: true
+      },
+      {
+        displayName: 'Delete',
+        type: 'button',
+        config: {
+          buttonName: 'X',
+          buttonClass: 'btn btn-sm btn-danger'
+        }
       }
     ]
   };

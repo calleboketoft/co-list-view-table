@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core'
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core'
 import {Sorter} from './sorter.service'
 import {SearchPipe} from './search.pipe'
 import {SearchInputComponent} from './search-input.component'
@@ -61,18 +61,18 @@ export interface ITableConfig {
     }
   `],
   template: `
-    <table class='table table-striped table-hover'>
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th *ngFor='let col of tableConfig.columnDefs'>
-            <span (click)='sortCol(col)'>
+          <th *ngFor="let col of tableConfig.columnDefs">
+            <span (click)="sortCol(col)">
               {{col.displayName || col.field}}
             </span>
-            <div *ngIf='isAnyFieldSearchable' class='search-wrap'>
+            <div *ngIf="isAnyFieldSearchable" class="search-wrap">
               <search-input-cmp
-                *ngIf='col.search'
-                [field]='col.field'
-                (search)='searchUpdate($event)'>
+                *ngIf="col.search"
+                [field]="col.field"
+                (search)="searchUpdate($event)">
               </search-input-cmp>
             </div>
           </th>
@@ -80,29 +80,40 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          [class.table-info]='rowIndex === activeRow'
-          *ngFor='let dataRow of tableData | search: tableConfigCopy; let rowIndex = index'
-          (click)='selectRow(dataRow, rowIndex)'>
-          <td *ngFor='let col of tableConfig.columnDefs'>
-            {{dataRow[col.field]}}
+          [class.table-info]="rowIndex === activeRow"
+          *ngFor="let dataRow of tableData | search: tableConfigCopy; let rowIndex = index"
+          (click)="selectRow(dataRow, rowIndex)">
+          <td *ngFor="let col of tableConfig.columnDefs">
+            <div [ngSwitch]="col.type">
+              <div *ngSwitchCase="'button'">
+                <button type="button" [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
+                  (click)="buttonFn($event, col, dataRow)">
+                  {{col.config.buttonName}}
+                </button>
+              </div>
+              <div *ngSwitchDefault>
+                {{dataRow[col.field]}}
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   `
 })
-export class CoListViewTableComponent {
+export class CoListViewTableComponent implements OnChanges {
   @Input() tableData: Array<any>;
   @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();
+  @Output() buttonClicked = new EventEmitter();
 
   public tableConfigCopy;
   public isAnyFieldSearchable;
   public activeRow;
 
-  sorter = new Sorter();
+  public sorter = new Sorter();
 
-  ngOnChanges (changes) {
+  public ngOnChanges (changes) {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
@@ -124,12 +135,18 @@ export class CoListViewTableComponent {
     }
   }
 
-  selectRow (dataRow, rowIndex) {
+  public selectRow (dataRow, rowIndex) {
     this.activeRow = rowIndex
     this.selected.emit(dataRow)
   }
 
-  searchUpdate ($event) {
+  // Custom button clicked
+  public buttonFn ($event, colSpec, row) {
+    $event.stopPropagation() // don't want to trigger "selectRow" as well
+    this.buttonClicked.emit({colSpec, row})
+  }
+
+  public searchUpdate ($event) {
     let foundColDef = this.tableConfigCopy.columnDefs.find(colDef => {
       return colDef.field === $event.field
     })
@@ -137,7 +154,7 @@ export class CoListViewTableComponent {
     this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy)
   }
 
-  sortCol (col, dontToggle) {
+  public sortCol (col, dontToggle) {
     this.tableData = this.sorter.sort(col.field, this.tableData, dontToggle)
   }
 }
