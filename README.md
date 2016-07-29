@@ -41,3 +41,17 @@ function selectedItem (item) {
   console.log('clicked item:', item)
 }
 ```
+
+Adding a button column:
+```javascript
+myConfig = {
+  columnDefs: [
+    {displayName: 'Buttons', type: 'button', config: {buttonName: 'XXX', buttonClass: 'btn btn-sm'}}
+  ]
+}
+
+function buttonClicked({colSpec, row}) {
+  console.log('spec for column: ', colSpec)
+  console.log('row data: ', row)
+}
+```
