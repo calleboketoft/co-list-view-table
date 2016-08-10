@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var co_list_view_table_component_1 = require('../co-list-view-table/co-list-view-table.component');
 var example_data_1 = require('./example.data');
-var AppCmp = (function () {
-    function AppCmp() {
+var AppComponent = (function () {
+    function AppComponent() {
         this.myData = example_data_1.exampleData;
         this.myConfig = {
             columnDefs: [
@@ -52,21 +52,21 @@ var AppCmp = (function () {
             ]
         };
     }
-    AppCmp.prototype.selectedItem = function (item) {
+    AppComponent.prototype.selectedItem = function (item) {
         console.log('clicked item:', item);
     };
-    AppCmp.prototype.buttonClicked = function (options) {
+    AppComponent.prototype.buttonClicked = function (options) {
         console.log(options);
     };
-    AppCmp = __decorate([
+    AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
             directives: [co_list_view_table_component_1.CoListViewTableComponent],
             template: "\n    <div style=\"height: 300px;\">\n      <co-list-view-table-cmp\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selected)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </co-list-view-table-cmp>\n    </div>\n\n    <br ><br >\n\n    <co-list-view-table-cmp\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selected)=\"selectedItem($event)\">\n    </co-list-view-table-cmp>\n  "
         }), 
         __metadata('design:paramtypes', [])
-    ], AppCmp);
-    return AppCmp;
+    ], AppComponent);
+    return AppComponent;
 }());
-exports.AppCmp = AppCmp;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLDZDQUF1QyxvREFDdkMsQ0FBQyxDQUQwRjtBQUMzRiw2QkFBMEIsZ0JBRTFCLENBQUMsQ0FGeUM7QUF3QjFDO0lBQUE7UUFDUyxXQUFNLEdBQUcsMEJBQVcsQ0FBQztRQUNyQixhQUFRLEdBQUc7WUFDaEIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO29CQUNmLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLE1BQU07b0JBQ25CLE1BQU0sRUFBRSxJQUFJO29CQUNaLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLFVBQVU7b0JBQ3ZCLE1BQU0sRUFBRSxJQUFJO2lCQUNiO2dCQUNEO29CQUNFLFdBQVcsRUFBRSxRQUFRO29CQUNyQixJQUFJLEVBQUUsUUFBUTtvQkFDZCxNQUFNLEVBQUU7d0JBQ04sVUFBVSxFQUFFLEdBQUc7d0JBQ2YsV0FBVyxFQUFFLHVCQUF1QjtxQkFDckM7aUJBQ0Y7YUFDRjtTQUNGLENBQUM7UUFFSyxrQkFBYSxHQUFHO1lBQ3JCLFVBQVUsRUFBRTtnQkFDVjtvQkFDRSxLQUFLLEVBQUUsUUFBUTtpQkFDaEI7Z0JBQ0Q7b0JBQ0UsS0FBSyxFQUFFLFVBQVU7aUJBQ2xCO2FBQ0Y7U0FDRixDQUFBO0lBT0gsQ0FBQztJQU5RLDZCQUFZLEdBQW5CLFVBQXFCLElBQUk7UUFDdkIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxlQUFlLEVBQUUsSUFBSSxDQUFDLENBQUE7SUFDcEMsQ0FBQztJQUNNLDhCQUFhLEdBQXBCLFVBQXNCLE9BQU87UUFDM0IsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQTtJQUN0QixDQUFDO0lBbkVIO1FBQUMsZ0JBQVMsQ0FBQztZQUNULFFBQVEsRUFBRSxLQUFLO1lBQ2YsVUFBVSxFQUFFLENBQUMsdURBQXdCLENBQUM7WUFDdEMsUUFBUSxFQUFFLDRkQWlCVDtTQUNGLENBQUM7O2NBQUE7SUErQ0YsYUFBQztBQUFELENBQUMsQUE5Q0QsSUE4Q0M7QUE5Q1ksY0FBTSxTQThDbEIsQ0FBQSJ9
+exports.AppComponent = AppComponent;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImFwcC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUFBLHFCQUF3QixlQUN4QixDQUFDLENBRHNDO0FBQ3ZDLDZDQUF1QyxvREFDdkMsQ0FBQyxDQUQwRjtBQUMzRiw2QkFBMEIsZ0JBRTFCLENBQUMsQ0FGeUM7QUF3QjFDO0lBQUE7UUFDUyxXQUFNLEdBQUcsMEJBQVcsQ0FBQztRQUNyQixhQUFRLEdBQUc7WUFDaEIsVUFBVSxFQUFFO2dCQUNWO29CQUNFLEtBQUssRUFBRSxRQUFRO29CQUNmLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLE1BQU07b0JBQ25CLE1BQU0sRUFBRSxJQUFJO29CQUNaLFdBQVcsRUFBRSxJQUFJO2lCQUNsQjtnQkFDRDtvQkFDRSxLQUFLLEVBQUUsVUFBVTtvQkFDakIsV0FBVyxFQUFFLFVBQVU7b0JBQ3ZCLE1BQU0sRUFBRSxJQUFJO2lCQUNiO2dCQUNEO29CQUNFLFdBQVcsRUFBRSxRQUFRO29CQUNyQixJQUFJLEVBQUUsUUFBUTtvQkFDZCxNQUFNLEVBQUU7d0JBQ04sVUFBVSxFQUFFLEdBQUc7d0JBQ2YsV0FBVyxFQUFFLHVCQUF1QjtxQkFDckM7aUJBQ0Y7YUFDRjtTQUNGLENBQUM7UUFFSyxrQkFBYSxHQUFHO1lBQ3JCLFVBQVUsRUFBRTtnQkFDVjtvQkFDRSxLQUFLLEVBQUUsUUFBUTtpQkFDaEI7Z0JBQ0Q7b0JBQ0UsS0FBSyxFQUFFLFVBQVU7aUJBQ2xCO2FBQ0Y7U0FDRixDQUFBO0lBT0gsQ0FBQztJQU5RLG1DQUFZLEdBQW5CLFVBQXFCLElBQUk7UUFDdkIsT0FBTyxDQUFDLEdBQUcsQ0FBQyxlQUFlLEVBQUUsSUFBSSxDQUFDLENBQUE7SUFDcEMsQ0FBQztJQUNNLG9DQUFhLEdBQXBCLFVBQXNCLE9BQU87UUFDM0IsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQTtJQUN0QixDQUFDO0lBbkVIO1FBQUMsZ0JBQVMsQ0FBQztZQUNULFFBQVEsRUFBRSxLQUFLO1lBQ2YsVUFBVSxFQUFFLENBQUMsdURBQXdCLENBQUM7WUFDdEMsUUFBUSxFQUFFLDRkQWlCVDtTQUNGLENBQUM7O29CQUFBO0lBK0NGLG1CQUFDO0FBQUQsQ0FBQyxBQTlDRCxJQThDQztBQTlDWSxvQkFBWSxlQThDeEIsQ0FBQSJ9

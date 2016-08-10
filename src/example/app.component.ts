@@ -24,7 +24,7 @@ import {exampleData} from './example.data'
     </co-list-view-table-cmp>
   `
 })
-export class AppCmp {
+export class AppComponent {
   public myData = exampleData;
   public myConfig = {
     columnDefs: [
