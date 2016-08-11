@@ -1,27 +1,27 @@
 import {Component} from '@angular/core'
-import {CoListViewTableComponent} from '../co-list-view-table/co-list-view-table.component'
+import {Ng2TableComponent} from '../ng2-table/ng2-table.component'
 import {exampleData} from './example.data'
 
 @Component({
   selector: 'app',
-  directives: [CoListViewTableComponent],
+  directives: [Ng2TableComponent],
   template: `
     <div style="height: 300px;">
-      <co-list-view-table-cmp
+      <ng2-table
         [tableData]="myData"
         [tableConfig]="myConfig"
         (selected)="selectedItem($event)"
         (buttonClicked)="buttonClicked($event)">
-      </co-list-view-table-cmp>
+      </ng2-table>
     </div>
 
     <br ><br >
 
-    <co-list-view-table-cmp
+    <ng2-table
       [tableData]="myData"
       [tableConfig]="minimalConfig"
       (selected)="selectedItem($event)">
-    </co-list-view-table-cmp>
+    </ng2-table>
   `
 })
 export class AppComponent {

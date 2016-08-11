@@ -1,0 +1,1 @@
+export { Ng2TableComponent } from './src/ng2-table/ng2-table.component'

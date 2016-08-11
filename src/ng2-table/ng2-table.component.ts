@@ -1,14 +1,14 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core'
-import {Sorter} from './sorter.service'
-import {SearchPipe} from './search.pipe'
-import {SearchInputComponent} from './search-input.component'
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core'
+import { Sorter } from './sorter.service'
+import { SearchPipe } from './search.pipe'
+import { SearchInputComponent } from './search-input.component'
 
 export interface ITableConfig {
   columnDefs: any
 }
 
 @Component({
-  selector: 'co-list-view-table-cmp',
+  selector: 'ng2-table',
   pipes: [SearchPipe],
   directives: [SearchInputComponent],
   styles: [`
@@ -103,7 +103,7 @@ export interface ITableConfig {
     </table>
   `
 })
-export class CoListViewTableComponent implements OnChanges {
+export class Ng2TableComponent implements OnChanges {
   @Input() tableData: Array<any>;
   @Input() tableConfig: ITableConfig;
   @Output() selected = new EventEmitter();
