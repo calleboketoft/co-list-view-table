@@ -1,10 +1,8 @@
-import {Component} from '@angular/core'
-import {Ng2TableComponent} from '../ng2-table/ng2-table.component'
-import {exampleData} from './example.data'
+import { Component } from '@angular/core'
+import { exampleData } from './example.data'
 
 @Component({
   selector: 'app',
-  directives: [Ng2TableComponent],
   template: `
     <div style="height: 300px;">
       <ng2-table

@@ -1,7 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core'
 import { Sorter } from './sorter.service'
-import { SearchPipe } from './search.pipe'
-import { SearchInputComponent } from './search-input.component'
 
 export interface ITableConfig {
   columnDefs: any
@@ -9,8 +7,6 @@ export interface ITableConfig {
 
 @Component({
   selector: 'ng2-table',
-  pipes: [SearchPipe],
-  directives: [SearchInputComponent],
   styles: [`
     /**
      * Scrollable tbody
