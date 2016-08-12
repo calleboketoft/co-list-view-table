@@ -102,7 +102,7 @@ export interface ITableConfig {
 export class Ng2TableComponent implements OnChanges {
   @Input() tableData: Array<any>;
   @Input() tableConfig: ITableConfig;
-  @Output() selected = new EventEmitter();
+  @Output() selectedItem = new EventEmitter();
   @Output() buttonClicked = new EventEmitter();
 
   public tableConfigCopy;
@@ -135,7 +135,7 @@ export class Ng2TableComponent implements OnChanges {
 
   public selectRow (dataRow, rowIndex) {
     this.activeRow = rowIndex
-    this.selected.emit(dataRow)
+    this.selectedItem.emit(dataRow)
   }
 
   // Custom button clicked

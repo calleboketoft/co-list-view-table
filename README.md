@@ -10,23 +10,21 @@ Simple table for list views
 
 
 ## How to use
-```javascript
-npm install --save co-list-view-table
-```
+
+- Install module: `npm install --save @calle/ng2-table
+- Import module and register with your app component `import { Ng2TableModule } from '@calle/ng2-table'`
 
 HTML Template:
 ```html
-<co-list-view-table-cmp
+<ng2-table
   [tableData]='myData'
   [tableConfig]='myConfig'
   (selected)='selectedItem($event)'>
-</co-list-view-table-cmp>
+</ng2-table>
 ```
 
 JavaScript:
 ```javascript
-import {CoListViewTableCmp} from 'co-list-view-table/co-list-view-table'
-
 myData = [
   {userId: '1', userName: 'Calle'},
   {userId: '2', userName: 'Nisse'}
@@ -46,7 +44,14 @@ Adding a button column:
 ```javascript
 myConfig = {
   columnDefs: [
-    {displayName: 'Buttons', type: 'button', config: {buttonName: 'XXX', buttonClass: 'btn btn-sm'}}
+    {
+      displayName: 'Buttons',
+      type: 'button',
+      config: {
+        buttonName: 'XXX',
+        buttonClass: 'btn btn-sm'
+      }
+    }
   ]
 }
 

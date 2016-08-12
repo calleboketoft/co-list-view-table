@@ -8,7 +8,7 @@ import { exampleData } from './example.data'
       <ng2-table
         [tableData]="myData"
         [tableConfig]="myConfig"
-        (selected)="selectedItem($event)"
+        (selectedItem)="selectedItem($event)"
         (buttonClicked)="buttonClicked($event)">
       </ng2-table>
     </div>
@@ -18,7 +18,7 @@ import { exampleData } from './example.data'
     <ng2-table
       [tableData]="myData"
       [tableConfig]="minimalConfig"
-      (selected)="selectedItem($event)">
+      (selectedItem)="selectedItem($event)">
     </ng2-table>
   `
 })
