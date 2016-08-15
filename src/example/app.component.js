@@ -60,7 +60,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n    <div style=\"height: 300px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selected)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <br ><br >\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selected)=\"selectedItem($event)\">\n    </ng2-table>\n  "
+            template: "\n    <div style=\"height: 300px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selectedItem)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <br ><br >\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selectedItem)=\"selectedItem($event)\">\n    </ng2-table>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

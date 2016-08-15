@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var sorter_service_1 = require('./sorter.service');
 var Ng2TableComponent = (function () {
     function Ng2TableComponent() {
-        this.selected = new core_1.EventEmitter();
+        this.selectedItem = new core_1.EventEmitter();
         this.buttonClicked = new core_1.EventEmitter();
         this.sorter = new sorter_service_1.Sorter();
     }
@@ -37,7 +37,7 @@ var Ng2TableComponent = (function () {
     };
     Ng2TableComponent.prototype.selectRow = function (dataRow, rowIndex) {
         this.activeRow = rowIndex;
-        this.selected.emit(dataRow);
+        this.selectedItem.emit(dataRow);
     };
     // Custom button clicked
     Ng2TableComponent.prototype.buttonFn = function ($event, colSpec, row) {
@@ -65,7 +65,7 @@ var Ng2TableComponent = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
-    ], Ng2TableComponent.prototype, "selected", void 0);
+    ], Ng2TableComponent.prototype, "selectedItem", void 0);
     __decorate([
         core_1.Output(), 
         __metadata('design:type', Object)
