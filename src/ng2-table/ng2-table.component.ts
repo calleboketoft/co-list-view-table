@@ -82,14 +82,14 @@ export interface ITableConfig {
           <td *ngFor="let col of tableConfig.columnDefs">
             <div [ngSwitch]="col.type">
               <div *ngSwitchCase="'button'">
-                <div style="text-align: right;">
+                <div [ngStyle]="col.style">
                   <button type="button" [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
                     (click)="buttonFn($event, col, dataRow)">
                     {{col.config.buttonName}}
                   </button>
                 </div>
               </div>
-              <div *ngSwitchDefault>
+              <div *ngSwitchDefault [ngStyle]="col.style">
                 {{dataRow[col.field]}}
               </div>
             </div>

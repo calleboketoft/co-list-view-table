@@ -33,6 +33,7 @@ var AppComponent = (function () {
                 {
                     displayName: 'Delete',
                     type: 'button',
+                    style: { 'text-align': 'right' },
                     config: {
                         buttonName: 'X',
                         buttonClass: 'btn btn-sm btn-danger'

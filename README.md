@@ -31,7 +31,7 @@ myData = [
 ]
 myConfig = {
   columnDefs: [
-    {field: 'userId', displayName: 'ID'},
+    {field: 'userId', displayName: 'ID', style: {'text-align':'right'}},
     {field: 'userName', displayName: 'Name', search: true}
   ]
 }
