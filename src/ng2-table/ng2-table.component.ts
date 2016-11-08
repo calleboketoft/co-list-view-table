@@ -30,7 +30,7 @@ export interface ITableConfig {
       /* body takes all the remaining available space */
       flex: 1 1 auto;
       display: block;
-      overflow-y: scroll;
+      overflow: auto;
     }
     table tbody tr {
       width: 100%;
