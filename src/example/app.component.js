@@ -17,7 +17,8 @@ var AppComponent = (function () {
             columnDefs: [
                 {
                     field: 'userId',
-                    displayName: 'ID'
+                    displayName: 'ID',
+                    width: '100px'
                 },
                 {
                     field: 'userName',

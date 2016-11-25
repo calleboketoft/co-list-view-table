@@ -60,7 +60,8 @@ export interface ITableConfig {
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th *ngFor="let col of tableConfig.columnDefs">
+          <th *ngFor="let col of tableConfig.columnDefs"
+            [style.width]="col.width">
             <span (click)="sortCol(col)">
               {{col.displayName || col.field}}
             </span>
@@ -79,7 +80,7 @@ export interface ITableConfig {
           [class.table-info]="rowIndex === activeRow"
           *ngFor="let dataRow of tableData | search: tableConfigCopy; let rowIndex = index"
           (click)="selectRow(dataRow, rowIndex)">
-          <td *ngFor="let col of tableConfig.columnDefs">
+          <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.type">
               <div *ngSwitchCase="'button'">
                 <div [ngStyle]="col.style">
