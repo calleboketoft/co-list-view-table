@@ -1,13 +1,12 @@
 {
   "name": "@calle/ng2-table",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Simple table to use in list views",
   "main": "index.js",
   "scripts": {
     "start": "node server",
-    "build": "tsc && npm run sass",
-    "watch": "tsc -w",
-    "sass": "node-sass ./node_modules/bootstrap/scss/bootstrap.scss ./src/css/bootstrap.css"
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "config": {
     "ghooks": {
@@ -21,26 +20,24 @@
   "author": "Carl-Ola Boketoft",
   "license": "ISC",
   "peerDependencies": {
-    "@angular/core": "^2.2.1"
+    "@angular/core": "^2.2.3"
   },
   "devDependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/common": "2.2.3",
+    "@angular/compiler": "2.2.3",
+    "@angular/core": "2.2.3",
+    "@angular/platform-browser": "2.2.3",
+    "@angular/platform-browser-dynamic": "2.2.3",
     "@types/core-js": "0.9.34",
     "bootstrap": "4.0.0-alpha.5",
-    "concurrently": "3.1.0",
-    "es6-shim": "0.35.1",
     "express": "4.14.0",
     "ghooks": "1.3.2",
-    "node-sass": "3.13.0",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.41",
+    "tslint-config-standard": "2.0.0",
     "typescript": "2.0.10",
-    "zone.js": "0.6.26"
+    "zone.js": "0.7.2"
   },
   "repository": {
     "type": "git",
