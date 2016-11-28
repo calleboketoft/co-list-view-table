@@ -101,16 +101,16 @@ export interface ITableConfig {
   `
 })
 export class Ng2TableComponent implements OnChanges {
-  @Input() tableData: Array<any>;
-  @Input() tableConfig: ITableConfig;
-  @Output() selectedItem = new EventEmitter();
-  @Output() buttonClicked = new EventEmitter();
+  @Input() tableData: Array<any>
+  @Input() tableConfig: ITableConfig
+  @Output() selectedItem = new EventEmitter()
+  @Output() buttonClicked = new EventEmitter()
 
-  public tableConfigCopy;
-  public isAnyFieldSearchable;
-  public activeRow;
+  public tableConfigCopy
+  public isAnyFieldSearchable
+  public activeRow
 
-  public sorter = new Sorter();
+  public sorter = new Sorter()
 
   public ngOnChanges (changes) {
     // add search terms etc to this one

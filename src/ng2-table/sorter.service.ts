@@ -1,18 +1,17 @@
 // https://github.com/thelgevold/angular-2-samples
 export class Sorter {
-  direction: number;
-  key: string;
+  direction: number
+  key: string
 
   constructor() {
     this.direction = 1
   }
 
   sort(key: string, data: any[], dontToggle) {
-    let dataCopy = data.map(i => Object['assign']({}, i))
+    let dataCopy = data.map(i => Object.assign({}, i))
     if (this.key === key && !dontToggle) {
       this.direction = -this.direction
-    }
-    else {
+    } else {
       this.direction = 1
     }
 
@@ -23,16 +22,13 @@ export class Sorter {
       let bTmp = (b[key] + '').toLowerCase()
       if (aTmp === bTmp) {
         return 0
-      }
-      else if (aTmp > bTmp) {
+      } else if (aTmp > bTmp) {
         return this.direction
-      }
-      else {
+      } else {
         return -this.direction
       }
     })
 
     return dataCopy
   }
-
 }

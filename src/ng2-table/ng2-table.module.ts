@@ -13,4 +13,4 @@ import { SearchInputComponent } from './search-input.component'
   ],
   exports: [Ng2TableComponent]
 })
-export class Ng2TableModule {}
+export class Ng2TableModule { }
