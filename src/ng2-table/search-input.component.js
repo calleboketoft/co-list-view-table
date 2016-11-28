@@ -36,7 +36,7 @@ var SearchInputComponent = (function () {
         core_1.Component({
             selector: 'search-input-cmp',
             styles: ["\n    .form-control {\n      max-width: 200px;\n      font-weight: 400;\n    }\n  "],
-            template: "\n    <input type='text'\n      class='form-control'\n      (keyup)='valueChange($event)'\n      placeholder='{{placeholder}}'>\n  "
+            template: "\n    <input type=\"text\"\n      class=\"form-control\"\n      (keyup)=\"valueChange($event)\"\n      placeholder=\"{{placeholder}}\">\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], SearchInputComponent);

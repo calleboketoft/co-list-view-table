@@ -6,7 +6,7 @@ var Sorter = (function () {
     }
     Sorter.prototype.sort = function (key, data, dontToggle) {
         var _this = this;
-        var dataCopy = data.map(function (i) { return Object['assign']({}, i); });
+        var dataCopy = data.map(function (i) { return Object.assign({}, i); });
         if (this.key === key && !dontToggle) {
             this.direction = -this.direction;
         }
