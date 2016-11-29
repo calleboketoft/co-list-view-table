@@ -61,7 +61,8 @@ export interface ITableConfig {
       <thead>
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
-            [style.width]="col.width">
+            [style.width]="col.width"
+            [ngStyle]="col.styleHeader">
             <span (click)="sortCol(col)">
               {{col.displayName || col.field}}
             </span>
@@ -83,14 +84,14 @@ export interface ITableConfig {
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.type">
               <div *ngSwitchCase="'button'">
-                <div [ngStyle]="col.style">
+                <div [ngStyle]="col.styleCell">
                   <button type="button" [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
                     (click)="buttonFn($event, col, dataRow)">
                     {{col.config.buttonName}}
                   </button>
                 </div>
               </div>
-              <div *ngSwitchDefault [ngStyle]="col.style">
+              <div *ngSwitchDefault [ngStyle]="col.styleCell">
                 {{dataRow[col.field]}}
               </div>
             </div>
@@ -125,11 +126,16 @@ export class Ng2TableComponent implements OnChanges {
     // TODO when updating content, remember which column was clicked for sorting
     // atm, we reset the sorting when updating the content
     if (changes.tableData.currentValue.length > 0) {
-      let sortDefaultCol = this.tableConfigCopy.columnDefs.find(col => {
-        return col.sortDefault
+      let colToSortBy = this.tableConfigCopy.columnDefs.find(col => {
+        return col.sortDefault || col.sortDefaultReverse
       })
-      if (sortDefaultCol) {
-        this.sortCol(sortDefaultCol, true)
+      if (colToSortBy) {
+        // Sort once, standard direction
+        this.sortCol(colToSortBy, false)
+        if (colToSortBy.sortDefaultReverse) {
+          // Sorting again to reverse the sorting
+          this.sortCol(colToSortBy, false)
+        }
       }
     }
   }

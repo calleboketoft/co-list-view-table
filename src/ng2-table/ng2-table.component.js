@@ -27,11 +27,16 @@ var Ng2TableComponent = (function () {
         // TODO when updating content, remember which column was clicked for sorting
         // atm, we reset the sorting when updating the content
         if (changes.tableData.currentValue.length > 0) {
-            var sortDefaultCol = this.tableConfigCopy.columnDefs.find(function (col) {
-                return col.sortDefault;
+            var colToSortBy = this.tableConfigCopy.columnDefs.find(function (col) {
+                return col.sortDefault || col.sortDefaultReverse;
             });
-            if (sortDefaultCol) {
-                this.sortCol(sortDefaultCol, true);
+            if (colToSortBy) {
+                // Sort once, standard direction
+                this.sortCol(colToSortBy, false);
+                if (colToSortBy.sortDefaultReverse) {
+                    // Sorting again to reverse the sorting
+                    this.sortCol(colToSortBy, false);
+                }
             }
         }
     };
@@ -74,7 +79,7 @@ var Ng2TableComponent = (function () {
         core_1.Component({
             selector: 'ng2-table',
             styles: ["\n    /**\n     * Scrollable tbody\n     * https://jsfiddle.net/tsayen/xuvsncr2/28/\n     * http://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody\n     */\n\n    table {\n      display: flex;\n      flex-flow: column;\n      height: 100%;\n      width: 100%;\n    }\n    table thead {\n      /* head takes the height it requires,\n      and it's not scaled when table is resized */\n      flex: 0 0 auto;\n      width: calc(100% - 0.9em);\n    }\n    table tbody {\n      /* body takes all the remaining available space */\n      flex: 1 1 auto;\n      display: block;\n      overflow: auto;\n    }\n    table tbody tr {\n      width: 100%;\n    }\n    table thead, table tbody tr {\n      display: table;\n      table-layout: fixed;\n    }\n\n    /**\n     * Appearance\n     */\n\n    tbody tr:hover,\n    th span:hover {\n      cursor: pointer;\n    }\n    .table thead th {\n      vertical-align: top;\n      border-bottom: 1px solid #eceeef;\n    }\n    .search-wrap {\n      margin-top: 8px;\n    }\n  "],
-            template: "\n    <table class=\"table table-striped table-hover\">\n      <thead>\n        <tr>\n          <th *ngFor=\"let col of tableConfig.columnDefs\"\n            [style.width]=\"col.width\">\n            <span (click)=\"sortCol(col)\">\n              {{col.displayName || col.field}}\n            </span>\n            <div *ngIf=\"isAnyFieldSearchable\" class=\"search-wrap\">\n              <search-input-cmp\n                *ngIf=\"col.search\"\n                [field]=\"col.field\"\n                (search)=\"searchUpdate($event)\">\n              </search-input-cmp>\n            </div>\n          </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr\n          [class.table-info]=\"rowIndex === activeRow\"\n          *ngFor=\"let dataRow of tableData | search: tableConfigCopy; let rowIndex = index\"\n          (click)=\"selectRow(dataRow, rowIndex)\">\n          <td *ngFor=\"let col of tableConfig.columnDefs\" [style.width]=\"col.width\">\n            <div [ngSwitch]=\"col.type\">\n              <div *ngSwitchCase=\"'button'\">\n                <div [ngStyle]=\"col.style\">\n                  <button type=\"button\" [class]=\"col.config.buttonClass || 'btn btn-sm btn-primary'\"\n                    (click)=\"buttonFn($event, col, dataRow)\">\n                    {{col.config.buttonName}}\n                  </button>\n                </div>\n              </div>\n              <div *ngSwitchDefault [ngStyle]=\"col.style\">\n                {{dataRow[col.field]}}\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  "
+            template: "\n    <table class=\"table table-striped table-hover\">\n      <thead>\n        <tr>\n          <th *ngFor=\"let col of tableConfig.columnDefs\"\n            [style.width]=\"col.width\"\n            [ngStyle]=\"col.styleHeader\">\n            <span (click)=\"sortCol(col)\">\n              {{col.displayName || col.field}}\n            </span>\n            <div *ngIf=\"isAnyFieldSearchable\" class=\"search-wrap\">\n              <search-input-cmp\n                *ngIf=\"col.search\"\n                [field]=\"col.field\"\n                (search)=\"searchUpdate($event)\">\n              </search-input-cmp>\n            </div>\n          </th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr\n          [class.table-info]=\"rowIndex === activeRow\"\n          *ngFor=\"let dataRow of tableData | search: tableConfigCopy; let rowIndex = index\"\n          (click)=\"selectRow(dataRow, rowIndex)\">\n          <td *ngFor=\"let col of tableConfig.columnDefs\" [style.width]=\"col.width\">\n            <div [ngSwitch]=\"col.type\">\n              <div *ngSwitchCase=\"'button'\">\n                <div [ngStyle]=\"col.styleCell\">\n                  <button type=\"button\" [class]=\"col.config.buttonClass || 'btn btn-sm btn-primary'\"\n                    (click)=\"buttonFn($event, col, dataRow)\">\n                    {{col.config.buttonName}}\n                  </button>\n                </div>\n              </div>\n              <div *ngSwitchDefault [ngStyle]=\"col.styleCell\">\n                {{dataRow[col.field]}}\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], Ng2TableComponent);

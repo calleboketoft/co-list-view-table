@@ -13,7 +13,7 @@ import { exampleData } from './example.data'
       </ng2-table>
     </div>
 
-    <br ><br >
+    <br><br>
 
     <ng2-table
       [tableData]="myData"
@@ -23,7 +23,7 @@ import { exampleData } from './example.data'
   `
 })
 export class AppComponent {
-  public myData = exampleData;
+  public myData = exampleData
   public myConfig = {
     columnDefs: [
       {
@@ -35,7 +35,8 @@ export class AppComponent {
         field: 'userName',
         displayName: 'Name',
         search: true,
-        sortDefault: true
+        sortDefaultReverse: true,
+        styleCell: { 'color': 'green' }
       },
       {
         field: 'nickName',
@@ -45,14 +46,15 @@ export class AppComponent {
       {
         displayName: 'Delete',
         type: 'button',
-        style: {'text-align': 'right'},
+        styleCell: { 'text-align': 'center' },
+        styleHeader: { 'text-align': 'center', 'color': 'orange' },
         config: {
           buttonName: 'X',
           buttonClass: 'btn btn-sm btn-danger'
         }
       }
     ]
-  };
+  }
 
   public minimalConfig = {
     columnDefs: [

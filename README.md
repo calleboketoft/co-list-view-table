@@ -26,13 +26,26 @@ HTML Template:
 JavaScript:
 ```javascript
 myData = [
-  {userId: '1', userName: 'Calle'},
-  {userId: '2', userName: 'Nisse'}
+  { userId: '1', userName: 'Calle' },
+  { userId: '2', userName: 'Nisse' }
 ]
 myConfig = {
   columnDefs: [
-    {field: 'userId', displayName: 'ID', style: {'text-align':'right'}},
-    {field: 'userName', displayName: 'Name', search: true}
+    {
+      field: 'userId',
+      displayName: 'ID',
+      sortDefault: true, // sort by this column upon init, "sortDefaultReverse"
+                         // sorts this column in reverse order
+      styleCell: {
+        'text-align':'right' // style the content of the cell
+      },
+      width: '100px' // set the width of the column
+    },
+    {
+      field: 'userName',
+      displayName: 'Name',
+      search: true
+    }
   ]
 }
 function selectedItem (item) {
@@ -50,6 +63,9 @@ myConfig = {
       config: {
         buttonName: 'XXX',
         buttonClass: 'btn btn-sm'
+      },
+      styleCell: {
+        'text-align': 'center'
       }
     }
   ]

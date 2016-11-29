@@ -24,7 +24,8 @@ var AppComponent = (function () {
                     field: 'userName',
                     displayName: 'Name',
                     search: true,
-                    sortDefault: true
+                    sortDefaultReverse: true,
+                    styleCell: { 'color': 'green' }
                 },
                 {
                     field: 'nickName',
@@ -34,7 +35,8 @@ var AppComponent = (function () {
                 {
                     displayName: 'Delete',
                     type: 'button',
-                    style: { 'text-align': 'right' },
+                    styleCell: { 'text-align': 'center' },
+                    styleHeader: { 'text-align': 'center', 'color': 'orange' },
                     config: {
                         buttonName: 'X',
                         buttonClass: 'btn btn-sm btn-danger'
@@ -62,7 +64,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n    <div style=\"height: 300px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selectedItem)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <br ><br >\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selectedItem)=\"selectedItem($event)\">\n    </ng2-table>\n  "
+            template: "\n    <div style=\"height: 300px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selectedItem)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <br><br>\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selectedItem)=\"selectedItem($event)\">\n    </ng2-table>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
