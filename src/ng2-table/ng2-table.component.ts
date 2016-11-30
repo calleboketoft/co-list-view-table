@@ -55,6 +55,14 @@ export interface ITableConfig {
     .search-wrap {
       margin-top: 8px;
     }
+
+    /**
+     * Preserve newlines
+     * http://stackoverflow.com/questions/10937218/how-to-show-multiline-text-in-a-table-cell
+     */
+    td > div > .cell-content {
+      white-space: pre;
+    }
   `],
   template: `
     <table class="table table-striped table-hover">
@@ -85,15 +93,15 @@ export interface ITableConfig {
             <div [ngSwitch]="col.type">
               <div *ngSwitchCase="'button'">
                 <div [ngStyle]="col.styleCell">
-                  <button type="button" [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
+                  <button type="button"
+                    [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
                     (click)="buttonFn($event, col, dataRow)">
-                    {{col.config.buttonName}}
+                      {{col.config.buttonName}}
                   </button>
                 </div>
               </div>
-              <div *ngSwitchDefault [ngStyle]="col.styleCell">
-                {{dataRow[col.field]}}
-              </div>
+              <div *ngSwitchDefault class="cell-content" [ngStyle]="col.styleCell"
+                >{{dataRow[col.field]}}</div>
             </div>
           </td>
         </tr>

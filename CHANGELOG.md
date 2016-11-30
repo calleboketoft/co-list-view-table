@@ -1,3 +1,7 @@
+## 1.2.1 (2016-11-30)
+
+* preserve whitespace in cell content
+
 ## 1.2.0 (2016-11-29)
 
 * changed cell style property from "style" to "styleCell":

@@ -12,7 +12,7 @@ let exampleData = [
   {
     userId: '3',
     userName: 'Bubba',
-    nickName: 'Bullen'
+    nickName: 'Bullen \n newline'
   },
   {
     userId: '4',
@@ -30,4 +30,4 @@ let exampleData = [
     nickName: 'Lasse'
   }
 ]
-export {exampleData}
+export { exampleData }
