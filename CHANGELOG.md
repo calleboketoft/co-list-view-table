@@ -1,3 +1,7 @@
+## 1.2.2 (2016-11-30)
+
+* use pre-wrap instead of pre to preserve whitespace so word-wrap can still be used
+
 ## 1.2.1 (2016-11-30)
 
 * preserve whitespace in cell content

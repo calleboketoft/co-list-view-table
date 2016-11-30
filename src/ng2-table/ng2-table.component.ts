@@ -59,9 +59,12 @@ export interface ITableConfig {
     /**
      * Preserve newlines
      * http://stackoverflow.com/questions/10937218/how-to-show-multiline-text-in-a-table-cell
+     *
+     * And let word-wrap still work
+     * http://stackoverflow.com/a/4413129
      */
     td > div > .cell-content {
-      white-space: pre;
+      white-space: pre-wrap;
     }
   `],
   template: `
