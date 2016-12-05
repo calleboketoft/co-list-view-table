@@ -25,7 +25,7 @@ import { exampleData } from './example.data'
 export class AppComponent {
   public myData = exampleData
   public myConfig = {
-    rowClick: true,
+    rowClickStyles: true,
     columnDefs: [
       {
         field: 'userId',

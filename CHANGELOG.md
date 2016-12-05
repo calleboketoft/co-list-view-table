@@ -1,3 +1,7 @@
+## 1.3.1 (2016-12-05)
+
+* The property rowClick name changed to rowClickStyles
+
 ## 1.3.0 (2016-12-05)
 
 * BREAKING CHANGE: table rows need the config param rowClick=true to get cursor 'pointer', class 'hover', and 'active' when clicked

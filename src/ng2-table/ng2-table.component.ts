@@ -68,7 +68,7 @@ export interface ITableConfig {
   `],
   template: `
     <table class="table table-striped"
-      [class.table-hover]="configTernary('rowClick')">
+      [class.table-hover]="configTernary('rowClickStyles')">
       <thead>
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
@@ -89,8 +89,8 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          [class.table-info]="configTernary('rowClick') && rowIndex === activeRow"
-          [style.cursor]="configTernary('rowClick', 'pointer', '')"
+          [class.table-info]="configTernary('rowClickStyles') && rowIndex === activeRow"
+          [style.cursor]="configTernary('rowClickStyles', 'pointer', '')"
           *ngFor="let dataRow of tableData | search: tableConfigCopy; let rowIndex = index"
           (click)="selectRow(dataRow, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
@@ -122,7 +122,7 @@ export class Ng2TableComponent implements OnChanges {
   public tableConfigCopy
   public isAnyFieldSearchable
   public activeRow
-  public rowClick = false
+  public rowClickStyles = false
 
   public sorter = new Sorter()
 
