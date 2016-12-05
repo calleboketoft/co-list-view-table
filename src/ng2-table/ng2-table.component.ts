@@ -44,7 +44,6 @@ export interface ITableConfig {
      * Appearance
      */
 
-    /* tbody tr:hover, */
     th span:hover {
       cursor: pointer;
     }
