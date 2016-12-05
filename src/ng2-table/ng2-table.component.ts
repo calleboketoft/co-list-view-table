@@ -44,7 +44,7 @@ export interface ITableConfig {
      * Appearance
      */
 
-    tbody tr:hover,
+    /* tbody tr:hover, */
     th span:hover {
       cursor: pointer;
     }
@@ -68,7 +68,8 @@ export interface ITableConfig {
     }
   `],
   template: `
-    <table class="table table-striped table-hover">
+    <table class="table table-striped"
+      [class.table-hover]="configTernary('rowClick')">
       <thead>
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
@@ -89,7 +90,8 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          [class.table-info]="rowIndex === activeRow"
+          [class.table-info]="configTernary('rowClick') && rowIndex === activeRow"
+          [style.cursor]="configTernary('rowClick', 'pointer', '')"
           *ngFor="let dataRow of tableData | search: tableConfigCopy; let rowIndex = index"
           (click)="selectRow(dataRow, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
@@ -103,8 +105,8 @@ export interface ITableConfig {
                   </button>
                 </div>
               </div>
-              <div *ngSwitchDefault class="cell-content" [ngStyle]="col.styleCell"
-                >{{dataRow[col.field]}}</div>
+              <div *ngSwitchDefault class="cell-content"
+                [ngStyle]="col.styleCell">{{dataRow[col.field]}}</div>
             </div>
           </td>
         </tr>
@@ -121,6 +123,7 @@ export class Ng2TableComponent implements OnChanges {
   public tableConfigCopy
   public isAnyFieldSearchable
   public activeRow
+  public rowClick = false
 
   public sorter = new Sorter()
 
@@ -148,6 +151,12 @@ export class Ng2TableComponent implements OnChanges {
           this.sortCol(colToSortBy, false)
         }
       }
+    }
+  }
+
+  public configTernary (configKey, trueVal = true, falseVal = false) {
+    if (this.tableConfigCopy) {
+      return this.tableConfigCopy[configKey] ? trueVal : falseVal
     }
   }
 

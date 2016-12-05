@@ -14,6 +14,7 @@ var AppComponent = (function () {
     function AppComponent() {
         this.myData = example_data_1.exampleData;
         this.myConfig = {
+            rowClick: true,
             columnDefs: [
                 {
                     field: 'userId',
