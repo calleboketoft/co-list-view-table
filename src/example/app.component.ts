@@ -42,6 +42,11 @@ export class AppComponent {
       {
         field: 'nickName',
         displayName: 'Nickname',
+        type: 'button',
+        config: {
+          buttonStyle: {'width': '120px'},
+          buttonClass: 'btn btn-sm btn-info'
+        },
         search: true
       },
       {

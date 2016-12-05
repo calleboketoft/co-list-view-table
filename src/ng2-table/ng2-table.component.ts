@@ -98,9 +98,10 @@ export interface ITableConfig {
               <div *ngSwitchCase="'button'">
                 <div [ngStyle]="col.styleCell">
                   <button type="button"
-                    [class]="col.config.buttonClass || 'btn btn-sm btn-primary'"
+                    [class]="col.config?.buttonClass || 'btn btn-sm btn-primary'"
+                    [ngStyle]="col.config?.buttonStyle"
                     (click)="buttonFn($event, col, dataRow)">
-                      {{col.config.buttonName}}
+                      {{col.config?.buttonName || dataRow[col.field]}}
                   </button>
                 </div>
               </div>

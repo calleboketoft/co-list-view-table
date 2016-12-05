@@ -1,3 +1,7 @@
+## 1.3.2 (2016-12-05)
+
+* Set button styles with config: {buttonStyle: {'width': '100px'}}
+
 ## 1.3.1 (2016-12-05)
 
 * The property rowClick name changed to rowClickStyles
