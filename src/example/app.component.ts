@@ -27,7 +27,6 @@ export class AppComponent {
   public myConfig = {
     rowClickStyles: true,
     rowClassPredicate: (rowData) => {
-      debugger
       return rowData.userId === '1' ? 'table-success' : ''
     },
     columnDefs: [

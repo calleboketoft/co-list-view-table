@@ -12,7 +12,7 @@
 
 ## 1.3.0 (2016-12-05)
 
-* BREAKING CHANGE: table rows need the config param rowClick=true to get cursor 'pointer', class 'hover', and 'active' when clicked
+* BREAKING CHANGE: the tableConfig param rowClick=true is now needed to get cursor 'pointer', class 'hover', and 'active' when clicked
 
 ## 1.2.2 (2016-11-30)
 

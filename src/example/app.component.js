@@ -16,7 +16,6 @@ var AppComponent = (function () {
         this.myConfig = {
             rowClickStyles: true,
             rowClassPredicate: function (rowData) {
-                debugger;
                 return rowData.userId === '1' ? 'table-success' : '';
             },
             columnDefs: [
