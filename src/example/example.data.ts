@@ -2,32 +2,38 @@ let exampleData = [
   {
     userId: '1',
     userName: 'Carl',
-    nickName: 'Calle'
+    nickName: 'Calle',
+    pet: 'dog'
   },
   {
     userId: '2',
     userName: 'Boke',
-    nickName: 'G'
+    nickName: 'G',
+    pet: 'cat'
   },
   {
     userId: '3',
     userName: 'Bubba',
-    nickName: 'Bullen \n newline'
+    nickName: 'Bullen \n newline',
+    pet: 'kangaroo'
   },
   {
     userId: '4',
     userName: 'Pelle',
-    nickName: 'P'
+    nickName: 'P',
+    pet: 'dragon'
   },
   {
     userId: '5',
     userName: 'Oskar',
-    nickName: 'Olle'
+    nickName: 'Olle',
+    pet: 'smurf'
   },
   {
     userId: '6',
     userName: 'Lars',
-    nickName: 'Lasse'
+    nickName: 'Lasse',
+    pet: 'beer'
   }
 ]
 export { exampleData }

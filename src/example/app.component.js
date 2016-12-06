@@ -14,42 +14,50 @@ var AppComponent = (function () {
     function AppComponent() {
         this.myData = example_data_1.exampleData;
         this.myConfig = {
-            rowClickStyles: true,
-            rowClassPredicate: function (rowData) {
-                return rowData.userId === '1' ? 'table-success' : '';
+            rowNgStylePredicate: function (rowData) {
+                return rowData.userId === '5' ? { 'cursor': 'crosshair' } : { 'cursor': 'pointer' };
             },
             columnDefs: [
                 {
                     field: 'userId',
-                    displayName: 'ID',
+                    headerTitle: 'ID',
                     width: '100px'
                 },
                 {
+                    field: 'pet',
+                    cellItem: {
+                        elementType: 'div',
+                        cellItemNgClassPredicate: function (rowData) {
+                            return rowData.pet === 'beer' ? 'tag tag-warning' : 'tag tag-primary';
+                        }
+                    }
+                },
+                {
                     field: 'userName',
-                    displayName: 'Name',
+                    headerTitle: 'Name',
                     search: true,
                     sortDefaultReverse: true,
-                    styleCell: { 'color': 'green' }
+                    cellNgStyle: { 'color': 'green' }
                 },
                 {
                     field: 'nickName',
-                    displayName: 'Nickname',
-                    type: 'button',
-                    config: {
-                        buttonStyle: { 'width': '120px' },
-                        buttonClass: 'btn btn-sm btn-info'
-                    },
-                    search: true
+                    headerTitle: 'Nickname',
+                    search: true,
+                    cellItem: {
+                        elementType: 'div',
+                        cellItemNgStyle: { 'width': '120px' },
+                        cellItemNgClass: 'btn btn-sm btn-info'
+                    }
                 },
                 {
-                    displayName: 'Delete',
-                    type: 'button',
-                    styleCell: { 'text-align': 'center' },
-                    styleHeader: { 'text-align': 'center', 'color': 'orange' },
-                    config: {
-                        buttonName: 'X',
-                        buttonClass: 'btn btn-sm btn-danger'
-                    }
+                    headerTitle: 'Delete',
+                    headerNgStyle: { 'text-align': 'center', 'color': 'orange' },
+                    cellItem: {
+                        elementType: 'button',
+                        staticContent: 'X',
+                        cellItemNgClass: 'btn btn-sm btn-danger'
+                    },
+                    cellNgStyle: { 'text-align': 'center' }
                 }
             ]
         };
@@ -64,16 +72,16 @@ var AppComponent = (function () {
             ]
         };
     }
-    AppComponent.prototype.selectedItem = function (item) {
+    AppComponent.prototype.rowClicked = function (item) {
         console.log('clicked item:', item);
     };
-    AppComponent.prototype.buttonClicked = function (options) {
+    AppComponent.prototype.cellItemClicked = function (options) {
         console.log(options);
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n    <div style=\"height: 300px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (selectedItem)=\"selectedItem($event)\"\n        (buttonClicked)=\"buttonClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <br><br>\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (selectedItem)=\"selectedItem($event)\">\n    </ng2-table>\n  "
+            template: "\n    <div style=\"height: 300px; margin-bottom: 25px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n\n    <ng2-table\n      [tableData]=\"myData\"\n      [tableConfig]=\"minimalConfig\"\n      (rowClicked)=\"rowClicked($event)\">\n    </ng2-table>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

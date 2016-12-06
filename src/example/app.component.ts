@@ -1,66 +1,73 @@
 import { Component } from '@angular/core'
 import { exampleData } from './example.data'
+import { TableConfigModel } from '../../index'
 
 @Component({
   selector: 'app',
   template: `
-    <div style="height: 300px;">
+    <div style="height: 300px; margin-bottom: 25px;">
       <ng2-table
         [tableData]="myData"
         [tableConfig]="myConfig"
-        (selectedItem)="selectedItem($event)"
-        (buttonClicked)="buttonClicked($event)">
+        (rowClicked)="rowClicked($event)"
+        (cellItemClicked)="cellItemClicked($event)">
       </ng2-table>
     </div>
-
-    <br><br>
 
     <ng2-table
       [tableData]="myData"
       [tableConfig]="minimalConfig"
-      (selectedItem)="selectedItem($event)">
+      (rowClicked)="rowClicked($event)">
     </ng2-table>
   `
 })
 export class AppComponent {
   public myData = exampleData
-  public myConfig = {
-    rowClickStyles: true,
-    rowClassPredicate: (rowData) => {
-      return rowData.userId === '1' ? 'table-success' : ''
+  public myConfig: TableConfigModel = {
+    rowNgStylePredicate: (rowData) => {
+      return rowData.userId === '5' ? {'cursor': 'crosshair'} : {'cursor': 'pointer'}
     },
     columnDefs: [
       {
         field: 'userId',
-        displayName: 'ID',
+        headerTitle: 'ID',
         width: '100px'
       },
       {
+        field: 'pet',
+        cellItem: {
+          elementType: 'div',
+          cellItemNgClassPredicate: (rowData) => {
+            return rowData.pet === 'beer' ? 'tag tag-warning' : 'tag tag-primary'
+          }
+        }
+      },
+      {
         field: 'userName',
-        displayName: 'Name',
+        headerTitle: 'Name',
         search: true,
         sortDefaultReverse: true,
-        styleCell: { 'color': 'green' }
+        cellNgStyle: { 'color': 'green' }
       },
       {
         field: 'nickName',
-        displayName: 'Nickname',
-        type: 'button',
-        config: {
-          buttonStyle: {'width': '120px'},
-          buttonClass: 'btn btn-sm btn-info'
-        },
-        search: true
+        headerTitle: 'Nickname',
+        search: true,
+        cellItem: {
+          elementType: 'div',
+          cellItemNgStyle: { 'width': '120px' },
+          cellItemNgClass: 'btn btn-sm btn-info'
+        }
       },
       {
-        displayName: 'Delete',
-        type: 'button',
-        styleCell: { 'text-align': 'center' },
-        styleHeader: { 'text-align': 'center', 'color': 'orange' },
-        config: {
-          buttonName: 'X',
-          buttonClass: 'btn btn-sm btn-danger'
-        }
+        headerTitle: 'Delete',
+        headerNgStyle: { 'text-align': 'center', 'color': 'orange' },
+        cellItem: {
+          elementType: 'button',
+          staticContent: 'X',
+          cellItemNgClass: 'btn btn-sm btn-danger'
+        },
+        cellNgStyle: { 'text-align': 'center' }
       }
     ]
   }
@@ -75,10 +82,10 @@ export class AppComponent {
       }
     ]
   }
-  public selectedItem (item) {
+  public rowClicked (item) {
     console.log('clicked item:', item)
   }
-  public buttonClicked (options) {
+  public cellItemClicked (options) {
     console.log(options)
   }
 }

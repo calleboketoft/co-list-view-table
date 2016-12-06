@@ -1,12 +1,13 @@
 {
   "name": "@calle/ng2-table",
-  "version": "1.3.3",
+  "version": "2.0.0",
   "description": "Simple table to use in list views",
   "main": "index.js",
   "scripts": {
     "start": "node server",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "sass": "node-sass ./scss/main.scss ./src/css/main.css"
   },
   "config": {
     "ghooks": {
@@ -20,18 +21,20 @@
   "author": "Carl-Ola Boketoft",
   "license": "ISC",
   "peerDependencies": {
-    "@angular/core": "^2.2.3"
+    "@angular/core": "^2.2.4"
   },
   "devDependencies": {
-    "@angular/common": "2.2.3",
-    "@angular/compiler": "2.2.3",
-    "@angular/core": "2.2.3",
-    "@angular/platform-browser": "2.2.3",
-    "@angular/platform-browser-dynamic": "2.2.3",
+    "@angular/common": "2.2.4",
+    "@angular/compiler": "2.2.4",
+    "@angular/core": "2.2.4",
+    "@angular/platform-browser": "2.2.4",
+    "@angular/platform-browser-dynamic": "2.2.4",
+    "@calle/bootstrap-2-buttons": "1.0.4",
     "@types/core-js": "0.9.34",
     "bootstrap": "4.0.0-alpha.5",
     "express": "4.14.0",
     "ghooks": "1.3.2",
+    "node-sass": "3.13.0",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.41",

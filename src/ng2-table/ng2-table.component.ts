@@ -1,9 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core'
 import { Sorter } from './sorter.service'
-
-export interface ITableConfig {
-  columnDefs: any
-}
+import { TableConfigModel } from './table-config.model'
 
 @Component({
   selector: 'ng2-table',
@@ -67,15 +64,18 @@ export interface ITableConfig {
     }
   `],
   template: `
-    <table class="table table-striped"
+    <table
+      [ngClass]="getNgThing('table', 'class', tableConfig)"
+      [ngStyle]="getNgThing('table', 'style', tableConfig)"
       [class.table-hover]="configTernary('rowClickStyles')">
       <thead>
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
             [style.width]="col.width"
-            [ngStyle]="col.styleHeader">
+            [ngClass]="getNgThing('colHeader', 'class', tableConfig, null, null, null, col)"
+            [ngStyle]="getNgThing('colHeader', 'style', tableConfig, null, null, null, col)">
             <span (click)="sortCol(col)">
-              {{col.displayName || col.field}}
+              {{col.headerTitle || col.field}}
             </span>
             <div *ngIf="isAnyFieldSearchable" class="search-wrap">
               <search-input-cmp
@@ -89,25 +89,45 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
-          [ngClass]="tableConfig.rowClassPredicate ? tableConfig.rowClassPredicate(rowData) : ''"
+          [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
+          [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
           [class.table-info]="configTernary('rowClickStyles') && rowIndex === activeRow"
-          [style.cursor]="configTernary('rowClickStyles', 'pointer', '')"
           *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
-          (click)="selectRow(rowData, rowIndex)">
+          (click)="rowClicked.emit(rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
-            <div [ngSwitch]="col.type">
+            <div [ngSwitch]="col.cellItem?.elementType">
+
+              <!-- BUTTON -->
               <div *ngSwitchCase="'button'">
-                <div [ngStyle]="col.styleCell">
+                <div
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)">
                   <button type="button"
-                    [class]="col.config?.buttonClass || 'btn btn-sm btn-primary'"
-                    [ngStyle]="col.config?.buttonStyle"
-                    (click)="buttonFn($event, col, rowData)">
-                      {{col.config?.buttonName || rowData[col.field]}}
-                  </button>
+                    [ngClass]="getNgThing('cellItemButton', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
+                    [ngStyle]="getNgThing('cellItemButton', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                    (click)="buttonFn($event, col, rowData)"
+                    >{{col.cellItem?.staticContent || rowData[col.field]}}</button>
                 </div>
               </div>
+
+              <!-- DIV -->
+              <div *ngSwitchCase="'div'">
+                <div
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)">
+                  <div
+                    [ngClass]="getNgThing('cellItemDiv', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
+                    [ngStyle]="getNgThing('cellItemDiv', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                    (click)="buttonFn($event, col, rowData)"
+                    >{{col.cellItem?.staticContent || rowData[col.field]}}</div>
+                </div>
+              </div>
+
+              <!-- NO ITEM -->
               <div *ngSwitchDefault class="cell-content"
-                [ngStyle]="col.styleCell">{{rowData[col.field]}}</div>
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                >{{rowData[col.field]}}</div>
             </div>
           </td>
         </tr>
@@ -117,9 +137,9 @@ export interface ITableConfig {
 })
 export class Ng2TableComponent implements OnChanges {
   @Input() tableData: Array<any>
-  @Input() tableConfig: ITableConfig
-  @Output() selectedItem = new EventEmitter()
-  @Output() buttonClicked = new EventEmitter()
+  @Input() tableConfig: TableConfigModel
+  @Output() rowClicked = new EventEmitter()
+  @Output() cellItemClicked = new EventEmitter()
 
   public tableConfigCopy
   public isAnyFieldSearchable
@@ -163,13 +183,13 @@ export class Ng2TableComponent implements OnChanges {
 
   public selectRow (dataRow, rowIndex) {
     this.activeRow = rowIndex
-    this.selectedItem.emit(dataRow)
+    this.rowClicked.emit(dataRow)
   }
 
   // Custom button clicked
   public buttonFn ($event, colSpec, row) {
     $event.stopPropagation() // don't want to trigger "selectRow" as well
-    this.buttonClicked.emit({colSpec, row})
+    this.cellItemClicked.emit({colSpec, row})
   }
 
   public searchUpdate ($event) {
@@ -177,10 +197,76 @@ export class Ng2TableComponent implements OnChanges {
       return colDef.field === $event.field
     })
     foundColDef.searchTerm = $event.value
-    this.tableConfigCopy = Object['assign']({}, this.tableConfigCopy)
+    this.tableConfigCopy = Object.assign({}, this.tableConfigCopy)
   }
 
   public sortCol (col, dontToggle) {
     this.tableData = this.sorter.sort(col.field, this.tableData, dontToggle)
+  }
+
+  public getNgThing (thingType, classOrStyle, tableConfig, rowData, rowIndex, activeRow, col?) {
+    switch (thingType + '-' + classOrStyle) {
+
+      case 'table-class':
+        return tableConfig['tableNgClass'] || 'table table-striped'
+
+      case 'table-style':
+        return tableConfig['tableNgStyle'] || ''
+
+      case 'row-class':
+        if (tableConfig['rowNgClassPredicate']) {
+          return tableConfig['rowNgClassPredicate'](rowData)
+        }
+        return tableConfig['rowNgClass'] || ''
+
+      case 'row-style':
+        debugger
+        if (tableConfig['rowNgStylePredicate']) {
+          return tableConfig['rowNgStylePredicate'](rowData)
+        }
+        return tableConfig['rowNgStyle'] || ''
+
+      case 'cell-class':
+        if (col['cellNgClassPredicate']) {
+          return col['cellNgClassPredicate'](rowData)
+        }
+        return col['cellNgClass'] || ''
+
+      case 'cell-style':
+        if (col['cellNgStylePredicate']) {
+          return col['cellNgStylePredicate'](rowData)
+        }
+        return col['cellNgStyle'] || ''
+
+      case 'cellItemButton-class':
+        if (col['cellItem']['cellItemNgClassPredicate']) {
+          return col['cellItem']['cellItemNgClassPredicate'](rowData)
+        }
+        return col['cellItem']['cellItemNgClass'] || ''
+
+      case 'cellItemButton-style':
+        if (col['cellItem']['cellItemNgStylePredicate']) {
+          return col['cellItem']['cellItemNgStylePredicate'](rowData)
+        }
+        return col['cellItem']['cellItemNgStyle'] || ''
+
+      case 'cellItemDiv-class':
+        if (col['cellItem']['cellItemNgClassPredicate']) {
+          return col['cellItem']['cellItemNgClassPredicate'](rowData)
+        }
+        return col['cellItem']['cellItemNgClass'] || ''
+
+      case 'cellItemDiv-style':
+        if (col['cellItem']['cellItemNgStylePredicate']) {
+          return col['cellItem']['cellItemNgStylePredicate'](rowData)
+        }
+        return col['cellItem']['cellItemNgStyle'] || ''
+
+      case 'colHeader-class':
+        return col['colHeaderNgClass'] || ''
+
+      case 'colHeader-style':
+        return col['colHeaderNgStyle'] || ''
+    }
   }
 }
