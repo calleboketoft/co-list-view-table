@@ -25,12 +25,12 @@ var AppComponent = (function () {
             columnDefs: [
                 {
                     field: 'userId',
-                    headerTitle: 'ID',
+                    headerText: 'ID',
                     width: '100px'
                 },
                 {
                     field: 'pet',
-                    headerTitle: 'Pet',
+                    headerText: 'Pet',
                     cellItem: {
                         elementType: 'div',
                         cellItemNgClassPredicate: function (rowData) {
@@ -40,14 +40,14 @@ var AppComponent = (function () {
                 },
                 {
                     field: 'userName',
-                    headerTitle: 'Name',
+                    headerText: 'Name',
                     search: true,
                     sortDefaultReverse: true,
                     cellNgStyle: { 'color': 'green' }
                 },
                 {
                     field: 'nickName',
-                    headerTitle: 'Nickname',
+                    headerText: 'Nickname',
                     search: true,
                     cellItem: {
                         elementType: 'div',
@@ -56,7 +56,7 @@ var AppComponent = (function () {
                     }
                 },
                 {
-                    headerTitle: 'Delete',
+                    headerText: 'Delete',
                     headerNgStyle: { 'text-align': 'center', 'color': 'orange' },
                     cellItem: {
                         elementType: 'button',

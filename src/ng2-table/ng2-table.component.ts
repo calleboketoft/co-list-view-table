@@ -74,7 +74,7 @@ import { TableConfigModel } from './table-config.model'
             [ngClass]="getNgThing('colHeader', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('colHeader', 'style', tableConfig, null, null, null, col)">
             <span (click)="sortCol(col)">
-              {{col.headerTitle || col.field}}
+              {{col.headerText || col.field}}
             </span>
             <div *ngIf="isAnyFieldSearchable" class="search-wrap">
               <search-input-cmp

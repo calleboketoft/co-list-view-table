@@ -1,3 +1,8 @@
+## 2.0.0 (2016-12-06)
+
+* BREAKING CHANGES: Pretty much the whole API of the component.
+* Read the README.md for simple instructions and check out the example code for advanced use.
+
 ## 1.3.3 (2016-12-06)
 
 * Add property rowClassPredicate to add a style to a cell conditionally

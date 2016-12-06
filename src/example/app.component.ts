@@ -35,12 +35,12 @@ export class AppComponent {
     columnDefs: [
       {
         field: 'userId',
-        headerTitle: 'ID',
+        headerText: 'ID',
         width: '100px'
       },
       {
         field: 'pet',
-        headerTitle: 'Pet',
+        headerText: 'Pet',
         cellItem: {
           elementType: 'div',
           cellItemNgClassPredicate: (rowData) => {
@@ -50,14 +50,14 @@ export class AppComponent {
       },
       {
         field: 'userName',
-        headerTitle: 'Name',
+        headerText: 'Name',
         search: true,
         sortDefaultReverse: true,
         cellNgStyle: { 'color': 'green' }
       },
       {
         field: 'nickName',
-        headerTitle: 'Nickname',
+        headerText: 'Nickname',
         search: true,
         cellItem: {
           elementType: 'div',
@@ -66,7 +66,7 @@ export class AppComponent {
         }
       },
       {
-        headerTitle: 'Delete',
+        headerText: 'Delete',
         headerNgStyle: { 'text-align': 'center', 'color': 'orange' },
         cellItem: {
           elementType: 'button',

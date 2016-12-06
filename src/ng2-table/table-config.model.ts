@@ -14,7 +14,7 @@ export interface TableColModel {
   search?: boolean
   sortDefault?: boolean
   sortDefaultReverse?: boolean
-  headerTitle?: string
+  headerText?: string
   headerNgStyle?: any
   headerNgClass?: any
   cellNgStyle?: any

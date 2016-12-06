@@ -5,21 +5,24 @@ Simple table for list views
 ## Run the example code
 
 - `npm install`
-- `npm start` serve the files
+- `npm run build`
+- `npm start`
 - navigate to `localhost:3000` in web browser
 
 
 ## How to use
 
-- Install module: `npm install --save @calle/ng2-table
+- Install module: `npm install --save @calle/ng2-table`
 - Import module and register with your app component `import { Ng2TableModule } from '@calle/ng2-table'`
+- Use the config interface `import { TableConfigModel } from '@calle/ng2-table'`
 
 HTML Template:
 ```html
 <ng2-table
-  [tableData]='myData'
-  [tableConfig]='myConfig'
-  (selected)='selectedItem($event)'>
+  [tableData]="myData"
+  [tableConfig]="myConfig"
+  (rowClicked)="rowClicked($event)"
+  (cellItemClicked)="cellItemClicked($event)">
 </ng2-table>
 ```
 
@@ -29,27 +32,31 @@ myData = [
   { userId: '1', userName: 'Calle' },
   { userId: '2', userName: 'Nisse' }
 ]
-myConfig = {
+myConfig: TableConfigModel = {
   columnDefs: [
     {
       field: 'userId',
-      displayName: 'ID',
+      headerText: 'ID',
       sortDefault: true, // sort by this column upon init, "sortDefaultReverse"
                          // sorts this column in reverse order
-      styleCell: {
+      cellNgStyle: {
         'text-align':'right' // style the content of the cell
       },
       width: '100px' // set the width of the column
     },
     {
       field: 'userName',
-      displayName: 'Name',
+      headerTitle: 'Name',
       search: true
     }
   ]
 }
-function selectedItem (item) {
-  console.log('clicked item:', item)
+function rowClicked (row) {
+  console.log('clicked row:', row)
+}
+
+function cellItemClicked (cellItem) {
+  console.log('clicked cell item:', cellItem)
 }
 ```
 
@@ -58,14 +65,11 @@ Adding a button column:
 myConfig = {
   columnDefs: [
     {
-      displayName: 'Buttons',
-      type: 'button',
-      config: {
-        buttonName: 'XXX',
-        buttonClass: 'btn btn-sm'
-      },
-      styleCell: {
-        'text-align': 'center'
+      headerText: 'Super button',
+      cellItem: {
+        type: 'button',
+        staticContent: 'XXX',
+        cellItemNgClass: 'btn btn-sm'
       }
     }
   ]
