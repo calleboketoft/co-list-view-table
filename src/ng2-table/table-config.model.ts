@@ -1,6 +1,7 @@
 export interface TableConfigModel {
   columnDefs: TableColModel[]
   tableNgClass?: any
+  tableNgStyle?: any
   rowNgStyle?: any
   rowNgStylePredicate?: any
   rowNgClass?: any

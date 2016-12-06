@@ -14,8 +14,13 @@ var AppComponent = (function () {
     function AppComponent() {
         this.myData = example_data_1.exampleData;
         this.myConfig = {
+            tableNgClass: 'table table-striped table-hover',
             rowNgStylePredicate: function (rowData) {
                 return rowData.userId === '5' ? { 'cursor': 'crosshair' } : { 'cursor': 'pointer' };
+            },
+            rowNgClassPredicate: function (rowData, rowIndex, activeRow) {
+                debugger;
+                return rowIndex === activeRow ? ['table-active'] : '';
             },
             columnDefs: [
                 {
@@ -25,6 +30,7 @@ var AppComponent = (function () {
                 },
                 {
                     field: 'pet',
+                    headerTitle: 'Pet',
                     cellItem: {
                         elementType: 'div',
                         cellItemNgClassPredicate: function (rowData) {

@@ -66,8 +66,7 @@ import { TableConfigModel } from './table-config.model'
   template: `
     <table
       [ngClass]="getNgThing('table', 'class', tableConfig)"
-      [ngStyle]="getNgThing('table', 'style', tableConfig)"
-      [class.table-hover]="configTernary('rowClickStyles')">
+      [ngStyle]="getNgThing('table', 'style', tableConfig)">
       <thead>
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
@@ -89,11 +88,10 @@ import { TableConfigModel } from './table-config.model'
       </thead>
       <tbody>
         <tr
+          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index; let activeRowz = activeRow"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
           [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
-          [class.table-info]="configTernary('rowClickStyles') && rowIndex === activeRow"
-          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
-          (click)="rowClicked.emit(rowData, rowIndex)">
+          (click)="selectRow(rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.cellItem?.elementType">
 
@@ -215,50 +213,49 @@ export class Ng2TableComponent implements OnChanges {
 
       case 'row-class':
         if (tableConfig['rowNgClassPredicate']) {
-          return tableConfig['rowNgClassPredicate'](rowData)
+          return tableConfig['rowNgClassPredicate'](rowData, rowIndex, activeRow)
         }
         return tableConfig['rowNgClass'] || ''
 
       case 'row-style':
-        debugger
         if (tableConfig['rowNgStylePredicate']) {
-          return tableConfig['rowNgStylePredicate'](rowData)
+          return tableConfig['rowNgStylePredicate'](rowData, rowIndex, activeRow)
         }
         return tableConfig['rowNgStyle'] || ''
 
       case 'cell-class':
         if (col['cellNgClassPredicate']) {
-          return col['cellNgClassPredicate'](rowData)
+          return col['cellNgClassPredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellNgClass'] || ''
 
       case 'cell-style':
         if (col['cellNgStylePredicate']) {
-          return col['cellNgStylePredicate'](rowData)
+          return col['cellNgStylePredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellNgStyle'] || ''
 
       case 'cellItemButton-class':
         if (col['cellItem']['cellItemNgClassPredicate']) {
-          return col['cellItem']['cellItemNgClassPredicate'](rowData)
+          return col['cellItem']['cellItemNgClassPredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellItem']['cellItemNgClass'] || ''
 
       case 'cellItemButton-style':
         if (col['cellItem']['cellItemNgStylePredicate']) {
-          return col['cellItem']['cellItemNgStylePredicate'](rowData)
+          return col['cellItem']['cellItemNgStylePredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellItem']['cellItemNgStyle'] || ''
 
       case 'cellItemDiv-class':
         if (col['cellItem']['cellItemNgClassPredicate']) {
-          return col['cellItem']['cellItemNgClassPredicate'](rowData)
+          return col['cellItem']['cellItemNgClassPredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellItem']['cellItemNgClass'] || ''
 
       case 'cellItemDiv-style':
         if (col['cellItem']['cellItemNgStylePredicate']) {
-          return col['cellItem']['cellItemNgStylePredicate'](rowData)
+          return col['cellItem']['cellItemNgStylePredicate'](rowData, rowIndex, activeRow)
         }
         return col['cellItem']['cellItemNgStyle'] || ''
 

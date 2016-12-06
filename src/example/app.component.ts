@@ -24,8 +24,13 @@ import { TableConfigModel } from '../../index'
 export class AppComponent {
   public myData = exampleData
   public myConfig: TableConfigModel = {
+    tableNgClass: 'table table-striped table-hover',
     rowNgStylePredicate: (rowData) => {
       return rowData.userId === '5' ? {'cursor': 'crosshair'} : {'cursor': 'pointer'}
+    },
+    rowNgClassPredicate: (rowData, rowIndex, activeRow) => {
+      debugger
+      return rowIndex === activeRow ? ['table-active'] : ''
     },
     columnDefs: [
       {
@@ -35,6 +40,7 @@ export class AppComponent {
       },
       {
         field: 'pet',
+        headerTitle: 'Pet',
         cellItem: {
           elementType: 'div',
           cellItemNgClassPredicate: (rowData) => {
