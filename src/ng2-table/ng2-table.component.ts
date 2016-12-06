@@ -89,10 +89,11 @@ export interface ITableConfig {
       </thead>
       <tbody>
         <tr
+          [ngClass]="tableConfig.rowClassPredicate ? tableConfig.rowClassPredicate(rowData) : ''"
           [class.table-info]="configTernary('rowClickStyles') && rowIndex === activeRow"
           [style.cursor]="configTernary('rowClickStyles', 'pointer', '')"
-          *ngFor="let dataRow of tableData | search: tableConfigCopy; let rowIndex = index"
-          (click)="selectRow(dataRow, rowIndex)">
+          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
+          (click)="selectRow(rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.type">
               <div *ngSwitchCase="'button'">
@@ -100,13 +101,13 @@ export interface ITableConfig {
                   <button type="button"
                     [class]="col.config?.buttonClass || 'btn btn-sm btn-primary'"
                     [ngStyle]="col.config?.buttonStyle"
-                    (click)="buttonFn($event, col, dataRow)">
-                      {{col.config?.buttonName || dataRow[col.field]}}
+                    (click)="buttonFn($event, col, rowData)">
+                      {{col.config?.buttonName || rowData[col.field]}}
                   </button>
                 </div>
               </div>
               <div *ngSwitchDefault class="cell-content"
-                [ngStyle]="col.styleCell">{{dataRow[col.field]}}</div>
+                [ngStyle]="col.styleCell">{{rowData[col.field]}}</div>
             </div>
           </td>
         </tr>

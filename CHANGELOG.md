@@ -1,3 +1,7 @@
+## 1.3.3 (2016-12-06)
+
+* Add property rowClassPredicate to add a style to a cell conditionally
+
 ## 1.3.2 (2016-12-05)
 
 * Set button styles with config: {buttonStyle: {'width': '100px'}}
