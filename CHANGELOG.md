@@ -1,3 +1,7 @@
+## 2.0.1 (2016-12-06)
+
+* FIX: colHeaderNgStyle -> headerNgStyle and colHeaderNgClass -> headerNgClass
+
 ## 2.0.0 (2016-12-06)
 
 * BREAKING CHANGES: Pretty much the whole API of the component.

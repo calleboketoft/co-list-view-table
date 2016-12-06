@@ -71,8 +71,8 @@ import { TableConfigModel } from './table-config.model'
         <tr>
           <th *ngFor="let col of tableConfig.columnDefs"
             [style.width]="col.width"
-            [ngClass]="getNgThing('colHeader', 'class', tableConfig, null, null, null, col)"
-            [ngStyle]="getNgThing('colHeader', 'style', tableConfig, null, null, null, col)">
+            [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
+            [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
             <span (click)="sortCol(col)">
               {{col.headerText || col.field}}
             </span>
@@ -259,11 +259,11 @@ export class Ng2TableComponent implements OnChanges {
         }
         return col['cellItem']['cellItemNgStyle'] || ''
 
-      case 'colHeader-class':
-        return col['colHeaderNgClass'] || ''
+      case 'header-class':
+        return col['headerNgClass'] || ''
 
-      case 'colHeader-style':
-        return col['colHeaderNgStyle'] || ''
+      case 'header-style':
+        return col['headerNgStyle'] || ''
     }
   }
 }

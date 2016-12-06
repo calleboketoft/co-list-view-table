@@ -29,7 +29,6 @@ export class AppComponent {
       return rowData.userId === '5' ? {'cursor': 'crosshair'} : {'cursor': 'pointer'}
     },
     rowNgClassPredicate: (rowData, rowIndex, activeRow) => {
-      debugger
       return rowIndex === activeRow ? ['table-active'] : ''
     },
     columnDefs: [

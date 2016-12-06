@@ -19,7 +19,6 @@ var AppComponent = (function () {
                 return rowData.userId === '5' ? { 'cursor': 'crosshair' } : { 'cursor': 'pointer' };
             },
             rowNgClassPredicate: function (rowData, rowIndex, activeRow) {
-                debugger;
                 return rowIndex === activeRow ? ['table-active'] : '';
             },
             columnDefs: [
