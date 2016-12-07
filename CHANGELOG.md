@@ -1,3 +1,7 @@
+## 2.0.2 (2016-12-07)
+
+* Added license
+
 ## 2.0.1 (2016-12-06)
 
 * FIX: colHeaderNgStyle -> headerNgStyle and colHeaderNgClass -> headerNgClass
