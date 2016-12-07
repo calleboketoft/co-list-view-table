@@ -1,7 +1,7 @@
 let exampleData = [
   {
     userId: '1',
-    userName: 'Carl',
+    userName: 'Carl \nOla',
     nickName: 'Calle',
     pet: 'dog'
   },
@@ -14,7 +14,7 @@ let exampleData = [
   {
     userId: '3',
     userName: 'Bubba',
-    nickName: 'Bullen \n newline',
+    nickName: 'Bullen',
     pet: 'kangaroo'
   },
   {
@@ -34,6 +34,12 @@ let exampleData = [
     userName: 'Lars',
     nickName: 'Lasse',
     pet: 'beer'
+  },
+  {
+    userId: '7',
+    userName: 'Hanui',
+    nickName: 'Hanui',
+    pet: 'unicorn'
   }
 ]
 export { exampleData }

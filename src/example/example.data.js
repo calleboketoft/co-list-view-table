@@ -2,7 +2,7 @@
 var exampleData = [
     {
         userId: '1',
-        userName: 'Carl',
+        userName: 'Carl \nOla',
         nickName: 'Calle',
         pet: 'dog'
     },
@@ -15,7 +15,7 @@ var exampleData = [
     {
         userId: '3',
         userName: 'Bubba',
-        nickName: 'Bullen \n newline',
+        nickName: 'Bullen',
         pet: 'kangaroo'
     },
     {
@@ -35,6 +35,12 @@ var exampleData = [
         userName: 'Lars',
         nickName: 'Lasse',
         pet: 'beer'
+    },
+    {
+        userId: '7',
+        userName: 'Hanui',
+        nickName: 'Hanui',
+        pet: 'unicorn'
     }
 ];
 exports.exampleData = exampleData;
