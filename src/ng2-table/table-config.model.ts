@@ -3,9 +3,9 @@ export interface TableConfigModel {
   tableNgClass?: any
   tableNgStyle?: any
   rowNgStyle?: any
-  rowNgStylePredicate?: any
+  rowNgStylePredicate?: PredicateFunc
   rowNgClass?: any
-  rowNgClassPredicate?: any
+  rowNgClassPredicate?: PredicateFunc
 }
 
 export interface TableColModel {
@@ -18,15 +18,19 @@ export interface TableColModel {
   headerNgStyle?: any
   headerNgClass?: any
   cellNgStyle?: any
-  cellNgStylePredicate?: any
+  cellNgStylePredicate?: PredicateFunc
   cellNgClass?: any
-  cellNgClassPredicate?: any
+  cellNgClassPredicate?: PredicateFunc
   cellItem?: {
     elementType: string // 'button' or 'div'
     staticContent?: string // otherwise just wraps field value
     cellItemNgStyle?: any
-    cellItemNgStylePredicate?: any
+    cellItemNgStylePredicate?: PredicateFunc
     cellItemNgClass?: any
-    cellItemNgClassPredicate?: any
+    cellItemNgClassPredicate?: PredicateFunc
   }
+}
+
+export interface PredicateFunc {
+  (rowData: any, rowIndex: number, activeRow: number): any
 }

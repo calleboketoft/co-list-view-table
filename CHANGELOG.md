@@ -1,3 +1,8 @@
+## 2.0.3 (2016-12-07)
+
+* Updated example to be loads nicer
+* Added interface for PredicateFunc to be used in the tableConfig
+
 ## 2.0.2 (2016-12-07)
 
 * Added license
