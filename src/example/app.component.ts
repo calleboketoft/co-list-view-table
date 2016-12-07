@@ -5,8 +5,13 @@ import { TableConfigModel } from '../../index'
 @Component({
   selector: 'app',
   template: `
+    <button class="btn btn-secondary btn-sm"
+      (click)="toggleTable()" style="margin-bottom: 15px;">
+      Toggle table
+    </button>
+
     <!-- Set the height of the table content on a wrapping div -->
-    <div style="height: 320px;">
+    <div style="height: 320px;" *ngIf="showTable">
       <ng2-table
         [tableData]="myData"
         [tableConfig]="myConfig"
@@ -17,6 +22,7 @@ import { TableConfigModel } from '../../index'
   `
 })
 export class AppComponent {
+  public showTable = true
   public myData = exampleData
   public myConfig: TableConfigModel = {
     // the following three properties create a "clickable row" look
@@ -80,5 +86,9 @@ export class AppComponent {
   }
   public cellItemClicked (options) {
     console.log('Cell item clicked:', options)
+  }
+
+  public toggleTable () {
+    this.showTable = !this.showTable
   }
 }

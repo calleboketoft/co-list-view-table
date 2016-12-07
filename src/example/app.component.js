@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var example_data_1 = require('./example.data');
 var AppComponent = (function () {
     function AppComponent() {
+        this.showTable = true;
         this.myData = example_data_1.exampleData;
         this.myConfig = {
             // the following three properties create a "clickable row" look
@@ -76,10 +77,13 @@ var AppComponent = (function () {
     AppComponent.prototype.cellItemClicked = function (options) {
         console.log('Cell item clicked:', options);
     };
+    AppComponent.prototype.toggleTable = function () {
+        this.showTable = !this.showTable;
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
+            template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\" style=\"margin-bottom: 15px;\">\n      Toggle table\n    </button>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
