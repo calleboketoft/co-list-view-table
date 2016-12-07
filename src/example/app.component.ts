@@ -6,7 +6,7 @@ import { TableConfigModel } from '../../index'
   selector: 'app',
   template: `
     <!-- Set the height of the table content on a wrapping div -->
-    <div style="height: 340px;">
+    <div style="height: 320px;">
       <ng2-table
         [tableData]="myData"
         [tableConfig]="myConfig"
