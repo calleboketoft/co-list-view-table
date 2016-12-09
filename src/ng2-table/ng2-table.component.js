@@ -41,13 +41,6 @@ var Ng2TableComponent = (function () {
             }
         }
     };
-    Ng2TableComponent.prototype.configTernary = function (configKey, trueVal, falseVal) {
-        if (trueVal === void 0) { trueVal = true; }
-        if (falseVal === void 0) { falseVal = false; }
-        if (this.tableConfigCopy) {
-            return this.tableConfigCopy[configKey] ? trueVal : falseVal;
-        }
-    };
     Ng2TableComponent.prototype.selectRow = function (dataRow, rowIndex) {
         this.activeRow = rowIndex;
         this.rowClicked.emit(dataRow);
