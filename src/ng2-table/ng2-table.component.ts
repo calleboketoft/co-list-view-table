@@ -173,12 +173,6 @@ export class Ng2TableComponent implements OnChanges {
     }
   }
 
-  public configTernary (configKey, trueVal = true, falseVal = false) {
-    if (this.tableConfigCopy) {
-      return this.tableConfigCopy[configKey] ? trueVal : falseVal
-    }
-  }
-
   public selectRow (dataRow, rowIndex) {
     this.activeRow = rowIndex
     this.rowClicked.emit(dataRow)
