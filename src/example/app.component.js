@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var example_data_1 = require('./example.data');
+var core_1 = require("@angular/core");
+var example_data_1 = require("./example.data");
 var AppComponent = (function () {
     function AppComponent() {
         this.showTable = true;
@@ -80,14 +80,14 @@ var AppComponent = (function () {
     AppComponent.prototype.toggleTable = function () {
         this.showTable = !this.showTable;
     };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'app',
-            template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\" style=\"margin-bottom: 15px;\">\n      Toggle table\n    </button>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'app',
+        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\" style=\"margin-bottom: 15px;\">\n      Toggle table\n    </button>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
+    }),
+    __metadata("design:paramtypes", [])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map
