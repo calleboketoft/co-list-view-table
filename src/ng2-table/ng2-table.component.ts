@@ -150,7 +150,15 @@ export class Ng2TableComponent implements OnChanges {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
-    this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig)
+
+    // columnDefs need to be deep copied
+    let columnDefsCopy = this.tableConfig.columnDefs.map(colDef => {
+      return Object.assign({}, colDef)
+    })
+
+    this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig, {
+      columnDefs: columnDefsCopy
+    })
 
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
       return !!col.search
@@ -186,6 +194,7 @@ export class Ng2TableComponent implements OnChanges {
     let foundColDef = this.tableConfigCopy.columnDefs.find(colDef => {
       return colDef.field === $event.field
     })
+    // Add search term to the colDef for the field being searched
     foundColDef.searchTerm = $event.value
     this.tableConfigCopy = Object.assign({}, this.tableConfigCopy)
   }

@@ -18,11 +18,17 @@ var Ng2TableComponent = (function () {
         this.sorter = new sorter_service_1.Sorter();
     }
     Ng2TableComponent.prototype.ngOnChanges = function (changes) {
-        var _this = this;
         // add search terms etc to this one
         // the only problem would be if we want to send in a new tableConfig
         // via the @Input() since we're now working with a copy
-        this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig);
+        var _this = this;
+        // columnDefs need to be deep copied
+        var columnDefsCopy = this.tableConfig.columnDefs.map(function (colDef) {
+            return Object.assign({}, colDef);
+        });
+        this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig, {
+            columnDefs: columnDefsCopy
+        });
         this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(function (col) {
             return !!col.search;
         });
@@ -54,6 +60,7 @@ var Ng2TableComponent = (function () {
         var foundColDef = this.tableConfigCopy.columnDefs.find(function (colDef) {
             return colDef.field === $event.field;
         });
+        // Add search term to the colDef for the field being searched
         foundColDef.searchTerm = $event.value;
         this.tableConfigCopy = Object.assign({}, this.tableConfigCopy);
     };
