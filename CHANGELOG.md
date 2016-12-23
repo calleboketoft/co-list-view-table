@@ -1,3 +1,8 @@
+## 2.0.6 (2016-12-23)
+
+* Fixed column defaultSort option when reloading table
+* now re-initializes search fields and sorting when instantiating table
+
 ## 2.0.3 (2016-12-07)
 
 * Updated example to be loads nicer
