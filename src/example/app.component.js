@@ -9,67 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var example_data_1 = require("./example.data");
+var example_table_data_1 = require("./example-table.data");
+var example_table_config_1 = require("./example-table.config");
 var AppComponent = (function () {
     function AppComponent() {
         this.showTable = true;
-        this.myData = example_data_1.exampleData;
-        this.myConfig = {
-            // the following three properties create a "clickable row" look
-            // and highlights the most recently clicked row in the table
-            tableNgClass: 'table table-striped table-hover',
-            rowNgStyle: { 'cursor': 'pointer' },
-            rowNgClassPredicate: function (rowData, rowIndex, activeRow) {
-                return rowIndex === activeRow ? ['table-active'] : '';
-            },
-            columnDefs: [
-                {
-                    field: 'userId',
-                    headerText: 'ID',
-                    headerNgClass: 'text-muted',
-                    width: '100px'
-                },
-                {
-                    field: 'pet',
-                    headerText: 'Pet',
-                    cellItem: {
-                        // elementType can be either 'div' or 'button'
-                        elementType: 'div',
-                        cellItemNgClassPredicate: function (rowData) {
-                            return rowData.pet === 'beer' ? 'tag tag-warning' : 'tag tag-primary';
-                        }
-                    }
-                },
-                {
-                    field: 'userName',
-                    headerText: 'Name',
-                    search: true,
-                    sortDefaultReverse: true,
-                    cellNgStyle: { 'font-weight': 'bold' }
-                },
-                {
-                    field: 'nickName',
-                    headerText: 'Nickname',
-                    search: true,
-                    cellItem: {
-                        elementType: 'div',
-                        cellItemNgStyle: { 'width': '120px' },
-                        cellItemNgClass: 'btn btn-sm btn-info'
-                    }
-                },
-                {
-                    // field isn't required when having a cellItem
-                    headerText: 'Delete',
-                    headerNgStyle: { 'text-align': 'center', 'color': 'red' },
-                    cellNgStyle: { 'text-align': 'center' },
-                    cellItem: {
-                        elementType: 'button',
-                        staticContent: 'Danger',
-                        cellItemNgClass: 'btn btn-sm btn-danger'
-                    }
-                }
-            ]
-        };
+        this.myData = example_table_data_1.exampleData;
+        this.myConfig = example_table_config_1.exampleTableConfig;
     }
     AppComponent.prototype.rowClicked = function (item) {
         console.log('clicked item:', item);
@@ -82,7 +28,7 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.reorganizeContent = function () {
         var order = this.getRandomInt(0, 1);
-        var dataCopy = example_data_1.exampleData.map(function (item) {
+        var dataCopy = example_table_data_1.exampleData.map(function (item) {
             return Object.assign({}, item);
         });
         dataCopy.sort(function (item1, item2) {
@@ -96,7 +42,8 @@ var AppComponent = (function () {
                 return order === 1 ? -1 : 1;
             }
         });
-        dataCopy.splice(this.getRandomInt(1, 7), 1);
+        dataCopy.splice(this.getRandomInt(0, 4), 1);
+        dataCopy.splice(this.getRandomInt(0, 3), 1);
         this.myData = dataCopy;
     };
     AppComponent.prototype.getRandomInt = function (min, max) {
@@ -107,7 +54,7 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app',
-        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove random item\n    </button>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
+        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove 2 random items\n    </button>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 340px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
     }),
     __metadata("design:paramtypes", [])
 ], AppComponent);

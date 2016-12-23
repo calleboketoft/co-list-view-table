@@ -12,12 +12,6 @@ let exampleData = [
     pet: 'cat'
   },
   {
-    userId: '3',
-    userName: 'Bubba',
-    nickName: 'Bullen',
-    pet: 'kangaroo'
-  },
-  {
     userId: '4',
     userName: 'Pelle',
     nickName: 'P',
@@ -30,15 +24,9 @@ let exampleData = [
     pet: 'smurf'
   },
   {
-    userId: '6',
-    userName: 'Lars',
-    nickName: 'Lasse',
-    pet: 'beer'
-  },
-  {
-    userId: '7',
+    userId: '3',
     userName: 'Hanui',
-    nickName: 'Hanui',
+    nickName: 'Honey',
     pet: 'unicorn'
   }
 ]
