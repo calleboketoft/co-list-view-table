@@ -18,6 +18,7 @@ var Ng2TableComponent = (function () {
         this.sorter = new sorter_service_1.Sorter();
     }
     Ng2TableComponent.prototype.ngOnChanges = function (changes) {
+        var _this = this;
         // add search terms etc to this one
         // the only problem would be if we want to send in a new tableConfig
         // via the @Input() since we're now working with a copy
@@ -28,17 +29,16 @@ var Ng2TableComponent = (function () {
         // TODO when updating content, remember which column was clicked for sorting
         // atm, we reset the sorting when updating the content
         if (changes.tableData.currentValue.length > 0) {
-            var colToSortBy = this.tableConfigCopy.columnDefs.find(function (col) {
-                return col.sortDefault || col.sortDefaultReverse;
-            });
-            if (colToSortBy) {
-                // Sort once, standard direction
-                this.sortCol(colToSortBy, false);
-                if (colToSortBy.sortDefaultReverse) {
-                    // Sorting again to reverse the sorting
-                    this.sortCol(colToSortBy, false);
+            this.tableConfigCopy.columnDefs.find(function (col) {
+                if (col.sortDefault) {
+                    _this.sortCol(col, true);
                 }
-            }
+                else if (col.sortDefaultReverse) {
+                    // Sorting again to reverse the sorting
+                    _this.sortCol(col, false);
+                    _this.sortCol(col, false);
+                }
+            });
         }
     };
     Ng2TableComponent.prototype.selectRow = function (dataRow, rowIndex) {

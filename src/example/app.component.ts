@@ -6,9 +6,15 @@ import { TableConfigModel } from '../../index'
   selector: 'app',
   template: `
     <button class="btn btn-secondary btn-sm"
-      (click)="toggleTable()" style="margin-bottom: 15px;">
+      (click)="toggleTable()">
       Toggle table
     </button>
+    <button class="btn btn-secondary btn-sm"
+      (click)="reorganizeContent()">
+      Reorganize content and remove random item
+    </button>
+
+    <br><br>
 
     <!-- Set the height of the table content on a wrapping div -->
     <div style="height: 320px;" *ngIf="showTable">
@@ -90,5 +96,25 @@ export class AppComponent {
 
   public toggleTable () {
     this.showTable = !this.showTable
+  }
+  public reorganizeContent () {
+    let order = this.getRandomInt(0, 1)
+    let dataCopy = exampleData.map((item) => {
+      return Object.assign({}, item)
+    })
+    dataCopy.sort((item1, item2) => {
+      if (item1.userId === item2.userId) {
+        return 0
+      } else if (item1.userId > item2.userId) {
+        return order === 1 ? 1 : -1
+      } else {
+        return order === 1 ? -1 : 1
+      }
+    })
+    dataCopy.splice(this.getRandomInt(1, 7), 1)
+    this.myData = dataCopy
+  }
+  public getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
   }
 }

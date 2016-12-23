@@ -80,12 +80,34 @@ var AppComponent = (function () {
     AppComponent.prototype.toggleTable = function () {
         this.showTable = !this.showTable;
     };
+    AppComponent.prototype.reorganizeContent = function () {
+        var order = this.getRandomInt(0, 1);
+        var dataCopy = example_data_1.exampleData.map(function (item) {
+            return Object.assign({}, item);
+        });
+        dataCopy.sort(function (item1, item2) {
+            if (item1.userId === item2.userId) {
+                return 0;
+            }
+            else if (item1.userId > item2.userId) {
+                return order === 1 ? 1 : -1;
+            }
+            else {
+                return order === 1 ? -1 : 1;
+            }
+        });
+        dataCopy.splice(this.getRandomInt(1, 7), 1);
+        this.myData = dataCopy;
+    };
+    AppComponent.prototype.getRandomInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app',
-        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\" style=\"margin-bottom: 15px;\">\n      Toggle table\n    </button>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
+        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove random item\n    </button>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 320px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\">\n      </ng2-table>\n    </div>\n  "
     }),
     __metadata("design:paramtypes", [])
 ], AppComponent);

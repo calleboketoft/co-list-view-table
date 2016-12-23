@@ -159,17 +159,15 @@ export class Ng2TableComponent implements OnChanges {
     // TODO when updating content, remember which column was clicked for sorting
     // atm, we reset the sorting when updating the content
     if (changes.tableData.currentValue.length > 0) {
-      let colToSortBy = this.tableConfigCopy.columnDefs.find(col => {
-        return col.sortDefault || col.sortDefaultReverse
-      })
-      if (colToSortBy) {
-        // Sort once, standard direction
-        this.sortCol(colToSortBy, false)
-        if (colToSortBy.sortDefaultReverse) {
+      this.tableConfigCopy.columnDefs.find(col => {
+        if (col.sortDefault) {
+          this.sortCol(col, true)
+        } else if (col.sortDefaultReverse) {
           // Sorting again to reverse the sorting
-          this.sortCol(colToSortBy, false)
+          this.sortCol(col, false)
+          this.sortCol(col, false)
         }
-      }
+      })
     }
   }
 
