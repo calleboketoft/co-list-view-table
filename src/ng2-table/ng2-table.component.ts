@@ -69,6 +69,8 @@ import { TableConfigModel } from './table-config.model'
       [ngStyle]="getNgThing('table', 'style', tableConfig)">
       <thead>
         <tr>
+          <!-- must render from tableConfig so the table don't re-render all the
+               time when tableConfigCopy is updated -->
           <th *ngFor="let col of tableConfig.columnDefs"
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
@@ -148,7 +150,15 @@ export class Ng2TableComponent implements OnChanges {
   public copyTableConfig (tableConfig) {
     // columnDefs need to be deep copied
     let columnDefsCopy = tableConfig.columnDefs.map(colDef => {
-      return Object.assign({}, colDef)
+
+      // sortAdvanced needs to be deep copied
+      let copiedSortAdvanced = colDef.sortAdvanced
+        ? Object.assign({}, colDef.sortAdvanced) : null
+      let copiedColDef = Object.assign({}, colDef)
+      if (copiedSortAdvanced) {
+        copiedColDef.sortAdvanced = copiedSortAdvanced
+      }
+      return copiedColDef
     })
 
     let tableConfigCopy = Object.assign({}, tableConfig, {
@@ -246,6 +256,13 @@ export class Ng2TableComponent implements OnChanges {
   }
 
   public colHeaderSortClicked (col) {
+
+    // The incoming col is from the original tableConfig, which we don't want
+    // to modify. Find the col from the tableConfigCopy and modify that one instead
+    let colInCopy = this.tableConfigCopy.columnDefs.find(colDef => {
+      return col.field === colDef.field
+    })
+
     // Find the current highest sort count. Every time a column header is clicked
     // for sorting, the counter gets increased. This can be used to create an
     // exact sort order based on multiple columns being sorted.
@@ -256,19 +273,19 @@ export class Ng2TableComponent implements OnChanges {
       return mem
     }, 0)
 
-    col.sortAdvanced = col.sortAdvanced || { }
+    colInCopy.sortAdvanced = colInCopy.sortAdvanced || { }
     // Set the sort count to max + 1, this is the most recently pressed sort
-    col.sortAdvanced.count = maxSortCount + 1
+    colInCopy.sortAdvanced.count = maxSortCount + 1
     // if the column sort has been pressed already, switch direction
-    col.sortAdvanced.direction = col.sortAdvanced.direction ? - col.sortAdvanced.direction : 1
+    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction ? - colInCopy.sortAdvanced.direction : 1
 
     // Update columnDef for sorted item
     let colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex((colDef) => {
-      return colDef.field === col.field
+      return colDef.field === colInCopy.field
     })
-    this.tableConfigCopy.columnDefs[colDefIndexToReplace] = col
+    this.tableConfigCopy.columnDefs[colDefIndexToReplace] = colInCopy
 
-    this.tableData = tableDataSort(col.field, this.tableData, col.sortAdvanced.direction)
+    this.tableData = tableDataSort(colInCopy.field, this.tableData, colInCopy.sortAdvanced.direction)
     this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
   }
 
