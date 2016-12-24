@@ -138,6 +138,7 @@ export class Ng2TableComponent implements OnChanges {
   @Input() tableConfig: TableConfigModel
   @Output() rowClicked = new EventEmitter()
   @Output() cellItemClicked = new EventEmitter()
+  @Output() tableConfigUpdated = new EventEmitter()
 
   public tableConfigCopy
   public isAnyFieldSearchable
@@ -156,7 +157,7 @@ export class Ng2TableComponent implements OnChanges {
       return Object.assign({}, colDef)
     })
 
-    this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig, {
+    this.tableConfigCopy = this.tableConfigCopy || Object.assign({}, this.tableConfig, {
       columnDefs: columnDefsCopy
     })
 
@@ -196,7 +197,9 @@ export class Ng2TableComponent implements OnChanges {
     })
     // Add search term to the colDef for the field being searched
     foundColDef.searchTerm = $event.value
-    this.tableConfigCopy = Object.assign({}, this.tableConfigCopy)
+    let updatedTableConfigCopy = Object.assign({}, this.tableConfigCopy)
+    this.tableConfigCopy = updatedTableConfigCopy
+    this.tableConfigUpdated.emit(updatedTableConfigCopy)
   }
 
   public sortCol (col, dontToggle) {

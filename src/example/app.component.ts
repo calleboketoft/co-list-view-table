@@ -22,7 +22,8 @@ import { exampleTableConfig } from './example-table.config'
         [tableData]="myData"
         [tableConfig]="myConfig"
         (rowClicked)="rowClicked($event)"
-        (cellItemClicked)="cellItemClicked($event)">
+        (cellItemClicked)="cellItemClicked($event)"
+        (tableConfigUpdated)="tableConfigUpdated($event)">
       </ng2-table>
     </div>
   `
@@ -33,10 +34,13 @@ export class AppComponent {
   public myConfig = exampleTableConfig
 
   public rowClicked (item) {
-    console.log('clicked item:', item)
+    console.log('(rowClicked):', item)
   }
   public cellItemClicked (options) {
-    console.log('Cell item clicked:', options)
+    console.log('(cellItemClicked):', options)
+  }
+  public tableConfigUpdated (config) {
+    console.log('(tableConfigUpdated):', config)
   }
 
   public toggleTable () {

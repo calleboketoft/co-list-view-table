@@ -14,6 +14,7 @@ var Ng2TableComponent = (function () {
     function Ng2TableComponent() {
         this.rowClicked = new core_1.EventEmitter();
         this.cellItemClicked = new core_1.EventEmitter();
+        this.tableConfigUpdated = new core_1.EventEmitter();
         this.rowClickStyles = false;
         this.sorter = new sorter_service_1.Sorter();
     }
@@ -26,7 +27,7 @@ var Ng2TableComponent = (function () {
         var columnDefsCopy = this.tableConfig.columnDefs.map(function (colDef) {
             return Object.assign({}, colDef);
         });
-        this.tableConfigCopy = this.tableConfigCopy || Object['assign']({}, this.tableConfig, {
+        this.tableConfigCopy = this.tableConfigCopy || Object.assign({}, this.tableConfig, {
             columnDefs: columnDefsCopy
         });
         this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(function (col) {
@@ -62,7 +63,9 @@ var Ng2TableComponent = (function () {
         });
         // Add search term to the colDef for the field being searched
         foundColDef.searchTerm = $event.value;
-        this.tableConfigCopy = Object.assign({}, this.tableConfigCopy);
+        var updatedTableConfigCopy = Object.assign({}, this.tableConfigCopy);
+        this.tableConfigCopy = updatedTableConfigCopy;
+        this.tableConfigUpdated.emit(updatedTableConfigCopy);
     };
     Ng2TableComponent.prototype.sortCol = function (col, dontToggle) {
         this.tableData = this.sorter.sort(col.field, this.tableData, dontToggle);
@@ -137,6 +140,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], Ng2TableComponent.prototype, "cellItemClicked", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], Ng2TableComponent.prototype, "tableConfigUpdated", void 0);
 Ng2TableComponent = __decorate([
     core_1.Component({
         selector: 'ng2-table',
