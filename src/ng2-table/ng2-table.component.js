@@ -88,7 +88,6 @@ var Ng2TableComponent = (function () {
         var updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy);
         this.tableConfigCopy = updatedTableConfigCopy;
         this.tableConfigUpdated.emit(updatedTableConfigCopy);
-        console.log(this.tableConfig);
     };
     Ng2TableComponent.prototype.sortColsAdvanced = function (columnDefs) {
         // go through all columns and figure out sorting order based on

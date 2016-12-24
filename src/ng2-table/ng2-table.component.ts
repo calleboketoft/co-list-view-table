@@ -229,7 +229,6 @@ export class Ng2TableComponent implements OnChanges {
     let updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy)
     this.tableConfigCopy = updatedTableConfigCopy
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
-    console.log(this.tableConfig)
   }
 
   public sortColsAdvanced (columnDefs) {
