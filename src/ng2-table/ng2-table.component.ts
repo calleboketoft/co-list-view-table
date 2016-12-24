@@ -171,7 +171,7 @@ export class Ng2TableComponent implements OnChanges {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
-    this.tableConfigCopy = this.copyTableConfig(this.tableConfig)
+    this.tableConfigCopy = this.tableConfigCopy || this.copyTableConfig(this.tableConfig)
 
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(colDef => {
       return !!colDef.search
@@ -229,6 +229,7 @@ export class Ng2TableComponent implements OnChanges {
     let updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy)
     this.tableConfigCopy = updatedTableConfigCopy
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
+    console.log(this.tableConfig)
   }
 
   public sortColsAdvanced (columnDefs) {
