@@ -3,31 +3,31 @@ var exampleData = [
     {
         userId: '1',
         userName: 'Carl \nOla',
-        nickName: 'Calle',
+        nickName: 'A',
         pet: 'dog'
     },
     {
         userId: '2',
         userName: 'Boke',
-        nickName: 'G',
+        nickName: 'B',
         pet: 'cat'
     },
     {
         userId: '4',
         userName: 'Pelle',
-        nickName: 'P',
+        nickName: 'A',
         pet: 'dragon'
     },
     {
         userId: '5',
         userName: 'Oskar',
-        nickName: 'Olle',
+        nickName: 'A',
         pet: 'smurf'
     },
     {
         userId: '3',
         userName: 'Hanui',
-        nickName: 'Honey',
+        nickName: 'A',
         pet: 'unicorn'
     }
 ];
