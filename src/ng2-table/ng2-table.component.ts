@@ -73,7 +73,7 @@ import { TableConfigModel } from './table-config.model'
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
-            <span (click)="sortColAdvanced(col)">
+            <span (click)="colHeaderSortClicked(col)">
               {{col.headerText || col.field}}
             </span>
             <div *ngIf="isAnyFieldSearchable" class="search-wrap">
@@ -189,10 +189,10 @@ export class Ng2TableComponent implements OnChanges {
           colToSort.sortAdvanced = {
             count: 1,
             // convert the basic sort to the opposite sorting direction of the
-            // default sort since the sortColAdvanced reverses the direction by default
-            direction: colToSort.sortDefault ? -1 : 1
+            // default sort since the colHeaderSortClicked reverses the direction by default
+            direction: colToSort.sortDefault ? 1 : -1
           }
-          this.sortColAdvanced(colToSort)
+          this.tableData = tableDataSort(colToSort.field, this.tableData, colToSort.sortAdvanced.direction)
         }
       }
     }
@@ -223,7 +223,7 @@ export class Ng2TableComponent implements OnChanges {
 
   public sortColsAdvanced (columnDefs) {
     // go through all columns and figure out sorting order based on
-    // "sortAdvanced.count". Then call "sortColAdvanced" in the correct order
+    // "sortAdvanced.count". Then call "tableDataSort" in the correct order
     let columnsToApplySorting = columnDefs.filter(colDef => {
       return !!colDef.sortAdvanced
     })
@@ -245,7 +245,7 @@ export class Ng2TableComponent implements OnChanges {
     }, this.tableData)
   }
 
-  public sortColAdvanced (col) {
+  public colHeaderSortClicked (col) {
     // Find the current highest sort count. Every time a column header is clicked
     // for sorting, the counter gets increased. This can be used to create an
     // exact sort order based on multiple columns being sorted.
