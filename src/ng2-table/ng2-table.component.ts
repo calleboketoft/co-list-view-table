@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core'
-import { Sorter } from './sorter.service'
+import { tableDataSort } from './sorter.service'
 import { TableConfigModel } from './table-config.model'
 
 @Component({
@@ -73,7 +73,7 @@ import { TableConfigModel } from './table-config.model'
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
-            <span (click)="sortCol(col)">
+            <span (click)="sortColAdvanced(col)">
               {{col.headerText || col.field}}
             </span>
             <div *ngIf="isAnyFieldSearchable" class="search-wrap">
@@ -145,38 +145,47 @@ export class Ng2TableComponent implements OnChanges {
   public activeRow
   public rowClickStyles = false
 
-  public sorter = new Sorter()
+  public copyTableConfig (tableConfig) {
+    // columnDefs need to be deep copied
+    let columnDefsCopy = tableConfig.columnDefs.map(colDef => {
+      return Object.assign({}, colDef)
+    })
+
+    let tableConfigCopy = Object.assign({}, tableConfig, {
+      columnDefs: columnDefsCopy
+    })
+    return tableConfigCopy
+  }
 
   public ngOnChanges (changes) {
     // add search terms etc to this one
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
+    this.tableConfigCopy = this.copyTableConfig(this.tableConfig)
 
-    // columnDefs need to be deep copied
-    let columnDefsCopy = this.tableConfig.columnDefs.map(colDef => {
-      return Object.assign({}, colDef)
+    this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(colDef => {
+      return !!colDef.search
     })
 
-    this.tableConfigCopy = this.tableConfigCopy || Object.assign({}, this.tableConfig, {
-      columnDefs: columnDefsCopy
-    })
-
-    this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(col => {
-      return !!col.search
-    })
-
-    // TODO when updating content, remember which column was clicked for sorting
-    // atm, we reset the sorting when updating the content
+    // re-apply sorting when updating data in table
     if (changes.tableData.currentValue.length > 0) {
-      this.tableConfigCopy.columnDefs.find(col => {
-        if (col.sortDefault) {
-          this.sortCol(col, true)
-        } else if (col.sortDefaultReverse) {
-          // Sorting again to reverse the sorting
-          this.sortCol(col, false)
-          this.sortCol(col, false)
-        }
+      let sortAdvanced = this.tableConfigCopy.columnDefs.find(colDef => {
+        return !!colDef.sortAdvanced
       })
+
+      // sortAdvanced takes precedence in sorting
+      if (sortAdvanced) {
+        this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
+
+      // if no sortAdvanced is present, look for basicSort
+      } else {
+        let basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
+          return colDef.sortDefault || colDef.sortDefaultReverse
+        })
+        if (basicSortColIndex) {
+          this.sortColBasic(this.tableConfigCopy.columnDefs[basicSortColIndex])
+        }
+      }
     }
   }
 
@@ -197,13 +206,47 @@ export class Ng2TableComponent implements OnChanges {
     })
     // Add search term to the colDef for the field being searched
     foundColDef.searchTerm = $event.value
-    let updatedTableConfigCopy = Object.assign({}, this.tableConfigCopy)
+    // NOTE not 100% sure why I have to do this
+    let updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy)
     this.tableConfigCopy = updatedTableConfigCopy
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
   }
 
-  public sortCol (col, dontToggle) {
-    this.tableData = this.sorter.sort(col.field, this.tableData, dontToggle)
+  public sortColBasic (col) {
+    console.log('TODO: how do I sort basic?')
+  }
+
+  public sortColsAdvanced (columnDefs) {
+    // TODO go through all columns and figure out sorting order based on
+    // "sortAdvanced.count". Then call "sortColAdvanced" in the correct order
+    console.log('TODO implement this one')
+  }
+
+  public sortColAdvanced (col) {
+    // Find the current highest sort count. Every time a column header is clicked
+    // for sorting, the counter gets increased. This can be used to create an
+    // exact sort order based on multiple columns being sorted.
+    let maxSortCount = this.tableConfigCopy.columnDefs.reduce((mem, curr) => {
+      if (curr.sort && curr.sort.count > mem) {
+        mem = curr.sort.count
+      }
+      return mem
+    }, 0)
+
+    col.sortAdvanced = col.sortAdvanced || { }
+    // Set the sort count to max + 1, this is the most recently pressed sort
+    col.sortAdvanced.count = maxSortCount + 1
+    // if the sort has been pressed already, switch direction
+    col.sortAdvanced.direction = col.sortAdvanced.direction ? - col.sortAdvanced.direction : 1
+
+    // Update columnDef for sorted item
+    let colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex((colDef) => {
+      return colDef.field === col.field
+    })
+    this.tableConfigCopy.columnDefs[colDefIndexToReplace] = col
+
+    this.tableData = tableDataSort(col.field, this.tableData, col.sortAdvanced.direction)
+    this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
   }
 
   public getNgThing (thingType, classOrStyle, tableConfig, rowData, rowIndex, activeRow, col?) {
