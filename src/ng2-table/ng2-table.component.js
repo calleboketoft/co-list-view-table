@@ -42,6 +42,7 @@ var Ng2TableComponent = (function () {
             });
             // sortAdvanced takes precedence in sorting
             if (sortAdvanced) {
+                // there might be multiple columns with advanced sort
                 this.sortColsAdvanced(this.tableConfigCopy.columnDefs);
             }
             else {
@@ -49,7 +50,14 @@ var Ng2TableComponent = (function () {
                     return colDef.sortDefault || colDef.sortDefaultReverse;
                 });
                 if (basicSortColIndex !== -1) {
-                    this.sortColBasic(this.tableConfigCopy.columnDefs[basicSortColIndex]);
+                    var colToSort = this.tableConfigCopy.columnDefs[basicSortColIndex];
+                    colToSort.sortAdvanced = {
+                        count: 1,
+                        // convert the basic sort to the opposite sorting direction of the
+                        // default sort since the sortColAdvanced reverses the direction by default
+                        direction: colToSort.sortDefault ? -1 : 1
+                    };
+                    this.sortColAdvanced(colToSort);
                 }
             }
         }
@@ -73,10 +81,6 @@ var Ng2TableComponent = (function () {
         var updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy);
         this.tableConfigCopy = updatedTableConfigCopy;
         this.tableConfigUpdated.emit(updatedTableConfigCopy);
-    };
-    Ng2TableComponent.prototype.sortColBasic = function (col) {
-        var sortDirection = col.sortDefault ? 1 : -1;
-        this.tableData = sorter_service_1.tableDataSort(col.field, this.tableData, sortDirection);
     };
     Ng2TableComponent.prototype.sortColsAdvanced = function (columnDefs) {
         // go through all columns and figure out sorting order based on
@@ -113,7 +117,7 @@ var Ng2TableComponent = (function () {
         col.sortAdvanced = col.sortAdvanced || {};
         // Set the sort count to max + 1, this is the most recently pressed sort
         col.sortAdvanced.count = maxSortCount + 1;
-        // if the sort has been pressed already, switch direction
+        // if the column sort has been pressed already, switch direction
         col.sortAdvanced.direction = col.sortAdvanced.direction ? -col.sortAdvanced.direction : 1;
         // Update columnDef for sorted item
         var colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex(function (colDef) {

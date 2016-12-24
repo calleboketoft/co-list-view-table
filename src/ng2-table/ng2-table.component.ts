@@ -175,6 +175,7 @@ export class Ng2TableComponent implements OnChanges {
 
       // sortAdvanced takes precedence in sorting
       if (sortAdvanced) {
+        // there might be multiple columns with advanced sort
         this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
 
       // if no sortAdvanced is present, look for basicSort
@@ -183,7 +184,15 @@ export class Ng2TableComponent implements OnChanges {
           return colDef.sortDefault || colDef.sortDefaultReverse
         })
         if (basicSortColIndex !== -1) {
-          this.sortColBasic(this.tableConfigCopy.columnDefs[basicSortColIndex])
+          let colToSort = this.tableConfigCopy.columnDefs[basicSortColIndex]
+
+          colToSort.sortAdvanced = {
+            count: 1,
+            // convert the basic sort to the opposite sorting direction of the
+            // default sort since the sortColAdvanced reverses the direction by default
+            direction: colToSort.sortDefault ? -1 : 1
+          }
+          this.sortColAdvanced(colToSort)
         }
       }
     }
@@ -210,11 +219,6 @@ export class Ng2TableComponent implements OnChanges {
     let updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy)
     this.tableConfigCopy = updatedTableConfigCopy
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
-  }
-
-  public sortColBasic (col) {
-    let sortDirection = col.sortDefault ? 1 : -1
-    this.tableData = tableDataSort(col.field, this.tableData, sortDirection)
   }
 
   public sortColsAdvanced (columnDefs) {
@@ -255,7 +259,7 @@ export class Ng2TableComponent implements OnChanges {
     col.sortAdvanced = col.sortAdvanced || { }
     // Set the sort count to max + 1, this is the most recently pressed sort
     col.sortAdvanced.count = maxSortCount + 1
-    // if the sort has been pressed already, switch direction
+    // if the column sort has been pressed already, switch direction
     col.sortAdvanced.direction = col.sortAdvanced.direction ? - col.sortAdvanced.direction : 1
 
     // Update columnDef for sorted item
