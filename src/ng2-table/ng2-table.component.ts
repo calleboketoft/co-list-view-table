@@ -182,7 +182,7 @@ export class Ng2TableComponent implements OnChanges {
         let basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
           return colDef.sortDefault || colDef.sortDefaultReverse
         })
-        if (basicSortColIndex) {
+        if (basicSortColIndex !== -1) {
           this.sortColBasic(this.tableConfigCopy.columnDefs[basicSortColIndex])
         }
       }
@@ -213,13 +213,32 @@ export class Ng2TableComponent implements OnChanges {
   }
 
   public sortColBasic (col) {
-    console.log('TODO: how do I sort basic?')
+    let sortDirection = col.sortDefault ? 1 : -1
+    this.tableData = tableDataSort(col.field, this.tableData, sortDirection)
   }
 
   public sortColsAdvanced (columnDefs) {
-    // TODO go through all columns and figure out sorting order based on
+    // go through all columns and figure out sorting order based on
     // "sortAdvanced.count". Then call "sortColAdvanced" in the correct order
-    console.log('TODO implement this one')
+    let columnsToApplySorting = columnDefs.filter(colDef => {
+      return !!colDef.sortAdvanced
+    })
+    columnsToApplySorting.sort((a, b) => {
+      if (a.sortAdvanced.count < b.sortAdvanced.count) {
+        return -1
+      }
+      if (a.sortAdvanced.count > b.sortAdvanced.count) {
+        return 1
+      }
+      // a must be equal to b
+      return 0
+    })
+
+    // sort all the columns with sortAdvanced, in order
+    this.tableData = columnsToApplySorting.reduce((mem, curr) => {
+      mem = tableDataSort(curr.field, mem, curr.sortAdvanced.direction)
+      return mem
+    }, this.tableData)
   }
 
   public sortColAdvanced (col) {
@@ -227,8 +246,8 @@ export class Ng2TableComponent implements OnChanges {
     // for sorting, the counter gets increased. This can be used to create an
     // exact sort order based on multiple columns being sorted.
     let maxSortCount = this.tableConfigCopy.columnDefs.reduce((mem, curr) => {
-      if (curr.sort && curr.sort.count > mem) {
-        mem = curr.sort.count
+      if (curr.sortAdvanced && curr.sortAdvanced.count > mem) {
+        mem = curr.sortAdvanced.count
       }
       return mem
     }, 0)

@@ -13,6 +13,7 @@ export const exampleTableConfig: TableConfigModel = {
       field: 'userId',
       headerText: 'ID',
       headerNgClass: 'text-muted',
+      sortDefaultReverse: true,
       width: '100px'
     },
     {
@@ -30,7 +31,6 @@ export const exampleTableConfig: TableConfigModel = {
       field: 'userName',
       headerText: 'Name',
       search: true,
-      sortDefaultReverse: true,
       cellNgStyle: { 'font-weight': 'bold' }
     },
     {

@@ -48,7 +48,7 @@ var Ng2TableComponent = (function () {
                 var basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(function (colDef) {
                     return colDef.sortDefault || colDef.sortDefaultReverse;
                 });
-                if (basicSortColIndex) {
+                if (basicSortColIndex !== -1) {
                     this.sortColBasic(this.tableConfigCopy.columnDefs[basicSortColIndex]);
                 }
             }
@@ -75,20 +75,38 @@ var Ng2TableComponent = (function () {
         this.tableConfigUpdated.emit(updatedTableConfigCopy);
     };
     Ng2TableComponent.prototype.sortColBasic = function (col) {
-        console.log('TODO: how do I sort basic?');
+        var sortDirection = col.sortDefault ? 1 : -1;
+        this.tableData = sorter_service_1.tableDataSort(col.field, this.tableData, sortDirection);
     };
     Ng2TableComponent.prototype.sortColsAdvanced = function (columnDefs) {
-        // TODO go through all columns and figure out sorting order based on
+        // go through all columns and figure out sorting order based on
         // "sortAdvanced.count". Then call "sortColAdvanced" in the correct order
-        console.log('TODO implement this one');
+        var columnsToApplySorting = columnDefs.filter(function (colDef) {
+            return !!colDef.sortAdvanced;
+        });
+        columnsToApplySorting.sort(function (a, b) {
+            if (a.sortAdvanced.count < b.sortAdvanced.count) {
+                return -1;
+            }
+            if (a.sortAdvanced.count > b.sortAdvanced.count) {
+                return 1;
+            }
+            // a must be equal to b
+            return 0;
+        });
+        // sort all the columns with sortAdvanced, in order
+        this.tableData = columnsToApplySorting.reduce(function (mem, curr) {
+            mem = sorter_service_1.tableDataSort(curr.field, mem, curr.sortAdvanced.direction);
+            return mem;
+        }, this.tableData);
     };
     Ng2TableComponent.prototype.sortColAdvanced = function (col) {
         // Find the current highest sort count. Every time a column header is clicked
         // for sorting, the counter gets increased. This can be used to create an
         // exact sort order based on multiple columns being sorted.
         var maxSortCount = this.tableConfigCopy.columnDefs.reduce(function (mem, curr) {
-            if (curr.sort && curr.sort.count > mem) {
-                mem = curr.sort.count;
+            if (curr.sortAdvanced && curr.sortAdvanced.count > mem) {
+                mem = curr.sortAdvanced.count;
             }
             return mem;
         }, 0);

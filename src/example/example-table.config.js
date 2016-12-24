@@ -12,6 +12,7 @@ exports.exampleTableConfig = {
             field: 'userId',
             headerText: 'ID',
             headerNgClass: 'text-muted',
+            sortDefaultReverse: true,
             width: '100px'
         },
         {
@@ -29,7 +30,6 @@ exports.exampleTableConfig = {
             field: 'userName',
             headerText: 'Name',
             search: true,
-            sortDefaultReverse: true,
             cellNgStyle: { 'font-weight': 'bold' }
         },
         {
