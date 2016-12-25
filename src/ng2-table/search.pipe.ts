@@ -24,7 +24,7 @@ export class SearchPipe {
           let fieldValue = (item[columnDef.field] + '').toLowerCase()
           let searchTerm = (field.searchTerm + '').toLowerCase()
 
-          resultArr.push(fieldValue['includes'](searchTerm))
+          resultArr.push(fieldValue.includes(searchTerm))
         }
       })
       return resultArr.every(i => i)

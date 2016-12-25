@@ -90,7 +90,7 @@ import { TableConfigModel } from './table-config.model'
       </thead>
       <tbody>
         <tr
-          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index; let activeRowz = activeRow"
+          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
           [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
           (click)="rowClickedFn(rowData, rowIndex)">

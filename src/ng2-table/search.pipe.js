@@ -32,7 +32,7 @@ var SearchPipe = (function () {
                     }
                     var fieldValue = (item[columnDef.field] + '').toLowerCase();
                     var searchTerm = (field.searchTerm + '').toLowerCase();
-                    resultArr.push(fieldValue['includes'](searchTerm));
+                    resultArr.push(fieldValue.includes(searchTerm));
                 }
             });
             return resultArr.every(function (i) { return i; });
