@@ -93,7 +93,7 @@ import { TableConfigModel } from './table-config.model'
           *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index; let activeRowz = activeRow"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
           [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
-          (click)="selectRow(rowData, rowIndex)">
+          (click)="rowClickedFn(rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.cellItem?.elementType">
 
@@ -105,7 +105,7 @@ import { TableConfigModel } from './table-config.model'
                   <button type="button"
                     [ngClass]="getNgThing('cellItemButton', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
                     [ngStyle]="getNgThing('cellItemButton', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
-                    (click)="buttonFn($event, col, rowData)"
+                    (click)="cellItemClickedFn($event, col, rowData)"
                     >{{col.cellItem?.staticContent || rowData[col.field]}}</button>
                 </div>
               </div>
@@ -118,7 +118,7 @@ import { TableConfigModel } from './table-config.model'
                   <div
                     [ngClass]="getNgThing('cellItemDiv', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
                     [ngStyle]="getNgThing('cellItemDiv', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
-                    (click)="buttonFn($event, col, rowData)"
+                    (click)="cellItemClickedFn($event, col, rowData)"
                     >{{col.cellItem?.staticContent || rowData[col.field]}}</div>
                 </div>
               </div>
@@ -147,6 +147,8 @@ export class Ng2TableComponent implements OnChanges {
   public activeRow
   public rowClickStyles = false
 
+  // Deep copy the parts of the tableConfig that will be modified when
+  // sorting and searching the columns
   public copyTableConfig (tableConfig) {
     // columnDefs need to be deep copied
     let columnDefsCopy = tableConfig.columnDefs.map(colDef => {
@@ -168,7 +170,7 @@ export class Ng2TableComponent implements OnChanges {
   }
 
   public ngOnChanges (changes) {
-    // add search terms etc to this one
+    // add search terms and sorting to a copy of tableConfig
     // the only problem would be if we want to send in a new tableConfig
     // via the @Input() since we're now working with a copy
     this.tableConfigCopy = this.tableConfigCopy || this.copyTableConfig(this.tableConfig)
@@ -183,12 +185,12 @@ export class Ng2TableComponent implements OnChanges {
         return !!colDef.sortAdvanced
       })
 
-      // sortAdvanced takes precedence in sorting
+      // sortAdvanced takes precedence over sortDefault in sorting
       if (sortAdvanced) {
         // there might be multiple columns with advanced sort
         this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
 
-      // if no sortAdvanced is present, look for basicSort
+      // no sortAdvanced is present, look for sortDefault or sortDefaultReverse
       } else {
         let basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
           return colDef.sortDefault || colDef.sortDefaultReverse
@@ -196,10 +198,10 @@ export class Ng2TableComponent implements OnChanges {
         if (basicSortColIndex !== -1) {
           let colToSort = this.tableConfigCopy.columnDefs[basicSortColIndex]
 
+          // convert sortDefault to sortAdvanced to be able to simplify further
+          // column sorting
           colToSort.sortAdvanced = {
             count: 1,
-            // convert the basic sort to the opposite sorting direction of the
-            // default sort since the colHeaderSortClicked reverses the direction by default
             direction: colToSort.sortDefault ? 1 : -1
           }
           this.tableData = tableDataSort(colToSort.field, this.tableData, colToSort.sortAdvanced.direction)
@@ -208,24 +210,27 @@ export class Ng2TableComponent implements OnChanges {
     }
   }
 
-  public selectRow (dataRow, rowIndex) {
+  public rowClickedFn (dataRow, rowIndex) {
     this.activeRow = rowIndex
     this.rowClicked.emit(dataRow)
   }
 
-  // Custom button clicked
-  public buttonFn ($event, colSpec, row) {
-    $event.stopPropagation() // don't want to trigger "selectRow" as well
+  public cellItemClickedFn ($event, colSpec, row) {
+    $event.stopPropagation() // don't want to trigger "rowClickedFn" as well
     this.cellItemClicked.emit({colSpec, row})
   }
 
-  public searchUpdate ($event) {
+  public searchUpdate (originalCol) {
+    // The incoming col is from the original tableConfig, which we don't want
+    // to modify. Find the col from the tableConfigCopy and modify that one instead
     let foundColDef = this.tableConfigCopy.columnDefs.find(colDef => {
-      return colDef.field === $event.field
+      return colDef.field === originalCol.field
     })
-    // Add search term to the colDef for the field being searched
-    foundColDef.searchTerm = $event.value
-    // NOTE not 100% sure why I have to do this
+    // add search term to the colDef for the field being searched
+    foundColDef.searchTerm = originalCol.value
+
+    // NOTE not 100% sure why I have to do this, foundColDef should've been
+    // a reference to the tableConfigCopy item?
     let updatedTableConfigCopy = this.copyTableConfig(this.tableConfigCopy)
     this.tableConfigCopy = updatedTableConfigCopy
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
@@ -237,6 +242,8 @@ export class Ng2TableComponent implements OnChanges {
     let columnsToApplySorting = columnDefs.filter(colDef => {
       return !!colDef.sortAdvanced
     })
+
+    // use the count property to figure out in which order the columns were sorted
     columnsToApplySorting.sort((a, b) => {
       if (a.sortAdvanced.count < b.sortAdvanced.count) {
         return -1
@@ -244,7 +251,6 @@ export class Ng2TableComponent implements OnChanges {
       if (a.sortAdvanced.count > b.sortAdvanced.count) {
         return 1
       }
-      // a must be equal to b
       return 0
     })
 
@@ -255,16 +261,16 @@ export class Ng2TableComponent implements OnChanges {
     }, this.tableData)
   }
 
-  public colHeaderSortClicked (col) {
+  public colHeaderSortClicked (originalCol) {
 
     // The incoming col is from the original tableConfig, which we don't want
     // to modify. Find the col from the tableConfigCopy and modify that one instead
     let colInCopy = this.tableConfigCopy.columnDefs.find(colDef => {
-      return col.field === colDef.field
+      return originalCol.field === colDef.field
     })
 
     // Find the current highest sort count. Every time a column header is clicked
-    // for sorting, the counter gets increased. This can be used to create an
+    // for sorting, the counter gets incremented. This can be used to recreate an
     // exact sort order based on multiple columns being sorted.
     let maxSortCount = this.tableConfigCopy.columnDefs.reduce((mem, curr) => {
       if (curr.sortAdvanced && curr.sortAdvanced.count > mem) {
@@ -277,15 +283,18 @@ export class Ng2TableComponent implements OnChanges {
     // Set the sort count to max + 1, this is the most recently pressed sort
     colInCopy.sortAdvanced.count = maxSortCount + 1
     // if the column sort has been pressed already, switch direction
-    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction ? - colInCopy.sortAdvanced.direction : 1
+    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction
+      ? - colInCopy.sortAdvanced.direction
+      : 1
 
-    // Update columnDef for sorted item
+    // Update columnDef for sorted item in the tableConfigCopy
     let colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex((colDef) => {
       return colDef.field === colInCopy.field
     })
     this.tableConfigCopy.columnDefs[colDefIndexToReplace] = colInCopy
 
     this.tableData = tableDataSort(colInCopy.field, this.tableData, colInCopy.sortAdvanced.direction)
+
     this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
   }
 
