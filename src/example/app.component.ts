@@ -14,12 +14,16 @@ import { exampleTableConfig } from './example-table.config'
       Reorganize content and remove 2 random items
     </button>
     <button class="btn btn-secondary btn-sm"
+      (click)="activateRow()">
+      Activate row
+    </button>
+    <button class="btn btn-secondary btn-sm"
       *ngIf="tableConfigUpdatedCounter > 0"
       (click)="setTableConfigToUpdated()">
-      Set tableConfig to updated one
+      Set tableConfig to updated
+      {{tableConfigUpdatedCounter}}
     </button>
     <span>
-      {{tableConfigUpdatedCounter}}
     </span>
 
     <br><br>
@@ -29,6 +33,7 @@ import { exampleTableConfig } from './example-table.config'
       <ng2-table
         [tableData]="tableData"
         [tableConfig]="tableConfig"
+        [activateRow]="rowToActivate"
         (rowClicked)="rowClicked($event)"
         (cellItemClicked)="cellItemClicked($event)"
         (tableConfigUpdated)="tableConfigUpdated($event)">
@@ -42,9 +47,10 @@ export class AppComponent {
   public tableConfig = exampleTableConfig
   public tableConfigUpdatedCounter = 0
   public updatedTableConfig
+  public rowToActivate
 
-  public rowClicked (item) {
-    console.log('(rowClicked):', item)
+  public rowClicked ($event) {
+    console.log('(rowClicked):', $event)
   }
   public cellItemClicked (options) {
     console.log('(cellItemClicked):', options)
@@ -60,6 +66,11 @@ export class AppComponent {
   }
   public setTableConfigToUpdated () {
     this.tableConfig = this.updatedTableConfig
+  }
+  public activateRow () {
+    this.rowToActivate = {
+      rowIndex: this.getRandomInt(0, this.tableData.length - 1)
+    }
   }
 
   public reorganizeContent () {

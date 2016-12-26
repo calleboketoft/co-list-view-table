@@ -94,7 +94,7 @@ import { TableConfigModel } from './table-config.model'
           *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
           [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
-          (click)="rowClickedFn(rowData, rowIndex)">
+          (click)="rowClickedFn($event, rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.cellItem?.elementType">
 
@@ -119,7 +119,7 @@ import { TableConfigModel } from './table-config.model'
                   <div
                     [ngClass]="getNgThing('cellItemDiv', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
                     [ngStyle]="getNgThing('cellItemDiv', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
-                    (click)="cellItemClickedFn($event, col, rowData)"
+                    (click)="cellItemClickedFn($event, col, rowData, rowIndex)"
                     >{{col.cellItem?.staticContent || rowData[col.field]}}</div>
                 </div>
               </div>
@@ -139,6 +139,7 @@ import { TableConfigModel } from './table-config.model'
 export class Ng2TableComponent implements OnChanges {
   @Input() tableData: Array<any>
   @Input() tableConfig: TableConfigModel
+  @Input() activateRow
   @Output() rowClicked = new EventEmitter()
   @Output() cellItemClicked = new EventEmitter()
   @Output() tableConfigUpdated = new EventEmitter()
@@ -171,17 +172,25 @@ export class Ng2TableComponent implements OnChanges {
   }
 
   public ngOnChanges (changes) {
+
     // if there's an incoming tableConfig, replace existing tableConfigCopy
-    if (changes.tableConfig.currentValue) {
+    if (changes.tableConfig) {
       this.tableConfigCopy = this.copyTableConfig(this.tableConfig)
+    }
+
+    if (changes.activateRow && changes.activateRow.currentValue) {
+      if (this.activateRow.rowIndex) {
+        this.activeRow = this.activateRow.rowIndex
+      }
+      // TODO find based on rowData if rowIndex isn't available
     }
 
     this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(colDef => {
       return !!colDef.search
     })
 
-    // re-apply sorting when updating data in table
-    if (this.tableData.length > 0) {
+    // re-apply sorting when updating tableData or tableConfig
+    if ((changes.tableConfig || changes.tableData) && this.tableData.length > 0) {
       let sortAdvanced = this.tableConfigCopy.columnDefs.find(colDef => {
         return !!colDef.sortAdvanced
       })
@@ -211,14 +220,25 @@ export class Ng2TableComponent implements OnChanges {
     }
   }
 
-  public rowClickedFn (dataRow, rowIndex) {
-    this.activeRow = rowIndex
-    this.rowClicked.emit(dataRow)
+  public rowClickedFn ($event, rowData, rowIndex) {
+    if (this.tableConfigCopy.rowClickToActivate !== false) {
+      this.activeRow = rowIndex
+    }
+    this.rowClicked.emit({
+      $event,
+      rowData,
+      rowIndex
+    })
   }
 
-  public cellItemClickedFn ($event, colSpec, row) {
+  public cellItemClickedFn ($event, colSpec, rowData, rowIndex) {
     $event.stopPropagation() // don't want to trigger "rowClickedFn" as well
-    this.cellItemClicked.emit({colSpec, row})
+    this.cellItemClicked.emit({
+      $event,
+      columnDef: colSpec,
+      rowData,
+      rowIndex
+    })
   }
 
   public searchUpdate (originalCol) {

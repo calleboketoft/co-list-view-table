@@ -1,3 +1,11 @@
+## 3.0.0 ()
+
+* rowClicked and cellItemClicked new signature
+* emits tableConfigChanged
+* activateRow
+* TODO column search -> filter
+
+
 ## 2.0.6 (2016-12-23)
 
 * Fixed column defaultSort option when reloading table
