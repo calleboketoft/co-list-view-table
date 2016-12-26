@@ -14,8 +14,9 @@ var example_table_config_1 = require("./example-table.config");
 var AppComponent = (function () {
     function AppComponent() {
         this.showTable = true;
-        this.myData = example_table_data_1.exampleData;
-        this.myConfig = example_table_config_1.exampleTableConfig;
+        this.tableData = example_table_data_1.exampleData;
+        this.tableConfig = example_table_config_1.exampleTableConfig;
+        this.tableConfigUpdatedCounter = 0;
     }
     AppComponent.prototype.rowClicked = function (item) {
         console.log('(rowClicked):', item);
@@ -25,9 +26,14 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.tableConfigUpdated = function (config) {
         console.log('(tableConfigUpdated):', config);
+        this.tableConfigUpdatedCounter++;
+        this.updatedTableConfig = config;
     };
     AppComponent.prototype.toggleTable = function () {
         this.showTable = !this.showTable;
+    };
+    AppComponent.prototype.setTableConfigToUpdated = function () {
+        this.tableConfig = this.updatedTableConfig;
     };
     AppComponent.prototype.reorganizeContent = function () {
         var order = this.getRandomInt(0, 1);
@@ -47,7 +53,7 @@ var AppComponent = (function () {
         });
         dataCopy.splice(this.getRandomInt(0, 4), 1);
         dataCopy.splice(this.getRandomInt(0, 3), 1);
-        this.myData = dataCopy;
+        this.tableData = dataCopy;
     };
     AppComponent.prototype.getRandomInt = function (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -57,7 +63,7 @@ var AppComponent = (function () {
 AppComponent = __decorate([
     core_1.Component({
         selector: 'app',
-        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove 2 random items\n    </button>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 340px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"myData\"\n        [tableConfig]=\"myConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\"\n        (tableConfigUpdated)=\"tableConfigUpdated($event)\">\n      </ng2-table>\n    </div>\n  "
+        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove 2 random items\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      *ngIf=\"tableConfigUpdatedCounter > 0\"\n      (click)=\"setTableConfigToUpdated()\">\n      Set tableConfig to updated one\n    </button>\n    <span>\n      {{tableConfigUpdatedCounter}}\n    </span>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 340px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"tableData\"\n        [tableConfig]=\"tableConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\"\n        (tableConfigUpdated)=\"tableConfigUpdated($event)\">\n      </ng2-table>\n    </div>\n  "
     }),
     __metadata("design:paramtypes", [])
 ], AppComponent);

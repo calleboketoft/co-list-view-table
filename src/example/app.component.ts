@@ -13,14 +13,22 @@ import { exampleTableConfig } from './example-table.config'
       (click)="reorganizeContent()">
       Reorganize content and remove 2 random items
     </button>
+    <button class="btn btn-secondary btn-sm"
+      *ngIf="tableConfigUpdatedCounter > 0"
+      (click)="setTableConfigToUpdated()">
+      Set tableConfig to updated one
+    </button>
+    <span>
+      {{tableConfigUpdatedCounter}}
+    </span>
 
     <br><br>
 
     <!-- Set the height of the table content on a wrapping div -->
     <div style="height: 340px;" *ngIf="showTable">
       <ng2-table
-        [tableData]="myData"
-        [tableConfig]="myConfig"
+        [tableData]="tableData"
+        [tableConfig]="tableConfig"
         (rowClicked)="rowClicked($event)"
         (cellItemClicked)="cellItemClicked($event)"
         (tableConfigUpdated)="tableConfigUpdated($event)">
@@ -30,8 +38,10 @@ import { exampleTableConfig } from './example-table.config'
 })
 export class AppComponent {
   public showTable = true
-  public myData = exampleData
-  public myConfig = exampleTableConfig
+  public tableData = exampleData
+  public tableConfig = exampleTableConfig
+  public tableConfigUpdatedCounter = 0
+  public updatedTableConfig
 
   public rowClicked (item) {
     console.log('(rowClicked):', item)
@@ -41,11 +51,17 @@ export class AppComponent {
   }
   public tableConfigUpdated (config) {
     console.log('(tableConfigUpdated):', config)
+    this.tableConfigUpdatedCounter++
+    this.updatedTableConfig = config
   }
 
   public toggleTable () {
     this.showTable = !this.showTable
   }
+  public setTableConfigToUpdated () {
+    this.tableConfig = this.updatedTableConfig
+  }
+
   public reorganizeContent () {
     let order = this.getRandomInt(0, 1)
     let dataCopy = exampleData.map((item) => {
@@ -62,7 +78,7 @@ export class AppComponent {
     })
     dataCopy.splice(this.getRandomInt(0, 4), 1)
     dataCopy.splice(this.getRandomInt(0, 3), 1)
-    this.myData = dataCopy
+    this.tableData = dataCopy
   }
   public getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
