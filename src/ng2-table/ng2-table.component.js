@@ -36,17 +36,16 @@ var Ng2TableComponent = (function () {
         });
         return tableConfigCopy;
     };
-    // currently used for tableData
     Ng2TableComponent.prototype.ngOnChanges = function (changes) {
-        // add search terms and sorting to a copy of tableConfig
-        // the only problem would be if we want to send in a new tableConfig
-        // via the @Input() since we're now working with a copy
-        this.tableConfigCopy = this.tableConfigCopy || this.copyTableConfig(this.tableConfig);
+        // if there's an incoming tableConfig, replace existing tableConfigCopy
+        if (changes.tableConfig.currentValue) {
+            this.tableConfigCopy = this.copyTableConfig(this.tableConfig);
+        }
         this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(function (colDef) {
             return !!colDef.search;
         });
         // re-apply sorting when updating data in table
-        if (changes.tableData.currentValue.length > 0) {
+        if (this.tableData.length > 0) {
             var sortAdvanced = this.tableConfigCopy.columnDefs.find(function (colDef) {
                 return !!colDef.sortAdvanced;
             });

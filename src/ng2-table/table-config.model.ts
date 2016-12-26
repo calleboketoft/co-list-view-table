@@ -15,6 +15,10 @@ export interface TableColModel {
   searchTerm?: string | number
   sortDefault?: boolean
   sortDefaultReverse?: boolean
+  sortAdvanced?: {
+    count?: number
+    direction: number
+  }
   headerText?: string
   headerNgStyle?: any
   headerNgClass?: any
