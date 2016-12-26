@@ -81,6 +81,7 @@ import { TableConfigModel } from './table-config.model'
             <div *ngIf="isAnyFieldSearchable" class="search-wrap">
               <search-input-cmp
                 *ngIf="col.search"
+                [searchTerm]="col.searchTerm"
                 [field]="col.field"
                 (search)="searchUpdate($event)">
               </search-input-cmp>
@@ -169,6 +170,7 @@ export class Ng2TableComponent implements OnChanges {
     return tableConfigCopy
   }
 
+  // currently used for tableData
   public ngOnChanges (changes) {
     // add search terms and sorting to a copy of tableConfig
     // the only problem would be if we want to send in a new tableConfig

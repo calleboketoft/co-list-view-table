@@ -10,6 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
   `],
   template: `
     <input type="text"
+      [value]="searchTerm || ''"
       class="form-control"
       (keyup)="valueChange($event)"
       placeholder="{{placeholder}}">
@@ -17,6 +18,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 })
 export class SearchInputComponent {
   @Input() field
+  @Input() searchTerm
   @Input() placeholder = 'Search'
   @Output() search = new EventEmitter()
 

@@ -12,6 +12,7 @@ export interface TableColModel {
   field?: string
   width?: string
   search?: boolean
+  searchTerm?: string | number
   sortDefault?: boolean
   sortDefaultReverse?: boolean
   headerText?: string

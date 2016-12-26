@@ -29,6 +29,10 @@ __decorate([
 __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
+], SearchInputComponent.prototype, "searchTerm", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Object)
 ], SearchInputComponent.prototype, "placeholder", void 0);
 __decorate([
     core_1.Output(),
@@ -38,7 +42,7 @@ SearchInputComponent = __decorate([
     core_1.Component({
         selector: 'search-input-cmp',
         styles: ["\n    .form-control {\n      max-width: 200px;\n      font-weight: 400;\n    }\n  "],
-        template: "\n    <input type=\"text\"\n      class=\"form-control\"\n      (keyup)=\"valueChange($event)\"\n      placeholder=\"{{placeholder}}\">\n  "
+        template: "\n    <input type=\"text\"\n      [value]=\"searchTerm || ''\"\n      class=\"form-control\"\n      (keyup)=\"valueChange($event)\"\n      placeholder=\"{{placeholder}}\">\n  "
     }),
     __metadata("design:paramtypes", [])
 ], SearchInputComponent);
