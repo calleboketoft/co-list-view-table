@@ -19,7 +19,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 export class FilterInputComponent {
   @Input() field
   @Input() filterValue
-  @Input() placeholder = 'Filter'
+  @Input() placeholder
   @Output() filter = new EventEmitter()
 
   public valueChange ($event) {

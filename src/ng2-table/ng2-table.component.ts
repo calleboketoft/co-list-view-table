@@ -83,6 +83,7 @@ import { TableConfigModel } from './table-config.model'
                 *ngIf="col.filterEnabled"
                 [filterValue]="col.filterValue"
                 [field]="col.field"
+                [placeholder]="col.filterPlaceholder"
                 (filter)="filterUpdate($event)">
               </filter-input-cmp>
             </div>
@@ -202,17 +203,17 @@ export class Ng2TableComponent implements OnChanges {
 
       // no sortAdvanced is present, look for sortDefault
       } else {
-        let basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
-          return colDef.sortDefaultAscending || colDef.sortDefaultDescending
+        let sortDefaultColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
+          return !!colDef.sortDefault
         })
-        if (basicSortColIndex !== -1) {
-          let colToSort = this.tableConfigCopy.columnDefs[basicSortColIndex]
+        if (sortDefaultColIndex !== -1) {
+          let colToSort = this.tableConfigCopy.columnDefs[sortDefaultColIndex]
 
           // convert sortDefault to sortAdvanced to be able to simplify further
           // column sorting
           colToSort.sortAdvanced = {
             count: 1,
-            direction: colToSort.sortDefaultAscending ? 1 : -1
+            direction: colToSort.sortDefault.startsWith('asc') ? 1 : -1
           }
           this.tableData = tableDataSort(colToSort.field, this.tableData, colToSort.sortAdvanced.direction)
         }

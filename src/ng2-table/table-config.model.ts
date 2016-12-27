@@ -14,8 +14,8 @@ export interface TableColModel {
   width?: string
   filterEnabled?: boolean // default false
   filterValue?: string | number
-  sortDefaultAscending?: boolean // default false
-  sortDefaultDescending?: boolean // default false
+  filterPlaceholder?: string
+  sortDefault?: string // 'asc' or 'desc'
   sortAdvanced?: {
     count?: number
     direction: number

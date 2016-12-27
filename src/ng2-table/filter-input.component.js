@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var FilterInputComponent = (function () {
     function FilterInputComponent() {
-        this.placeholder = 'Filter';
         this.filter = new core_1.EventEmitter();
     }
     FilterInputComponent.prototype.valueChange = function ($event) {

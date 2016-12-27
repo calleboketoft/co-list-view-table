@@ -12,7 +12,7 @@ exports.exampleTableConfig = {
             field: 'userId',
             headerText: 'ID',
             headerNgClass: 'text-muted',
-            sortDefaultAscending: true,
+            sortDefault: 'asc',
             width: '100px'
         },
         {
@@ -30,6 +30,7 @@ exports.exampleTableConfig = {
             field: 'userName',
             headerText: 'Name',
             filterEnabled: true,
+            filterPlaceholder: 'test',
             cellNgStyle: { 'font-weight': 'bold' }
         },
         {
