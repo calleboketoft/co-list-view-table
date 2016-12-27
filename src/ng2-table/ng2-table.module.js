@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var ng2_table_component_1 = require("./ng2-table.component");
-var search_pipe_1 = require("./search.pipe");
-var search_input_component_1 = require("./search-input.component");
+var filter_pipe_1 = require("./filter.pipe");
+var filter_input_component_1 = require("./filter-input.component");
 var Ng2TableModule = (function () {
     function Ng2TableModule() {
     }
@@ -23,8 +23,8 @@ Ng2TableModule = __decorate([
         imports: [platform_browser_1.BrowserModule],
         declarations: [
             ng2_table_component_1.Ng2TableComponent,
-            search_input_component_1.SearchInputComponent,
-            search_pipe_1.SearchPipe
+            filter_input_component_1.FilterInputComponent,
+            filter_pipe_1.FilterPipe
         ],
         exports: [ng2_table_component_1.Ng2TableComponent]
     }),

@@ -48,7 +48,7 @@ import { TableConfigModel } from './table-config.model'
       vertical-align: top;
       border-bottom: 1px solid #eceeef;
     }
-    .search-wrap {
+    .filter-wrap {
       margin-top: 8px;
     }
 
@@ -78,20 +78,20 @@ import { TableConfigModel } from './table-config.model'
             <span (click)="colHeaderSortClicked(col)">
               {{col.headerText || col.field}}
             </span>
-            <div *ngIf="isAnyFieldSearchable" class="search-wrap">
-              <search-input-cmp
-                *ngIf="col.search"
-                [searchTerm]="col.searchTerm"
+            <div *ngIf="isAnyFieldFilterable" class="filter-wrap">
+              <filter-input-cmp
+                *ngIf="col.filterEnabled"
+                [filterValue]="col.filterValue"
                 [field]="col.field"
-                (search)="searchUpdate($event)">
-              </search-input-cmp>
+                (filter)="filterUpdate($event)">
+              </filter-input-cmp>
             </div>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          *ngFor="let rowData of tableData | search: tableConfigCopy; let rowIndex = index"
+          *ngFor="let rowData of tableData | filter: tableConfigCopy; let rowIndex = index"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
           [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
           (click)="rowClickedFn($event, rowData, rowIndex)">
@@ -145,7 +145,7 @@ export class Ng2TableComponent implements OnChanges {
   @Output() tableConfigUpdated = new EventEmitter()
 
   public tableConfigCopy
-  public isAnyFieldSearchable
+  public isAnyFieldFilterable
   public activeRow
   public rowClickStyles = false
 
@@ -185,8 +185,8 @@ export class Ng2TableComponent implements OnChanges {
       // TODO find based on rowData if rowIndex isn't available
     }
 
-    this.isAnyFieldSearchable = this.tableConfigCopy.columnDefs.some(colDef => {
-      return !!colDef.search
+    this.isAnyFieldFilterable = this.tableConfigCopy.columnDefs.some(colDef => {
+      return !!colDef.filterEnabled
     })
 
     // re-apply sorting when updating tableData or tableConfig
@@ -200,10 +200,10 @@ export class Ng2TableComponent implements OnChanges {
         // there might be multiple columns with advanced sort
         this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
 
-      // no sortAdvanced is present, look for sortDefault or sortDefaultReverse
+      // no sortAdvanced is present, look for sortDefault
       } else {
         let basicSortColIndex = this.tableConfigCopy.columnDefs.findIndex(colDef => {
-          return colDef.sortDefault || colDef.sortDefaultReverse
+          return colDef.sortDefaultAscending || colDef.sortDefaultDescending
         })
         if (basicSortColIndex !== -1) {
           let colToSort = this.tableConfigCopy.columnDefs[basicSortColIndex]
@@ -212,7 +212,7 @@ export class Ng2TableComponent implements OnChanges {
           // column sorting
           colToSort.sortAdvanced = {
             count: 1,
-            direction: colToSort.sortDefault ? 1 : -1
+            direction: colToSort.sortDefaultAscending ? 1 : -1
           }
           this.tableData = tableDataSort(colToSort.field, this.tableData, colToSort.sortAdvanced.direction)
         }
@@ -221,7 +221,7 @@ export class Ng2TableComponent implements OnChanges {
   }
 
   public rowClickedFn ($event, rowData, rowIndex) {
-    if (this.tableConfigCopy.rowClickToActivate !== false) {
+    if (this.tableConfigCopy.clickingRowActivatesRow !== false) {
       this.activeRow = rowIndex
     }
     this.rowClicked.emit({
@@ -241,14 +241,14 @@ export class Ng2TableComponent implements OnChanges {
     })
   }
 
-  public searchUpdate (originalCol) {
+  public filterUpdate (originalCol) {
     // The incoming col is from the original tableConfig, which we don't want
     // to modify. Find the col from the tableConfigCopy and modify that one instead
     let foundColDef = this.tableConfigCopy.columnDefs.find(colDef => {
       return colDef.field === originalCol.field
     })
     // add search term to the colDef for the field being searched
-    foundColDef.searchTerm = originalCol.value
+    foundColDef.filterValue = originalCol.value
 
     // NOTE not 100% sure why I have to do this, foundColDef should've been
     // a reference to the tableConfigCopy item?

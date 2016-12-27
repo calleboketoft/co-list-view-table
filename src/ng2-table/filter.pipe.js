@@ -9,42 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var SearchPipe = (function () {
-    function SearchPipe() {
+var FilterPipe = (function () {
+    function FilterPipe() {
     }
-    SearchPipe.prototype.transform = function (value, searchParams) {
+    FilterPipe.prototype.transform = function (value, filterParams) {
         return value.filter(function (item) {
             // each row
             var resultArr = []; // filter results per column
-            searchParams.columnDefs.forEach(function (columnDef) {
+            filterParams.columnDefs.forEach(function (columnDef) {
                 // each column
-                var field = searchParams.columnDefs.find(function (colDef) {
+                var field = filterParams.columnDefs.find(function (colDef) {
                     return colDef.field === columnDef.field;
                 });
-                if (!field.search) {
+                if (!field.filterEnabled) {
                     // the field doesn't support search, always include
                     resultArr.push(true);
                 }
                 else {
                     // searchable field,
-                    if (!field.searchTerm) {
+                    if (!field.filterValue) {
                         return true;
                     }
                     var fieldValue = (item[columnDef.field] + '').toLowerCase();
-                    var searchTerm = (field.searchTerm + '').toLowerCase();
-                    resultArr.push(fieldValue.includes(searchTerm));
+                    var filterValue = (field.filterValue + '').toLowerCase();
+                    resultArr.push(fieldValue.includes(filterValue));
                 }
             });
             return resultArr.every(function (i) { return i; });
         });
     };
-    return SearchPipe;
+    return FilterPipe;
 }());
-SearchPipe = __decorate([
+FilterPipe = __decorate([
     core_1.Pipe({
-        name: 'search'
+        name: 'filter'
     }),
     __metadata("design:paramtypes", [])
-], SearchPipe);
-exports.SearchPipe = SearchPipe;
-//# sourceMappingURL=search.pipe.js.map
+], FilterPipe);
+exports.FilterPipe = FilterPipe;
+//# sourceMappingURL=filter.pipe.js.map

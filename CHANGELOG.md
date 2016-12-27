@@ -1,10 +1,12 @@
 ## 3.0.0 ()
 
 * rowClicked and cellItemClicked new signature
-* emits tableConfigChanged
-* activateRow
-* TODO column search -> filter
-
+* @Output tableConfigChanged
+* @Input activateRow
+* TableModel search -> filterEnabled
+* TableModel searchTerm -> filterValue
+* sortDefault -> sortDefaultAscending
+* sortDefaultReverse -> sortDefaultDescending
 
 ## 2.0.6 (2016-12-23)
 

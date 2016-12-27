@@ -6,16 +6,16 @@ export interface TableConfigModel {
   rowNgStylePredicate?: PredicateFunc
   rowNgClass?: any
   rowNgClassPredicate?: PredicateFunc
-  rowClickToActivate?: boolean // default true
+  clickingRowActivatesRow?: boolean // default true
 }
 
 export interface TableColModel {
   field?: string
   width?: string
-  search?: boolean // default false
-  searchTerm?: string | number
-  sortDefault?: boolean // default false
-  sortDefaultReverse?: boolean // default false
+  filterEnabled?: boolean // default false
+  filterValue?: string | number
+  sortDefaultAscending?: boolean // default false
+  sortDefaultDescending?: boolean // default false
   sortAdvanced?: {
     count?: number
     direction: number

@@ -1,30 +1,30 @@
 import { Pipe } from '@angular/core'
 
 @Pipe({
-  name: 'search'
+  name: 'filter'
 })
-export class SearchPipe {
-  transform (value, searchParams) {
+export class FilterPipe {
+  transform (value, filterParams) {
     return value.filter((item) => {
       // each row
       let resultArr = [] // filter results per column
-      searchParams.columnDefs.forEach(columnDef => {
+      filterParams.columnDefs.forEach(columnDef => {
         // each column
-        let field = searchParams.columnDefs.find(colDef => {
+        let field = filterParams.columnDefs.find(colDef => {
           return colDef.field === columnDef.field
         })
-        if (!field.search) {
+        if (!field.filterEnabled) {
           // the field doesn't support search, always include
           resultArr.push(true)
         } else {
           // searchable field,
-          if (!field.searchTerm) {
+          if (!field.filterValue) {
             return true
           }
           let fieldValue = (item[columnDef.field] + '').toLowerCase()
-          let searchTerm = (field.searchTerm + '').toLowerCase()
+          let filterValue = (field.filterValue + '').toLowerCase()
 
-          resultArr.push(fieldValue.includes(searchTerm))
+          resultArr.push(fieldValue.includes(filterValue))
         }
       })
       return resultArr.every(i => i)

@@ -13,7 +13,7 @@ export const exampleTableConfig: TableConfigModel = {
       field: 'userId',
       headerText: 'ID',
       headerNgClass: 'text-muted',
-      sortDefaultReverse: true,
+      sortDefaultAscending: true,
       width: '100px'
     },
     {
@@ -30,13 +30,13 @@ export const exampleTableConfig: TableConfigModel = {
     {
       field: 'userName',
       headerText: 'Name',
-      search: true,
+      filterEnabled: true,
       cellNgStyle: { 'font-weight': 'bold' }
     },
     {
       field: 'nickName',
       headerText: 'Nickname',
-      search: true,
+      filterEnabled: true,
       cellItem: {
         elementType: 'div',
         cellItemNgStyle: { 'width': '120px' },

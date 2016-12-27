@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
-  selector: 'search-input-cmp',
+  selector: 'filter-input-cmp',
   styles: [`
     .form-control {
       max-width: 200px;
@@ -10,20 +10,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
   `],
   template: `
     <input type="text"
-      [value]="searchTerm || ''"
+      [value]="filterValue || ''"
       class="form-control"
       (keyup)="valueChange($event)"
       placeholder="{{placeholder}}">
   `
 })
-export class SearchInputComponent {
+export class FilterInputComponent {
   @Input() field
-  @Input() searchTerm
-  @Input() placeholder = 'Search'
-  @Output() search = new EventEmitter()
+  @Input() filterValue
+  @Input() placeholder = 'Filter'
+  @Output() filter = new EventEmitter()
 
   public valueChange ($event) {
-    this.search.emit({
+    this.filter.emit({
       field: this.field,
       value: $event.target.value
     })

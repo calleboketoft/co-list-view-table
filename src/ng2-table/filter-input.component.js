@@ -9,42 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var SearchInputComponent = (function () {
-    function SearchInputComponent() {
-        this.placeholder = 'Search';
-        this.search = new core_1.EventEmitter();
+var FilterInputComponent = (function () {
+    function FilterInputComponent() {
+        this.placeholder = 'Filter';
+        this.filter = new core_1.EventEmitter();
     }
-    SearchInputComponent.prototype.valueChange = function ($event) {
-        this.search.emit({
+    FilterInputComponent.prototype.valueChange = function ($event) {
+        this.filter.emit({
             field: this.field,
             value: $event.target.value
         });
     };
-    return SearchInputComponent;
+    return FilterInputComponent;
 }());
 __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
-], SearchInputComponent.prototype, "field", void 0);
+], FilterInputComponent.prototype, "field", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
-], SearchInputComponent.prototype, "searchTerm", void 0);
+], FilterInputComponent.prototype, "filterValue", void 0);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
-], SearchInputComponent.prototype, "placeholder", void 0);
+], FilterInputComponent.prototype, "placeholder", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], SearchInputComponent.prototype, "search", void 0);
-SearchInputComponent = __decorate([
+], FilterInputComponent.prototype, "filter", void 0);
+FilterInputComponent = __decorate([
     core_1.Component({
-        selector: 'search-input-cmp',
+        selector: 'filter-input-cmp',
         styles: ["\n    .form-control {\n      max-width: 200px;\n      font-weight: 400;\n    }\n  "],
-        template: "\n    <input type=\"text\"\n      [value]=\"searchTerm || ''\"\n      class=\"form-control\"\n      (keyup)=\"valueChange($event)\"\n      placeholder=\"{{placeholder}}\">\n  "
+        template: "\n    <input type=\"text\"\n      [value]=\"filterValue || ''\"\n      class=\"form-control\"\n      (keyup)=\"valueChange($event)\"\n      placeholder=\"{{placeholder}}\">\n  "
     }),
     __metadata("design:paramtypes", [])
-], SearchInputComponent);
-exports.SearchInputComponent = SearchInputComponent;
-//# sourceMappingURL=search-input.component.js.map
+], FilterInputComponent);
+exports.FilterInputComponent = FilterInputComponent;
+//# sourceMappingURL=filter-input.component.js.map
