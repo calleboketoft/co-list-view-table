@@ -33,13 +33,14 @@ export const exampleTableConfig: TableConfigModel = {
       field: 'userName',
       headerText: 'Name',
       filterEnabled: true,
-      filterPlaceholder: 'test',
+      filterPlaceholder: 'Filter name',
       cellNgStyle: { 'font-weight': 'bold' }
     },
     {
       field: 'nickName',
       headerText: 'Nickname',
       filterEnabled: true,
+      filterPlaceholder: 'Filter nickname',
       cellItem: {
         elementType: 'div',
         cellItemNgStyle: { 'width': '120px' },

@@ -8,6 +8,7 @@
 * sortDefault -> sortDefault: 'asc'
 * sortDefaultReverse -> sortDefault: 'desc'
 * @Input filterPlaceholder
+* activateRow public function to be used
 
 ## 2.0.6 (2016-12-23)
 
