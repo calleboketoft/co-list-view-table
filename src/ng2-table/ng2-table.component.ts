@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core'
+import { Component, Input, Output, EventEmitter,
+  OnChanges, OnInit } from '@angular/core'
 import { tableDataSort } from './sorter.service'
 import { TableConfigModel } from './table-config.model'
 
@@ -93,8 +94,8 @@ import { TableConfigModel } from './table-config.model'
       <tbody>
         <tr
           *ngFor="let rowData of tableData | filter: tableConfigCopy; let rowIndex = index"
-          [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, activeRow)"
-          [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, activeRow)"
+          [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow)"
+          [ngStyle]="getNgThing('row', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow)"
           (click)="rowClickedFn($event, rowData, rowIndex)">
           <td *ngFor="let col of tableConfig.columnDefs" [style.width]="col.width">
             <div [ngSwitch]="col.cellItem?.elementType">
@@ -102,11 +103,11 @@ import { TableConfigModel } from './table-config.model'
               <!-- BUTTON -->
               <div *ngSwitchCase="'button'">
                 <div
-                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
-                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)">
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)">
                   <button type="button"
-                    [ngClass]="getNgThing('cellItemButton', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
-                    [ngStyle]="getNgThing('cellItemButton', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                    [ngClass]="getNgThing('cellItemButton', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                    [ngStyle]="getNgThing('cellItemButton', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
                     (click)="cellItemClickedFn($event, col, rowData)"
                     >{{col.cellItem?.staticContent || rowData[col.field]}}</button>
                 </div>
@@ -115,11 +116,11 @@ import { TableConfigModel } from './table-config.model'
               <!-- DIV -->
               <div *ngSwitchCase="'div'">
                 <div
-                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
-                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)">
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)">
                   <div
-                    [ngClass]="getNgThing('cellItemDiv', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
-                    [ngStyle]="getNgThing('cellItemDiv', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                    [ngClass]="getNgThing('cellItemDiv', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                    [ngStyle]="getNgThing('cellItemDiv', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
                     (click)="cellItemClickedFn($event, col, rowData, rowIndex)"
                     >{{col.cellItem?.staticContent || rowData[col.field]}}</div>
                 </div>
@@ -127,8 +128,8 @@ import { TableConfigModel } from './table-config.model'
 
               <!-- NO ITEM -->
               <div *ngSwitchDefault class="cell-content"
-                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, activeRow, col)"
-                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, activeRow, col)"
+                  [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                  [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
                 >{{rowData[col.field]}}</div>
             </div>
           </td>
@@ -140,15 +141,12 @@ import { TableConfigModel } from './table-config.model'
 export class Ng2TableComponent implements OnChanges {
   @Input() tableData: Array<any>
   @Input() tableConfig: TableConfigModel
-  @Input() activateRow
   @Output() rowClicked = new EventEmitter()
   @Output() cellItemClicked = new EventEmitter()
   @Output() tableConfigUpdated = new EventEmitter()
 
   public tableConfigCopy
   public isAnyFieldFilterable
-  public activeRow
-  public rowClickStyles = false
 
   // Deep copy the parts of the tableConfig that will be modified when
   // sorting and searching the columns
@@ -177,13 +175,6 @@ export class Ng2TableComponent implements OnChanges {
     // if there's an incoming tableConfig, replace existing tableConfigCopy
     if (changes.tableConfig) {
       this.tableConfigCopy = this.copyTableConfig(this.tableConfig)
-    }
-
-    if (changes.activateRow && changes.activateRow.currentValue) {
-      if (this.activateRow.rowIndex) {
-        this.activeRow = this.activateRow.rowIndex
-      }
-      // TODO find based on rowData if rowIndex isn't available
     }
 
     this.isAnyFieldFilterable = this.tableConfigCopy.columnDefs.some(colDef => {
@@ -221,9 +212,18 @@ export class Ng2TableComponent implements OnChanges {
     }
   }
 
+  public activateRow (options) {
+    if (options.rowIndex) {
+      this.tableConfigCopy.activeRow = options.rowIndex
+    }
+    // TODO find based on rowData if rowIndex isn't available
+
+    this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
+  }
+
   public rowClickedFn ($event, rowData, rowIndex) {
     if (this.tableConfigCopy.clickingRowActivatesRow !== false) {
-      this.activeRow = rowIndex
+      this.tableConfigCopy.activeRow = rowIndex
     }
     this.rowClicked.emit({
       $event,

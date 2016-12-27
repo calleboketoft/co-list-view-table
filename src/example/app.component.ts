@@ -1,6 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, ViewChild } from '@angular/core'
 import { exampleData } from './example-table.data'
 import { exampleTableConfig } from './example-table.config'
+import { Ng2TableComponent } from '../../'
 
 @Component({
   selector: 'app',
@@ -33,7 +34,6 @@ import { exampleTableConfig } from './example-table.config'
       <ng2-table
         [tableData]="tableData"
         [tableConfig]="tableConfig"
-        [activateRow]="rowToActivate"
         (rowClicked)="rowClicked($event)"
         (cellItemClicked)="cellItemClicked($event)"
         (tableConfigUpdated)="tableConfigUpdated($event)">
@@ -48,6 +48,8 @@ export class AppComponent {
   public tableConfigUpdatedCounter = 0
   public updatedTableConfig
   public rowToActivate
+
+  @ViewChild(Ng2TableComponent) public ng2TableComponent: Ng2TableComponent
 
   public rowClicked ($event) {
     console.log('(rowClicked):', $event)
@@ -68,9 +70,9 @@ export class AppComponent {
     this.tableConfig = this.updatedTableConfig
   }
   public activateRow () {
-    this.rowToActivate = {
+    this.ng2TableComponent.activateRow({
       rowIndex: this.getRandomInt(0, this.tableData.length - 1)
-    }
+    })
   }
 
   public reorganizeContent () {
