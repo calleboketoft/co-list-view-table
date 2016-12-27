@@ -13,7 +13,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
       [value]="filterValue || ''"
       class="form-control"
       (keyup)="valueChange($event)"
-      placeholder="{{placeholder}}">
+      placeholder="{{placeholder || ''}}">
   `
 })
 export class FilterInputComponent {

@@ -8,6 +8,8 @@ export const exampleTableConfig: TableConfigModel = {
   rowNgClassPredicate: (rowData, rowIndex, activeRow) => {
     return rowIndex === activeRow ? ['table-active'] : ''
   },
+
+  // definition objects for each column
   columnDefs: [
     {
       field: 'userId',
@@ -23,7 +25,7 @@ export const exampleTableConfig: TableConfigModel = {
         // elementType can be either 'div' or 'button'
         elementType: 'div',
         cellItemNgClassPredicate: (rowData) => {
-          return rowData.pet === 'beer' ? 'tag tag-warning' : 'tag tag-primary'
+          return rowData.pet === 'unicorn' ? 'tag tag-warning' : 'tag tag-primary'
         }
       }
     },

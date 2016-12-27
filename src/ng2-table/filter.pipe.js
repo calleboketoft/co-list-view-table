@@ -22,11 +22,11 @@ var FilterPipe = (function () {
                     return colDef.field === columnDef.field;
                 });
                 if (!field.filterEnabled) {
-                    // the field doesn't support search, always include
+                    // the field doesn't support filter, always include
                     resultArr.push(true);
                 }
                 else {
-                    // searchable field,
+                    // filterable field,
                     if (!field.filterValue) {
                         return true;
                     }

@@ -5,8 +5,9 @@
 * @Input activateRow
 * TableModel search -> filterEnabled
 * TableModel searchTerm -> filterValue
-* sortDefault -> sortDefaultAscending
-* sortDefaultReverse -> sortDefaultDescending
+* sortDefault -> sortDefault: 'asc'
+* sortDefaultReverse -> sortDefault: 'desc'
+* @Input filterPlaceholder
 
 ## 2.0.6 (2016-12-23)
 
