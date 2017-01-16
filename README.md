@@ -80,8 +80,8 @@ myConfig = {
   ]
 }
 
-function buttonClicked({colSpec, row}) {
-  console.log('spec for column: ', colSpec)
-  console.log('row data: ', row)
+function buttonClicked({columnDef, rowData}) {
+  console.log('spec for column: ', columnDef)
+  console.log('row data: ', rowData)
 }
 ```
