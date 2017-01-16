@@ -51,12 +51,17 @@ myConfig: TableConfigModel = {
     }
   ]
 }
-function rowClicked (row) {
-  console.log('clicked row:', row)
+function rowClicked ({$event, columnDef, rowData, rowIndex}) {
+  console.log('Original mouse event:', $event)
+  console.log('Row data:', rowData)
+  console.log('Row index:', rowIndex)
 }
 
-function cellItemClicked (cellItem) {
-  console.log('clicked cell item:', cellItem)
+function cellItemClicked ({$event, columnDef, rowData, rowIndex}) {
+  console.log('Original mouse event:', $event)
+  console.log('Column definition:', columnDef)
+  console.log('Row data:', rowData)
+  console.log('Row index:', rowIndex)
 }
 ```
 

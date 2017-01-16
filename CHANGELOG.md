@@ -1,14 +1,15 @@
 ## 3.0.0 (2017-01-16)
 
-* rowClicked and cellItemClicked new signature
+* rowClicked and cellItemClicked events have new signature
 * @Output tableConfigChanged
-* @Input activateRow
 * TableModel search -> filterEnabled
 * TableModel searchTerm -> filterValue
 * sortDefault -> sortDefault: 'asc'
 * sortDefaultReverse -> sortDefault: 'desc'
 * @Input filterPlaceholder
 * activateRow public function to be used
+
+Take a look at README.md and the example code for more details on the updates
 
 ## 2.0.6 (2016-12-23)
 

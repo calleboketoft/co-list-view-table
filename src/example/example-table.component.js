@@ -19,8 +19,8 @@ var ExampleTableComponent = (function () {
         this.tableConfig = example_table_config_1.exampleTableConfig;
         this.tableConfigUpdatedCounter = 0;
     }
-    ExampleTableComponent.prototype.rowClicked = function ($event) {
-        console.log('(rowClicked):', $event);
+    ExampleTableComponent.prototype.rowClicked = function (options) {
+        console.log('(rowClicked):', options);
     };
     ExampleTableComponent.prototype.cellItemClicked = function (options) {
         console.log('(cellItemClicked):', options);

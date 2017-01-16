@@ -51,8 +51,8 @@ export class ExampleTableComponent {
 
   @ViewChild(Ng2TableComponent) public ng2TableComponent: Ng2TableComponent
 
-  public rowClicked ($event) {
-    console.log('(rowClicked):', $event)
+  public rowClicked (options) {
+    console.log('(rowClicked):', options)
   }
   public cellItemClicked (options) {
     console.log('(cellItemClicked):', options)
