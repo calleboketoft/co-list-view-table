@@ -1,4 +1,4 @@
-## 3.0.0 ()
+## 3.0.0 (2017-01-16)
 
 * rowClicked and cellItemClicked new signature
 * @Output tableConfigChanged
