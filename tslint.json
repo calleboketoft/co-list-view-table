@@ -1,6 +1,9 @@
 {
   "extends": "tslint-config-standard",
   "rules": {
-    "align": [true, "parameters", "statements"]
+    "align": [true, "parameters", "statements"],
+    "max-line-length": [
+      false
+    ]
   }
 }
