@@ -6252,3 +6252,9 @@ a.text-gray-dark:focus, a.text-gray-dark:hover {
 .btn-inverse:active,
 .btn-inverse.active {
   background-color: #080808 \9; }
+
+.div-link {
+  color: darkblue; }
+
+.div-link:hover {
+  text-decoration: underline; }

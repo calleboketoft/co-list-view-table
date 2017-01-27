@@ -49,13 +49,14 @@ export const exampleTableConfig: TableConfigModel = {
     },
     {
       // field isn't required when having a cellItem
-      headerText: 'Delete',
+      headerText: 'Link',
       headerNgStyle: { 'text-align': 'center', 'color': 'red' },
       cellNgStyle: { 'text-align': 'center' },
+      // See the file scss/custom-styles.scss for this class
+      cellNgClass: 'div-link',
       cellItem: {
-        elementType: 'button',
-        staticContent: 'Danger',
-        cellItemNgClass: 'btn btn-sm btn-danger'
+        elementType: 'div',
+        staticContent: 'div styled as a link'
       }
     }
   ]
