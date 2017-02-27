@@ -25,7 +25,7 @@ export class AppComponent {
   public showMinimalTable = false
   public minimalTableConfig: TableConfigModel = {
     columnDefs: [
-      { field: 'userId' },
+      { field: 'userId', sortDefault: 'asc' },
       { field: 'pet' },
       { field: 'userName' },
       { field: 'nickName' }

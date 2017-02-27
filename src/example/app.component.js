@@ -13,7 +13,7 @@ var AppComponent = (function () {
         this.showMinimalTable = false;
         this.minimalTableConfig = {
             columnDefs: [
-                { field: 'userId' },
+                { field: 'userId', sortDefault: 'asc' },
                 { field: 'pet' },
                 { field: 'userName' },
                 { field: 'nickName' }

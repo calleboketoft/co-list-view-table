@@ -5,7 +5,7 @@ function tableDataSort(key, data, direction) {
     dataCopy.sort(function (a, b) {
         var aTmp = (a[key] + '').toLowerCase();
         var bTmp = (b[key] + '').toLowerCase();
-        if (aTmp === bTmp) {
+        if (aTmp === bTmp || direction === 0) {
             return 0;
         }
         else if (aTmp > bTmp) {

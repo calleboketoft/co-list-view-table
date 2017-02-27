@@ -1,3 +1,8 @@
+## 3.1.0 (2017-02-27)
+
+* Column sorting can be set to "unsorted" by clicking header multiple times
+* Column headers have carets showing sorting order
+
 ## 3.0.0 (2017-01-16)
 
 * rowClicked and cellItemClicked events have new signature

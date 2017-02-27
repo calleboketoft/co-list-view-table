@@ -34,7 +34,7 @@ export interface TableColModel {
     cellItemNgStylePredicate?: PredicateFunc
     cellItemNgClass?: any
     cellItemNgClassPredicate?: PredicateFunc
-  },
+  }
   extraMetadata?: any // free data field
 }
 

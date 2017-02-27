@@ -72,13 +72,16 @@ import { TableConfigModel } from './table-config.model'
         <tr>
           <!-- must render from tableConfig so the table don't re-render all the
                time when tableConfigCopy is updated -->
-          <th *ngFor="let col of tableConfig.columnDefs"
+          <th *ngFor="let col of tableConfigCopy.columnDefs"
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
             <span (click)="colHeaderSortClicked(col)">
               {{col.headerText || col.field}}
             </span>
+            <span *ngIf="col.sortAdvanced?.direction === -1">&#9660;</span>
+            <span *ngIf="col.sortAdvanced?.direction === 1">&#9650;</span>
+
             <div *ngIf="isAnyFieldFilterable" class="filter-wrap">
               <filter-input-cmp
                 *ngIf="col.filterEnabled"
@@ -304,10 +307,17 @@ export class Ng2TableComponent implements OnChanges {
     colInCopy.sortAdvanced = colInCopy.sortAdvanced || { }
     // Set the sort count to max + 1, this is the most recently pressed sort
     colInCopy.sortAdvanced.count = maxSortCount + 1
-    // if the column sort has been pressed already, switch direction
-    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction
-      ? - colInCopy.sortAdvanced.direction
-      : 1
+
+    let newDirection
+    if (colInCopy.sortAdvanced.direction === 1) {
+      newDirection = -1
+    } else if (colInCopy.sortAdvanced.direction === -1) {
+      newDirection = 0
+    } else {
+      // if there was no previous sorting or 0
+      newDirection = 1
+    }
+    colInCopy.sortAdvanced.direction = newDirection
 
     // Update columnDef for sorted item in the tableConfigCopy
     let colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex((colDef) => {
@@ -315,7 +325,8 @@ export class Ng2TableComponent implements OnChanges {
     })
     this.tableConfigCopy.columnDefs[colDefIndexToReplace] = colInCopy
 
-    this.tableData = tableDataSort(colInCopy.field, this.tableData, colInCopy.sortAdvanced.direction)
+    // reapply sorting to tableData
+    this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
 
     this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
   }
