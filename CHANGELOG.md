@@ -1,6 +1,7 @@
 ## 3.1.2 (2017-02-28)
 
 * Disable selecting table headers
+* Fix sorting when there are two columns with staticContent
 
 ## 3.1.1 (2017-02-28)
 
