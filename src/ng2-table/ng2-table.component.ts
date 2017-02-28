@@ -69,6 +69,15 @@ import { getNgThing } from './style-and-class.service'
     td > div > .cell-content {
       white-space: pre-wrap;
     }
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+    }
   `],
   template: `
     <table
@@ -78,11 +87,11 @@ import { getNgThing } from './style-and-class.service'
         <tr>
           <!-- rendering from tableConfigCopy makes the header re-render each
                time tableConfigCopy is updated -->
-          <th *ngFor="let col of tableConfigCopy.columnDefs"
+          <th *ngFor="let col of tableConfigCopy.columnDefs; let colIndex = index"
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
-            <span (click)="colHeaderSortClicked(col)">
+            <span (click)="colHeaderSortClicked(colIndex)" class="noselect">
               {{col.headerText || col.field}}
               <span *ngIf="col.sortAdvanced?.direction === -1" class="ng2-table-caret">
                 &nbsp;&#9660;
@@ -318,13 +327,11 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     }, this.tableData)
   }
 
-  public colHeaderSortClicked (originalCol) {
+  public colHeaderSortClicked (colIndex) {
 
     // The incoming col is from the original tableConfig, which we don't want
     // to modify. Find the col from the tableConfigCopy and modify that one instead
-    let colInCopy = this.tableConfigCopy.columnDefs.find(colDef => {
-      return originalCol.field === colDef.field
-    })
+    let colInCopy = this.tableConfigCopy.columnDefs[colIndex]
 
     // Find the current highest sort count. Every time a column header is clicked
     // for sorting, the counter gets incremented. This can be used to recreate an
@@ -352,10 +359,7 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     colInCopy.sortAdvanced.direction = newDirection
 
     // Update columnDef for sorted item in the tableConfigCopy
-    let colDefIndexToReplace = this.tableConfigCopy.columnDefs.findIndex((colDef) => {
-      return colDef.field === colInCopy.field
-    })
-    this.tableConfigCopy.columnDefs[colDefIndexToReplace] = colInCopy
+    this.tableConfigCopy.columnDefs[colIndex] = colInCopy
 
     // reapply sorting to tableData
     this.sortColsAdvanced(this.tableConfigCopy.columnDefs)

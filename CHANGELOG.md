@@ -1,3 +1,7 @@
+## 3.1.2 (2017-02-28)
+
+* Disable selecting table headers
+
 ## 3.1.1 (2017-02-28)
 
 * Place sorting carets within clickable header area
