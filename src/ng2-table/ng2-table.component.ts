@@ -85,24 +85,21 @@ import { getNgThing } from './style-and-class.service'
       [ngStyle]="getNgThing('table', 'style', tableConfig)">
       <thead #thead>
         <tr>
-          <!-- rendering from tableConfigCopy makes the header re-render each
-               time tableConfigCopy is updated -->
-          <th *ngFor="let col of tableConfigCopy.columnDefs; let colIndex = index"
+          <!-- rendering from tableConfigCopy would make the header re-render
+               each time tableConfigCopy is updated, input fields lose focus -->
+          <th *ngFor="let col of tableConfig.columnDefs; let colIndex = index"
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
             <span (click)="colHeaderSortClicked(colIndex)" class="noselect">
               {{col.headerText || col.field}}
-              <span *ngIf="col.sortAdvanced?.direction === -1" class="ng2-table-caret">
+              <span *ngIf="tableConfigCopy.columnDefs[colIndex].sortAdvanced?.direction === -1" class="ng2-table-caret">
                 &nbsp;&#9660;
               </span>
-              <span *ngIf="col.sortAdvanced?.direction === 1" class="ng2-table-caret">
+              <span *ngIf="tableConfigCopy.columnDefs[colIndex].sortAdvanced?.direction === 1" class="ng2-table-caret">
                 &nbsp;&#9650;
               </span>
             </span>
-
-            <div *ngIf="!isAnyFieldFilterable" class="filter-wrap">
-            </div>
 
             <div *ngIf="isAnyFieldFilterable" class="filter-wrap">
               <filter-input-cmp

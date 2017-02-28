@@ -1,3 +1,7 @@
+## 3.1.3 (2017-02-28)
+
+* Fix filter input focus issue
+
 ## 3.1.2 (2017-02-28)
 
 * Disable selecting table headers
