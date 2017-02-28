@@ -1,3 +1,9 @@
+## 3.1.1 (2017-02-28)
+
+* Place sorting carets within clickable header area
+* add class "ng2-table-caret" to the carets for custom styling possibilities
+* Thead size varies based on if tbody has scrollbar or not
+
 ## 3.1.0 (2017-02-27)
 
 * Column sorting can be set to "unsorted" by clicking header multiple times

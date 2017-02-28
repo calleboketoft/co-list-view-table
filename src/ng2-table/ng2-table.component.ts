@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter,
-  OnChanges, OnInit } from '@angular/core'
+import { Component, Input, Output, EventEmitter, ViewChild, AfterViewChecked,
+  OnChanges } from '@angular/core'
 import { tableDataSort } from './sorter.service'
 import { TableConfigModel } from './table-config.model'
+import { getNgThing } from './style-and-class.service'
 
 @Component({
   selector: 'ng2-table',
@@ -22,7 +23,12 @@ import { TableConfigModel } from './table-config.model'
       /* head takes the height it requires,
       and it's not scaled when table is resized */
       flex: 0 0 auto;
+    }
+    table thead.with-scrollbar {
       width: calc(100% - 0.9em);
+    }
+    table thead.without-scrollbar {
+      width: 100%
     }
     table tbody {
       /* body takes all the remaining available space */
@@ -68,19 +74,26 @@ import { TableConfigModel } from './table-config.model'
     <table
       [ngClass]="getNgThing('table', 'class', tableConfig)"
       [ngStyle]="getNgThing('table', 'style', tableConfig)">
-      <thead>
+      <thead #thead>
         <tr>
-          <!-- must render from tableConfig so the table don't re-render all the
-               time when tableConfigCopy is updated -->
+          <!-- rendering from tableConfigCopy makes the header re-render each
+               time tableConfigCopy is updated -->
           <th *ngFor="let col of tableConfigCopy.columnDefs"
             [style.width]="col.width"
             [ngClass]="getNgThing('header', 'class', tableConfig, null, null, null, col)"
             [ngStyle]="getNgThing('header', 'style', tableConfig, null, null, null, col)">
             <span (click)="colHeaderSortClicked(col)">
               {{col.headerText || col.field}}
+              <span *ngIf="col.sortAdvanced?.direction === -1" class="ng2-table-caret">
+                &nbsp;&#9660;
+              </span>
+              <span *ngIf="col.sortAdvanced?.direction === 1" class="ng2-table-caret">
+                &nbsp;&#9650;
+              </span>
             </span>
-            <span *ngIf="col.sortAdvanced?.direction === -1">&#9660;</span>
-            <span *ngIf="col.sortAdvanced?.direction === 1">&#9650;</span>
+
+            <div *ngIf="!isAnyFieldFilterable" class="filter-wrap">
+            </div>
 
             <div *ngIf="isAnyFieldFilterable" class="filter-wrap">
               <filter-input-cmp
@@ -94,7 +107,7 @@ import { TableConfigModel } from './table-config.model'
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody #tbody>
         <tr
           *ngFor="let rowData of tableData | filter: tableConfigCopy; let rowIndex = index"
           [ngClass]="getNgThing('row', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow)"
@@ -141,15 +154,19 @@ import { TableConfigModel } from './table-config.model'
     </table>
   `
 })
-export class Ng2TableComponent implements OnChanges {
+export class Ng2TableComponent implements OnChanges, AfterViewChecked {
   @Input() tableData: Array<any>
   @Input() tableConfig: TableConfigModel
   @Output() rowClicked = new EventEmitter()
   @Output() cellItemClicked = new EventEmitter()
   @Output() tableConfigUpdated = new EventEmitter()
 
+  @ViewChild('tbody') tbody
+  @ViewChild('thead') thead
+
   public tableConfigCopy
   public isAnyFieldFilterable
+  public getNgThing = getNgThing
 
   // Deep copy the parts of the tableConfig that will be modified when
   // sorting and searching the columns
@@ -171,6 +188,21 @@ export class Ng2TableComponent implements OnChanges {
       columnDefs: columnDefsCopy
     })
     return tableConfigCopy
+  }
+
+  public ngAfterViewChecked () {
+    // update header width based on view changes
+    this.setTheadClass (this.tbody, this.thead)
+  }
+
+  public setTheadClass (tbody, thead) {
+    if (tbody && thead) {
+      if (tbody.nativeElement.scrollHeight > tbody.nativeElement.clientHeight) {
+        thead.nativeElement.className = 'with-scrollbar'
+      } else {
+        thead.nativeElement.className = 'without-scrollbar'
+      }
+    }
   }
 
   public ngOnChanges (changes) {
@@ -329,70 +361,5 @@ export class Ng2TableComponent implements OnChanges {
     this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
 
     this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
-  }
-
-  public getNgThing (thingType, classOrStyle, tableConfig, rowData, rowIndex, activeRow, col?) {
-    switch (thingType + '-' + classOrStyle) {
-
-      case 'table-class':
-        return tableConfig['tableNgClass'] || 'table table-striped'
-
-      case 'table-style':
-        return tableConfig['tableNgStyle'] || ''
-
-      case 'row-class':
-        if (tableConfig['rowNgClassPredicate']) {
-          return tableConfig['rowNgClassPredicate'](rowData, rowIndex, activeRow)
-        }
-        return tableConfig['rowNgClass'] || ''
-
-      case 'row-style':
-        if (tableConfig['rowNgStylePredicate']) {
-          return tableConfig['rowNgStylePredicate'](rowData, rowIndex, activeRow)
-        }
-        return tableConfig['rowNgStyle'] || ''
-
-      case 'cell-class':
-        if (col['cellNgClassPredicate']) {
-          return col['cellNgClassPredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellNgClass'] || ''
-
-      case 'cell-style':
-        if (col['cellNgStylePredicate']) {
-          return col['cellNgStylePredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellNgStyle'] || ''
-
-      case 'cellItemButton-class':
-        if (col['cellItem']['cellItemNgClassPredicate']) {
-          return col['cellItem']['cellItemNgClassPredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellItem']['cellItemNgClass'] || ''
-
-      case 'cellItemButton-style':
-        if (col['cellItem']['cellItemNgStylePredicate']) {
-          return col['cellItem']['cellItemNgStylePredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellItem']['cellItemNgStyle'] || ''
-
-      case 'cellItemDiv-class':
-        if (col['cellItem']['cellItemNgClassPredicate']) {
-          return col['cellItem']['cellItemNgClassPredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellItem']['cellItemNgClass'] || ''
-
-      case 'cellItemDiv-style':
-        if (col['cellItem']['cellItemNgStylePredicate']) {
-          return col['cellItem']['cellItemNgStylePredicate'](rowData, rowIndex, activeRow)
-        }
-        return col['cellItem']['cellItemNgStyle'] || ''
-
-      case 'header-class':
-        return col['headerNgClass'] || ''
-
-      case 'header-style':
-        return col['headerNgStyle'] || ''
-    }
   }
 }

@@ -48,13 +48,20 @@ exports.exampleTableConfig = {
         {
             // field isn't required when having a cellItem
             headerText: 'Link',
-            headerNgStyle: { 'text-align': 'center', 'color': 'red' },
-            cellNgStyle: { 'text-align': 'center' },
+            headerNgStyle: { 'color': 'red' },
+            cellNgStyle: { 'color': 'lightblue' },
             // See the file scss/custom-styles.scss for this class
             cellNgClass: 'div-link',
             cellItem: {
                 elementType: 'div',
                 staticContent: 'div styled as a link'
+            }
+        },
+        {
+            headerText: 'Last column',
+            cellItem: {
+                elementType: 'div',
+                staticContent: 'Placeholder'
             }
         }
     ]
