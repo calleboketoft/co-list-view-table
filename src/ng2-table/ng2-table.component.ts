@@ -201,6 +201,7 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     this.setTheadClass (this.tbody, this.thead)
   }
 
+  // set thead class based on if scrollbar is visible or not
   public setTheadClass (tbody, thead) {
     if (tbody && thead) {
       if (tbody.nativeElement.scrollHeight > tbody.nativeElement.clientHeight) {
