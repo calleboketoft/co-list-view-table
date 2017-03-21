@@ -41,6 +41,7 @@ var Ng2TableComponent = (function () {
         // update header width based on view changes
         this.setTheadClass(this.tbody, this.thead);
     };
+    // set thead class based on if scrollbar is visible or not
     Ng2TableComponent.prototype.setTheadClass = function (tbody, thead) {
         if (tbody && thead) {
             if (tbody.nativeElement.scrollHeight > tbody.nativeElement.clientHeight) {
