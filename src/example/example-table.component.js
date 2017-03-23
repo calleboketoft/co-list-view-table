@@ -41,6 +41,10 @@ var ExampleTableComponent = (function () {
             rowIndex: this.getRandomInt(0, this.tableData.length - 1)
         });
     };
+    ExampleTableComponent.prototype.changeNameOfHeader = function () {
+        this.updatedTableConfig.columnDefs[0].headerText = 'DI';
+        this.tableConfig = this.updatedTableConfig;
+    };
     ExampleTableComponent.prototype.reorganizeContent = function () {
         var order = this.getRandomInt(0, 1);
         var dataCopy = example_table_data_1.exampleData.map(function (item) {
@@ -73,7 +77,7 @@ __decorate([
 ExampleTableComponent = __decorate([
     core_1.Component({
         selector: 'example-table-component',
-        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove 2 random items\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"activateRow()\">\n      Activate row\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      *ngIf=\"tableConfigUpdatedCounter > 0\"\n      (click)=\"setTableConfigToUpdated()\">\n      Set tableConfig to updated\n      {{tableConfigUpdatedCounter}}\n    </button>\n    <span>\n    </span>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 340px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"tableData\"\n        [tableConfig]=\"tableConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\"\n        (tableConfigUpdated)=\"tableConfigUpdated($event)\">\n      </ng2-table>\n    </div>\n  "
+        template: "\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"toggleTable()\">\n      Toggle table\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"reorganizeContent()\">\n      Reorganize content and remove 2 random items\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      (click)=\"activateRow()\">\n      Activate row\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      *ngIf=\"tableConfigUpdatedCounter > 0\"\n      (click)=\"setTableConfigToUpdated()\">\n      Set tableConfig to updated\n      {{tableConfigUpdatedCounter}}\n    </button>\n    <button class=\"btn btn-secondary btn-sm\"\n      *ngIf=\"tableConfigUpdatedCounter > 0\"\n      (click)=\"changeNameOfHeader()\">\n      Change header name\n    </button>\n    <span>\n    </span>\n\n    <br><br>\n\n    <!-- Set the height of the table content on a wrapping div -->\n    <div style=\"height: 340px;\" *ngIf=\"showTable\">\n      <ng2-table\n        [tableData]=\"tableData\"\n        [tableConfig]=\"tableConfig\"\n        (rowClicked)=\"rowClicked($event)\"\n        (cellItemClicked)=\"cellItemClicked($event)\"\n        (tableConfigUpdated)=\"tableConfigUpdated($event)\">\n      </ng2-table>\n    </div>\n  "
     })
 ], ExampleTableComponent);
 exports.ExampleTableComponent = ExampleTableComponent;

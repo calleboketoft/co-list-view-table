@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core'
 import { exampleData } from './example-table.data'
 import { exampleTableConfig } from './example-table.config'
 import { Ng2TableComponent } from '../../'
+import { TableConfigModel } from '../../'
 
 @Component({
   selector: 'example-table-component',
@@ -24,6 +25,11 @@ import { Ng2TableComponent } from '../../'
       Set tableConfig to updated
       {{tableConfigUpdatedCounter}}
     </button>
+    <button class="btn btn-secondary btn-sm"
+      *ngIf="tableConfigUpdatedCounter > 0"
+      (click)="changeNameOfHeader()">
+      Change header name
+    </button>
     <span>
     </span>
 
@@ -44,9 +50,9 @@ import { Ng2TableComponent } from '../../'
 export class ExampleTableComponent {
   public showTable = true
   public tableData = exampleData
-  public tableConfig = exampleTableConfig
+  public tableConfig: TableConfigModel = exampleTableConfig
   public tableConfigUpdatedCounter = 0
-  public updatedTableConfig
+  public updatedTableConfig: TableConfigModel
   public rowToActivate
 
   @ViewChild(Ng2TableComponent) public ng2TableComponent: Ng2TableComponent
@@ -73,6 +79,10 @@ export class ExampleTableComponent {
     this.ng2TableComponent.activateRow({
       rowIndex: this.getRandomInt(0, this.tableData.length - 1)
     })
+  }
+  public changeNameOfHeader () {
+    this.updatedTableConfig.columnDefs[0].headerText = 'DI'
+    this.tableConfig = this.updatedTableConfig
   }
 
   public reorganizeContent () {
