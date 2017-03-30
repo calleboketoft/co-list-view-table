@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.exampleTableConfig = {
     // the following three properties create a "clickable row" look
     // and highlights the most recently clicked row in the table

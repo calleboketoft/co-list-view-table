@@ -1,3 +1,7 @@
+## 4.0.0 (2017-03-30)
+
+* Update Angular to v4
+
 ## 3.1.3 (2017-02-28)
 
 * Fix filter input focus issue

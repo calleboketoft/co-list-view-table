@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function getNgThing(thingType, classOrStyle, tableConfig, rowData, rowIndex, activeRow, col) {
     switch (thingType + '-' + classOrStyle) {
         case 'table-class':

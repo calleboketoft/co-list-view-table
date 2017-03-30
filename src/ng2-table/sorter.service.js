@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // https://github.com/thelgevold/angular-2-samples
 function tableDataSort(key, data, direction) {
     var dataCopy = data.map(function (i) { return Object.assign({}, i); });

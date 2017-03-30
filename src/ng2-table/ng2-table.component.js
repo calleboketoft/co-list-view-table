@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var sorter_service_1 = require("./sorter.service");
 var style_and_class_service_1 = require("./style-and-class.service");
@@ -69,6 +70,7 @@ var Ng2TableComponent = (function () {
             if (sortAdvanced) {
                 // there might be multiple columns with advanced sort
                 this.sortColsAdvanced(this.tableConfigCopy.columnDefs);
+                // no sortAdvanced is present, look for sortDefault
             }
             else {
                 var sortDefaultColIndex = this.tableConfigCopy.columnDefs.findIndex(function (colDef) {
