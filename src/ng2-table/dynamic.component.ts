@@ -1,5 +1,4 @@
 import { Subscription } from 'rxjs/Rx'
-import { OnDestroy } from '@angular/core/core'
 import { DynamicDirective } from './dynamic.directive'
 import { 
   Component, 
@@ -9,7 +8,8 @@ import {
   OnChanges, 
   Type, 
   Output, 
-  EventEmitter 
+  EventEmitter,
+  OnDestroy
 } from '@angular/core'
 
 @Component({
