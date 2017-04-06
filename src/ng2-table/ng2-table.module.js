@@ -6,13 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var dynamic_directive_1 = require("./dynamic.directive");
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var ng2_table_component_1 = require("./ng2-table.component");
 var filter_pipe_1 = require("./filter.pipe");
 var filter_input_component_1 = require("./filter-input.component");
 var dynamic_component_1 = require("./dynamic.component");
+var dynamic_directive_1 = require("./dynamic.directive");
 var Ng2TableModule = (function () {
     function Ng2TableModule() {
     }
