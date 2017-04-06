@@ -1,0 +1,1 @@
+{"version":3,"file":"dynamic.directive.js","sourceRoot":"","sources":["dynamic.directive.ts"],"names":[],"mappings":";;;;;;;;;;;AAAA,sCAA4D;AAK5D,IAAa,gBAAgB;IAC3B,0BAAmB,gBAAkC;QAAlC,qBAAgB,GAAhB,gBAAgB,CAAkB;IAAI,CAAC;IAC5D,uBAAC;AAAD,CAAC,AAFD,IAEC;AAFY,gBAAgB;IAH5B,gBAAS,CAAC;QACT,QAAQ,EAAE,gBAAgB;KAC3B,CAAC;qCAEqC,uBAAgB;GAD1C,gBAAgB,CAE5B;AAFY,4CAAgB"}

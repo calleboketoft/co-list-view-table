@@ -10,6 +10,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var app_component_1 = require("./app.component");
 var example_table_component_1 = require("./example-table.component");
+var example_dynamic_component_1 = require("./example-dynamic.component");
 var _1 = require("../../");
 var AppModule = (function () {
     function AppModule() {
@@ -18,9 +19,10 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        declarations: [app_component_1.AppComponent, example_table_component_1.ExampleTableComponent],
+        declarations: [app_component_1.AppComponent, example_table_component_1.ExampleTableComponent, example_dynamic_component_1.ExampleDynamicComponent],
         imports: [platform_browser_1.BrowserModule, _1.Ng2TableModule],
-        bootstrap: [app_component_1.AppComponent]
+        bootstrap: [app_component_1.AppComponent],
+        entryComponents: [example_dynamic_component_1.ExampleDynamicComponent]
     })
 ], AppModule);
 exports.AppModule = AppModule;

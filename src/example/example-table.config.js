@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var example_dynamic_component_1 = require("./example-dynamic.component");
 exports.exampleTableConfig = {
     // the following three properties create a "clickable row" look
     // and highlights the most recently clicked row in the table
@@ -56,6 +57,14 @@ exports.exampleTableConfig = {
             cellItem: {
                 elementType: 'div',
                 staticContent: 'div styled as a link'
+            }
+        },
+        {
+            headerText: 'Dynamic column',
+            cellItem: {
+                elementType: 'dynamic',
+                component: example_dynamic_component_1.ExampleDynamicComponent,
+                change: function (change, col, row, index) { return console.log('A change has occured: ', change); }
             }
         },
         {
