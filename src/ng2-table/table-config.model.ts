@@ -1,3 +1,5 @@
+import { Type } from '@angular/core';
+
 export interface TableConfigModel {
   columnDefs: TableColModel[]
   tableNgClass?: any
@@ -33,7 +35,9 @@ export interface TableColModel {
     cellItemNgStyle?: any
     cellItemNgStylePredicate?: PredicateFunc
     cellItemNgClass?: any
-    cellItemNgClassPredicate?: PredicateFunc
+    cellItemNgClassPredicate?: PredicateFunc,
+    component?: Type<any>,
+    change?: (change: any, col: any, row: any, index: number) => void
   }
   extraMetadata?: any // free data field
 }

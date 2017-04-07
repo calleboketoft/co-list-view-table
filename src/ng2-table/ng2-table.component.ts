@@ -148,6 +148,11 @@ import { getNgThing } from './style-and-class.service'
                 </div>
               </div>
 
+              <!-- DYNAMIC CONTENT -->
+              <div *ngSwitchCase="'dynamic'">
+                <dynamic-component [component]="col.cellItem.component" [rowData]="rowData" (change)="cellChanged($event, col, rowData, rowIndex)"></dynamic-component>
+              </div>
+
               <!-- NO ITEM -->
               <div *ngSwitchDefault class="cell-content"
                   [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
@@ -282,6 +287,14 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
       rowData,
       rowIndex
     })
+  }
+
+  cellChanged(change: any, col: any, row: any, index: number): void {
+    if (!col.cellItem || !col.cellItem.change) {
+      return;
+    }
+
+    col.cellItem.change(change, col, row, index);
   }
 
   public filterUpdate (originalCol) {

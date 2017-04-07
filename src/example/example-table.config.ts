@@ -1,3 +1,4 @@
+import { ExampleDynamicComponent } from './example-dynamic.component';
 import { TableConfigModel } from '../../index'
 
 export const exampleTableConfig: TableConfigModel = {
@@ -57,6 +58,14 @@ export const exampleTableConfig: TableConfigModel = {
       cellItem: {
         elementType: 'div',
         staticContent: 'div styled as a link'
+      }
+    },
+    {
+      headerText: 'Dynamic column',
+      cellItem: {
+        elementType: 'dynamic',
+        component: ExampleDynamicComponent,
+        change: (change, col, row, index) => console.log('A change has occured: ', change)
       }
     },
     {
