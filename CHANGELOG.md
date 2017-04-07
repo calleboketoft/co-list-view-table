@@ -1,3 +1,7 @@
+## 4.1.0 (2017-04-07)
+
+* Add "dynamic cell type" feature. See example for usage.
+
 ## 4.0.0 (2017-03-30)
 
 * Update Angular to v4
