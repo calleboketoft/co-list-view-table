@@ -15,7 +15,7 @@ import {
 @Component({
   selector: 'dynamic-component',
   template: `
-    <ng-template dynamic-host></ng-template>
+    <div dynamic-host></div>
   `,
 })
 export class DynamicComponent implements OnChanges, OnDestroy {

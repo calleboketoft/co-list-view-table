@@ -60,7 +60,7 @@ __decorate([
 DynamicComponent = __decorate([
     core_1.Component({
         selector: 'dynamic-component',
-        template: "\n    <ng-template dynamic-host></ng-template>\n  ",
+        template: "\n    <div dynamic-host></div>\n  ",
     }),
     __metadata("design:paramtypes", [core_1.ComponentFactoryResolver])
 ], DynamicComponent);
