@@ -61,6 +61,7 @@ exports.exampleTableConfig = {
         },
         {
             headerText: 'Dynamic column',
+            field: 'userName',
             cellItem: {
                 elementType: 'dynamic',
                 component: example_dynamic_component_1.ExampleDynamicComponent,
