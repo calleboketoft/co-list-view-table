@@ -1,3 +1,7 @@
+## 4.1.1 (2017-04-11)
+
+* Change dynamic type to allow to pass a subset of the row data
+
 ## 4.1.0 (2017-04-07)
 
 * Add "dynamic cell type" feature. See example for usage.
