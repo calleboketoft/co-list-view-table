@@ -62,6 +62,7 @@ export const exampleTableConfig: TableConfigModel = {
     },
     {
       headerText: 'Dynamic column',
+      field: 'userName',
       cellItem: {
         elementType: 'dynamic',
         component: ExampleDynamicComponent,

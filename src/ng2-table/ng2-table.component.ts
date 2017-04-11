@@ -150,7 +150,11 @@ import { getNgThing } from './style-and-class.service'
 
               <!-- DYNAMIC CONTENT -->
               <div *ngSwitchCase="'dynamic'">
-                <dynamic-component [component]="col.cellItem.component" [rowData]="rowData" (change)="cellChanged($event, col, rowData, rowIndex)"></dynamic-component>
+                <dynamic-component 
+                  [component]="col.cellItem.component" 
+                  [rowData]="col.field ? rowData[col.field] : rowData" 
+                  (change)="cellChanged($event, col, rowData, rowIndex)"
+                ></dynamic-component>
               </div>
 
               <!-- NO ITEM -->

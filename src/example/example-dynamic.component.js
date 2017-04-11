@@ -33,7 +33,7 @@ __decorate([
 ExampleDynamicComponent = __decorate([
     core_1.Component({
         selector: 'example-dynamic-component',
-        template: "\n    <button (click)=\"buttonClicked($event)\">{{ toggle ? 'Hello' : 'Goodbye' }} {{ data.userName }}</button>\n  "
+        template: "\n    <button (click)=\"buttonClicked($event)\">{{ toggle ? 'Hello' : 'Goodbye' }} {{ data }}</button>\n  "
     })
 ], ExampleDynamicComponent);
 exports.ExampleDynamicComponent = ExampleDynamicComponent;

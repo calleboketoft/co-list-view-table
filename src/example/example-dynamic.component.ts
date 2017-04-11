@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 @Component({
   selector: 'example-dynamic-component',
   template: `
-    <button (click)="buttonClicked($event)">{{ toggle ? 'Hello' : 'Goodbye' }} {{ data.userName }}</button>
+    <button (click)="buttonClicked($event)">{{ toggle ? 'Hello' : 'Goodbye' }} {{ data }}</button>
   `
 })
 export class ExampleDynamicComponent {
