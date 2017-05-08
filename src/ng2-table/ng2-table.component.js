@@ -136,8 +136,7 @@ var Ng2TableComponent = (function () {
         this.tableConfigUpdated.emit(updatedTableConfigCopy);
     };
     Ng2TableComponent.prototype.sortCols = function (columnDefs) {
-        // go through all columns and figure out sorting order based on
-        // "sortAdvanced.count". Then call "tableDataSort" in the correct order
+        // Get the sorting column
         var columnToApplySorting = columnDefs.find(function (colDef) { return !!(colDef.sortAdvanced && colDef.sortAdvanced.direction); });
         if (!columnToApplySorting) {
             return;
@@ -156,17 +155,8 @@ var Ng2TableComponent = (function () {
             }
         });
         colInCopy.sortAdvanced = colInCopy.sortAdvanced || {};
-        // // Set the sort count to max + 1, this is the most recently pressed sort
-        // colInCopy.sortAdvanced.count = maxSortCount + 1
-        var newDirection;
-        if (colInCopy.sortAdvanced.direction === 1) {
-            newDirection = -1;
-        }
-        else {
-            // if there was no previous sorting or 0
-            newDirection = 1;
-        }
-        colInCopy.sortAdvanced.direction = newDirection;
+        // We invert the order or set 1 as default
+        colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction === 1 ? -1 : 1;
         // reapply sorting to tableData
         this.sortCols(this.tableConfigCopy.columnDefs);
         this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy));

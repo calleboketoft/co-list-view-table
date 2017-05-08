@@ -318,8 +318,7 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
   }
 
   public sortCols (columnDefs: TableColModel[]) {
-    // go through all columns and figure out sorting order based on
-    // "sortAdvanced.count". Then call "tableDataSort" in the correct order
+    // Get the sorting column
     let columnToApplySorting = columnDefs.find(colDef => !!(colDef.sortAdvanced && colDef.sortAdvanced.direction))
     if (!columnToApplySorting) {
       return
@@ -329,7 +328,8 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     this.tableData = tableDataSort(
       columnToApplySorting.field, 
       this.tableData, 
-      columnToApplySorting.sortAdvanced.direction)
+      columnToApplySorting.sortAdvanced.direction
+    )
   }
 
   public colHeaderSortClicked (colIndex) {
@@ -346,17 +346,9 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     })
 
     colInCopy.sortAdvanced = colInCopy.sortAdvanced || { }
-    // // Set the sort count to max + 1, this is the most recently pressed sort
-    // colInCopy.sortAdvanced.count = maxSortCount + 1
 
-    let newDirection
-    if (colInCopy.sortAdvanced.direction === 1) {
-      newDirection = -1
-    } else {
-      // if there was no previous sorting or 0
-      newDirection = 1
-    }
-    colInCopy.sortAdvanced.direction = newDirection
+    // We invert the order or set 1 as default
+    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction === 1 ? -1 : 1
 
     // reapply sorting to tableData
     this.sortCols(this.tableConfigCopy.columnDefs)
