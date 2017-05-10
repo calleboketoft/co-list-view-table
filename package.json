@@ -1,6 +1,6 @@
 {
   "name": "@calle/ng2-table",
-  "version": "4.1.2",
+  "version": "5.0.0",
   "description": "Simple table to use in list views",
   "main": "index.js",
   "scripts": {
