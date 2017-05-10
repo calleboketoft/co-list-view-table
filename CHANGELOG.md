@@ -1,3 +1,7 @@
+## 5.0.0 (2017-05-10)
+
+* Removed advanced, multi-column, sorting
+
 ## 4.1.1 (2017-04-11)
 
 * Change dynamic type to allow to pass a subset of the row data
