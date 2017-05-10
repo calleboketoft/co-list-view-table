@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, ViewChild, AfterViewChecked,
   OnChanges } from '@angular/core'
 import { tableDataSort } from './sorter.service'
-import { TableConfigModel } from './table-config.model'
+import { TableConfigModel, TableColModel } from './table-config.model'
 import { getNgThing } from './style-and-class.service'
 
 @Component({
@@ -174,18 +174,18 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
   @Input() tableConfig: TableConfigModel
   @Output() rowClicked = new EventEmitter()
   @Output() cellItemClicked = new EventEmitter()
-  @Output() tableConfigUpdated = new EventEmitter()
+  @Output() tableConfigUpdated = new EventEmitter<TableConfigModel>()
 
   @ViewChild('tbody') tbody
   @ViewChild('thead') thead
 
   public tableConfigCopy
-  public isAnyFieldFilterable
+  public isAnyFieldFilterable: boolean
   public getNgThing = getNgThing
 
   // Deep copy the parts of the tableConfig that will be modified when
   // sorting and searching the columns
-  public copyTableConfig (tableConfig) {
+  public copyTableConfig (tableConfig: TableConfigModel) {
     // columnDefs need to be deep copied
     let columnDefsCopy = tableConfig.columnDefs.map(colDef => {
 
@@ -241,7 +241,7 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
       // sortAdvanced takes precedence over sortDefault in sorting
       if (sortAdvanced) {
         // there might be multiple columns with advanced sort
-        this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
+        this.sortCols(this.tableConfigCopy.columnDefs)
 
       // no sortAdvanced is present, look for sortDefault
       } else {
@@ -317,29 +317,19 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     this.tableConfigUpdated.emit(updatedTableConfigCopy)
   }
 
-  public sortColsAdvanced (columnDefs) {
-    // go through all columns and figure out sorting order based on
-    // "sortAdvanced.count". Then call "tableDataSort" in the correct order
-    let columnsToApplySorting = columnDefs.filter(colDef => {
-      return !!colDef.sortAdvanced
-    })
-
-    // use the count property to figure out in which order the columns were sorted
-    columnsToApplySorting.sort((a, b) => {
-      if (a.sortAdvanced.count < b.sortAdvanced.count) {
-        return -1
-      }
-      if (a.sortAdvanced.count > b.sortAdvanced.count) {
-        return 1
-      }
-      return 0
-    })
+  public sortCols (columnDefs: TableColModel[]) {
+    // Get the sorting column
+    let columnToApplySorting = columnDefs.find(colDef => !!(colDef.sortAdvanced && colDef.sortAdvanced.direction))
+    if (!columnToApplySorting) {
+      return
+    }
 
     // sort all the columns with sortAdvanced, in order
-    this.tableData = columnsToApplySorting.reduce((mem, curr) => {
-      mem = tableDataSort(curr.field, mem, curr.sortAdvanced.direction)
-      return mem
-    }, this.tableData)
+    this.tableData = tableDataSort(
+      columnToApplySorting.field, 
+      this.tableData, 
+      columnToApplySorting.sortAdvanced.direction
+    )
   }
 
   public colHeaderSortClicked (colIndex) {
@@ -348,36 +338,20 @@ export class Ng2TableComponent implements OnChanges, AfterViewChecked {
     // to modify. Find the col from the tableConfigCopy and modify that one instead
     let colInCopy = this.tableConfigCopy.columnDefs[colIndex]
 
-    // Find the current highest sort count. Every time a column header is clicked
-    // for sorting, the counter gets incremented. This can be used to recreate an
-    // exact sort order based on multiple columns being sorted.
-    let maxSortCount = this.tableConfigCopy.columnDefs.reduce((mem, curr) => {
-      if (curr.sortAdvanced && curr.sortAdvanced.count > mem) {
-        mem = curr.sortAdvanced.count
+    // Remove previous sort
+    this.tableConfigCopy.columnDefs.forEach(column => {
+      if (column !== colInCopy && column.sortAdvanced) {
+        column.sortAdvanced.direction = 0
       }
-      return mem
-    }, 0)
+    })
 
     colInCopy.sortAdvanced = colInCopy.sortAdvanced || { }
-    // Set the sort count to max + 1, this is the most recently pressed sort
-    colInCopy.sortAdvanced.count = maxSortCount + 1
 
-    let newDirection
-    if (colInCopy.sortAdvanced.direction === 1) {
-      newDirection = -1
-    } else if (colInCopy.sortAdvanced.direction === -1) {
-      newDirection = 0
-    } else {
-      // if there was no previous sorting or 0
-      newDirection = 1
-    }
-    colInCopy.sortAdvanced.direction = newDirection
-
-    // Update columnDef for sorted item in the tableConfigCopy
-    this.tableConfigCopy.columnDefs[colIndex] = colInCopy
+    // We invert the order or set 1 as default
+    colInCopy.sortAdvanced.direction = colInCopy.sortAdvanced.direction === 1 ? -1 : 1
 
     // reapply sorting to tableData
-    this.sortColsAdvanced(this.tableConfigCopy.columnDefs)
+    this.sortCols(this.tableConfigCopy.columnDefs)
 
     this.tableConfigUpdated.emit(this.copyTableConfig(this.tableConfigCopy))
   }
