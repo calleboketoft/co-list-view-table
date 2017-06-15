@@ -63,6 +63,7 @@ export const exampleTableConfig: TableConfigModel = {
     {
       headerText: 'Dynamic column',
       field: 'userName',
+      cellNgStyle: { 'background-color': 'yellow' },
       cellItem: {
         elementType: 'dynamic',
         component: ExampleDynamicComponent,

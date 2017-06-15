@@ -149,7 +149,10 @@ import { getNgThing } from './style-and-class.service'
               </div>
 
               <!-- DYNAMIC CONTENT -->
-              <div *ngSwitchCase="'dynamic'">
+              <div *ngSwitchCase="'dynamic'"
+                [ngClass]="getNgThing('cell', 'class', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+                [ngStyle]="getNgThing('cell', 'style', tableConfig, rowData, rowIndex, tableConfigCopy.activeRow, col)"
+              >
                 <dynamic-component 
                   [component]="col.cellItem.component" 
                   [rowData]="col.field ? rowData[col.field] : rowData" 
