@@ -1,3 +1,7 @@
+## 5.0.1 (2017-06-15)
+
+* bugfix: styles not being applied for dynamic components
+
 ## 5.0.0 (2017-05-10)
 
 * Removed advanced, multi-column, sorting
